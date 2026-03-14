@@ -56,7 +56,7 @@ export default function DeployPanel() {
     })
   }
 
-  const selectAll = () => setSelected(new Set(files.map(f => f.name)))
+  const selectAll = () => setSelected(new Set(files.map(f => f.path)))
   const clearAll = () => setSelected(new Set())
 
   const handleDeploy = async () => {
@@ -94,14 +94,14 @@ export default function DeployPanel() {
           ) : (
             <div style={styles.fileList}>
               {files.map(f => (
-                <label key={f.name} style={{ ...styles.fileRow, ...(selected.has(f.name) ? styles.fileRowSelected : {}) }}>
+                <label key={f.path} style={{ ...styles.fileRow, ...(selected.has(f.path) ? styles.fileRowSelected : {}) }}>
                   <input
                     type="checkbox"
-                    checked={selected.has(f.name)}
-                    onChange={() => toggleFile(f.name)}
+                    checked={selected.has(f.path)}
+                    onChange={() => toggleFile(f.path)}
                     style={styles.checkbox}
                   />
-                  <span style={styles.fileName}>{f.name}</span>
+                  <span style={styles.fileName}>{f.path}</span>
                 </label>
               ))}
             </div>

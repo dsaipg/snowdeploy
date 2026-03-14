@@ -32,8 +32,9 @@ class UserInfo(BaseModel):
 
 # ── Files ─────────────────────────────────────────────────────────────
 class SqlFile(BaseModel):
-    name: str                       # filename e.g. "20260313_create_orders.sql"
-    path: str                       # relative path in repo e.g. "team-a/20260313_create_orders.sql"
+    name: str                       # filename only e.g. "users.sql"
+    path: str                       # path relative to team folder e.g. "tables/core/users.sql"
+    subfolder: Optional[str] = None # subfolder within team folder e.g. "tables/core"
     size_bytes: int
     last_modified: Optional[datetime] = None
     last_commit_message: Optional[str] = None
@@ -54,6 +55,7 @@ class FileContentResponse(BaseModel):
 
 class SaveFileRequest(BaseModel):
     filename: str = Field(..., description="Filename only, no path. e.g. create_orders.sql")
+    subfolder: Optional[str] = Field(None, description="Subfolder within team folder e.g. tables/core")
     content: str = Field(..., description="SQL content")
     commit_message: Optional[str] = None
 

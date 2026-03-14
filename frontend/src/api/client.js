@@ -45,10 +45,11 @@ export const configApi = {
 // ── Files ──────────────────────────────────────────────────────────
 export const filesApi = {
   listFiles: () => api.get('/files'),
-  getFile: (filename) => api.get(`/files/${encodeURIComponent(filename)}`),
-  saveFile: (filename, content, commitMessage) =>
-    api.post('/files', { filename, content, commit_message: commitMessage }),
-  deleteFile: (filename) => api.delete(`/files/${encodeURIComponent(filename)}`),
+  // path can include subfolders e.g. "tables/core/users.sql"
+  getFile: (path) => api.get(`/files/${path}`),
+  saveFile: (filename, content, commitMessage, subfolder) =>
+    api.post('/files', { filename, content, commit_message: commitMessage, subfolder: subfolder || null }),
+  deleteFile: (path) => api.delete(`/files/${path}`),
 }
 
 // ── Deploy ─────────────────────────────────────────────────────────

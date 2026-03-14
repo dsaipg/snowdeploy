@@ -2,8 +2,18 @@ import { useState, useEffect, useRef } from 'react'
 import Editor from '@monaco-editor/react'
 import { filesApi } from '../api/client'
 
+const SUBFOLDERS = ['tables/core', 'tables/staging', 'views', 'procedures', 'migrations', 'scripts']
+
+function parseFilePath(path) {
+  if (!path) return { subfolder: '', filename: '' }
+  const parts = path.split('/')
+  if (parts.length === 1) return { subfolder: '', filename: path }
+  return { subfolder: parts.slice(0, -1).join('/'), filename: parts[parts.length - 1] }
+}
+
 export default function SqlEditor({ initialFile, templates, onFileSaved }) {
   const [filename, setFilename] = useState('')
+  const [subfolder, setSubfolder] = useState('tables/core')
   const [content, setContent] = useState('-- Write your SQL here\n')
   const [commitMessage, setCommitMessage] = useState('')
   const [saving, setSaving] = useState(false)
@@ -16,13 +26,16 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
   useEffect(() => {
     if (!initialFile) {
       setFilename('')
+      setSubfolder('tables/core')
       setContent('-- Write your SQL here\n')
       return
     }
+    const parsed = parseFilePath(initialFile)
     setLoading(true)
     filesApi.getFile(initialFile)
       .then(res => {
-        setFilename(initialFile)
+        setFilename(parsed.filename)
+        setSubfolder(parsed.subfolder)
         setContent(res.data.content)
         setStatus(null)
       })
@@ -34,15 +47,18 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
     const name = filename.trim()
     if (!name) return setStatus({ type: 'error', msg: 'Enter a filename before saving.' })
     const finalName = name.endsWith('.sql') ? name : `${name}.sql`
+    const finalSubfolder = subfolder.trim() || null
 
     setSaving(true)
     setStatus(null)
     try {
-      const res = await filesApi.saveFile(finalName, content, commitMessage || undefined)
+      const res = await filesApi.saveFile(finalName, content, commitMessage || undefined, finalSubfolder)
       setFilename(finalName)
-      setStatus({ type: 'success', msg: `✓ Saved as ${finalName} (commit: ${res.data.commit_sha.slice(0, 7)})` })
+      const displayPath = finalSubfolder ? `${finalSubfolder}/${finalName}` : finalName
+      setStatus({ type: 'success', msg: `✓ Saved as ${displayPath} (commit: ${res.data.commit_sha.slice(0, 7)})` })
       setCommitMessage('')
-      onFileSaved?.(finalName)
+      const savedPath = finalSubfolder ? `${finalSubfolder}/${finalName}` : finalName
+      onFileSaved?.(savedPath)
     } catch (err) {
       setStatus({ type: 'error', msg: err.response?.data?.detail || 'Save failed.' })
     } finally {
@@ -72,6 +88,7 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
 
   const handleNew = () => {
     setFilename('')
+    setSubfolder('tables/core')
     setContent('-- Write your SQL here\n')
     setStatus(null)
     setCommitMessage('')
@@ -89,7 +106,18 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
       {/* Toolbar */}
       <div style={styles.toolbar}>
         <div style={styles.filenameWrap}>
-          <span style={styles.folderHint}>your-team /</span>
+          <select
+            style={styles.subfolderSelect}
+            value={subfolder}
+            onChange={e => setSubfolder(e.target.value)}
+          >
+            {SUBFOLDERS.map(f => <option key={f} value={f}>{f}</option>)}
+            {subfolder && !SUBFOLDERS.includes(subfolder) && (
+              <option value={subfolder}>{subfolder}</option>
+            )}
+            <option value="">/ (root)</option>
+          </select>
+          <span style={styles.folderHint}>/</span>
           <input
             style={styles.filenameInput}
             value={filename}
@@ -192,6 +220,11 @@ const styles = {
     display: 'flex', alignItems: 'center', gap: 4,
     background: '#161b27', border: '1px solid #1e293b',
     borderRadius: 7, padding: '6px 10px', flex: 1, maxWidth: 320,
+  },
+  subfolderSelect: {
+    background: 'transparent', border: 'none', outline: 'none',
+    color: '#64748b', fontSize: 12, fontFamily: 'monospace', cursor: 'pointer',
+    maxWidth: 150,
   },
   folderHint: { fontSize: 12, color: '#475569', whiteSpace: 'nowrap' },
   filenameInput: {

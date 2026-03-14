@@ -49,10 +49,22 @@ def _team_dir(repo_root: str, team_folder: str) -> Path:
     return path
 
 
-def _file_path(repo_root: str, team_folder: str, filename: str) -> Path:
-    """Return the absolute path to a specific file, validating team isolation."""
-    safe_name = _validate_filename(filename)
-    return _team_dir(repo_root, team_folder) / safe_name
+def _resolve_team_file(repo_root: str, team_folder: str, rel_path: str) -> Path:
+    """
+    Resolve a path relative to the team folder, e.g. 'tables/core/users.sql'.
+    Prevents directory traversal and validates the filename.
+    """
+    p = Path(rel_path)
+    if '..' in p.parts or p.is_absolute():
+        raise ValueError(f"Invalid path: '{rel_path}'")
+    _validate_filename(p.name)
+    team_root = (Path(repo_root) / team_folder).resolve()
+    target = (team_root / p).resolve()
+    try:
+        target.relative_to(team_root)
+    except ValueError:
+        raise ValueError(f"Path escape attempt: '{rel_path}'")
+    return target
 
 
 # ── Repo initialisation ────────────────────────────────────────────────
@@ -108,21 +120,23 @@ def _pull_latest():
 
 # ── Read operations ────────────────────────────────────────────────────
 def list_files(team_folder: str) -> list[SqlFile]:
-    """List all .sql files in the team's folder."""
+    """List all .sql files in the team's folder, recursing into subfolders."""
     _pull_latest()
     repo_root = os.path.abspath(settings.git_repo_path)
     team_path = _team_dir(repo_root, team_folder)
     repo = _get_repo()
 
     files = []
-    for f in sorted(team_path.glob("*.sql")):
+    for f in sorted(team_path.rglob("*.sql")):
         stat = f.stat()
+        rel_to_team = f.relative_to(team_path)
+        subfolder = str(rel_to_team.parent) if str(rel_to_team.parent) != '.' else None
+
         last_commit_msg = None
         last_commit_author = None
-
         if repo:
             try:
-                commits = list(repo.iter_commits(paths=str(f.relative_to(repo_root)), max_count=1))
+                commits = list(repo.iter_commits(paths=str(f.relative_to(Path(repo_root))), max_count=1))
                 if commits:
                     last_commit_msg = commits[0].message.strip()
                     last_commit_author = commits[0].author.name
@@ -131,7 +145,8 @@ def list_files(team_folder: str) -> list[SqlFile]:
 
         files.append(SqlFile(
             name=f.name,
-            path=f"{team_folder}/{f.name}",
+            path=str(rel_to_team),   # e.g. "tables/core/users.sql"
+            subfolder=subfolder,      # e.g. "tables/core"
             size_bytes=stat.st_size,
             last_modified=datetime.fromtimestamp(stat.st_mtime, tz=timezone.utc),
             last_commit_message=last_commit_msg,
@@ -140,13 +155,13 @@ def list_files(team_folder: str) -> list[SqlFile]:
     return files
 
 
-def read_file(team_folder: str, filename: str) -> str:
-    """Read the content of a SQL file."""
+def read_file(team_folder: str, rel_path: str) -> str:
+    """Read the content of a SQL file. rel_path is relative to the team folder."""
     _pull_latest()
     repo_root = os.path.abspath(settings.git_repo_path)
-    path = _file_path(repo_root, team_folder, filename)
+    path = _resolve_team_file(repo_root, team_folder, rel_path)
     if not path.exists():
-        raise FileNotFoundError(f"File not found: {filename}")
+        raise FileNotFoundError(f"File not found: {rel_path}")
     return path.read_text(encoding="utf-8")
 
 
@@ -158,13 +173,16 @@ def save_file(
     author_name: str,
     author_email: str,
     commit_message: Optional[str] = None,
+    subfolder: Optional[str] = None,
 ) -> str:
     """
-    Write a SQL file to the team folder and commit it.
+    Write a SQL file to the team folder (optionally in a subfolder) and commit it.
     Returns the commit SHA.
     """
     repo_root = os.path.abspath(settings.git_repo_path)
-    path = _file_path(repo_root, team_folder, filename)
+    rel_path = f"{subfolder}/{filename}" if subfolder else filename
+    path = _resolve_team_file(repo_root, team_folder, rel_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
 
     if not GIT_AVAILABLE:
@@ -178,7 +196,7 @@ def save_file(
     repo.index.add([relative_path])
 
     action = "update" if repo.is_dirty(index=True) else "add"
-    msg = commit_message or f"{action}: {team_folder}/{filename} by {author_name}"
+    msg = commit_message or f"{action}: {team_folder}/{rel_path} by {author_name}"
 
     commit = repo.index.commit(
         msg,
@@ -194,23 +212,23 @@ def save_file(
 
 def delete_file(
     team_folder: str,
-    filename: str,
+    rel_path: str,
     author_name: str,
     author_email: str,
     commit_message: Optional[str] = None,
 ) -> str:
-    """Delete a SQL file and commit the removal."""
+    """Delete a SQL file and commit the removal. rel_path is relative to the team folder."""
     repo_root = os.path.abspath(settings.git_repo_path)
-    path = _file_path(repo_root, team_folder, filename)
+    path = _resolve_team_file(repo_root, team_folder, rel_path)
     if not path.exists():
-        raise FileNotFoundError(f"File not found: {filename}")
+        raise FileNotFoundError(f"File not found: {rel_path}")
 
     if GIT_AVAILABLE:
         repo = _get_repo()
         if repo:
             relative_path = str(path.relative_to(repo_root))
             repo.index.remove([relative_path])
-            msg = commit_message or f"delete: {team_folder}/{filename} by {author_name}"
+            msg = commit_message or f"delete: {team_folder}/{rel_path} by {author_name}"
             commit = repo.index.commit(
                 msg,
                 author=git.Actor(author_name, author_email),
