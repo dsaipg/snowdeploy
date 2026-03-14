@@ -64,6 +64,14 @@ services:
       AIRFLOW_PASSWORD: "admin"
       AIRFLOW_DEFAULT_DAG_ID: "sql_deploy_dag"
 
+      # ── Promotion ─────────────────────────────────
+      # Options: mock | github
+      PROMOTION_MODE: "mock"
+      MOCK_APPROVAL_DELAY_S: "30"
+      # Uncomment for real GitHub PRs:
+      # GITHUB_TOKEN: ""
+      # GITHUB_REPO: "org/repo"
+
       # ── Config ────────────────────────────────────
       TEAMS_CONFIG_PATH: "../config/teams.yaml"
 

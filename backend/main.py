@@ -11,7 +11,9 @@ from routers.auth_router import router as auth_router
 from routers.files_router import router as files_router
 from routers.deploy_router import router as deploy_router
 from routers.status_router import router as status_router
+from routers.promotion_router import router as promotion_router
 import git_service
+import promotion_service
 
 
 # ── Startup / Shutdown ─────────────────────────────────────────────────
@@ -23,6 +25,7 @@ async def lifespan(app: FastAPI):
     print(f"  airflow_mode: {settings.airflow_mode}")
     print(f"  teams loaded: {[t['id'] for t in TEAMS]}")
     git_service.init_repo()
+    promotion_service.init_promotion_service()
     yield
     print("Shutting down.")
 
@@ -51,6 +54,7 @@ app.include_router(auth_router)
 app.include_router(files_router)
 app.include_router(deploy_router)
 app.include_router(status_router)
+app.include_router(promotion_router)
 
 
 # ── Public endpoints ───────────────────────────────────────────────────

@@ -58,6 +58,15 @@ class Settings(BaseSettings):
     airflow_password: str = Field("admin")
     airflow_default_dag_id: str = Field("sql_deploy_dag")
 
+    # ── Promotion (Environment Flow) ─────────────────────────────────────
+    # promotion_mode:
+    #   "mock"   — simulates PR approvals automatically (no GitHub needed)
+    #   "github" — creates real GitHub PRs and polls for merge
+    promotion_mode: str = Field("mock", description="mock | github")
+    github_token: Optional[str] = Field(None, description="GitHub personal access token (for github mode)")
+    github_repo: Optional[str] = Field(None, description="GitHub repo e.g. 'org/repo' (for github mode)")
+    mock_approval_delay_s: int = Field(30, description="Seconds until mock auto-approves a promotion")
+
     # ── Teams config ─────────────────────────────────────────────────────
     teams_config_path: str = Field("../config/teams.yaml", description="Path to teams.yaml")
 

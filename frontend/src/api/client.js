@@ -65,4 +65,14 @@ export const statusApi = {
     api.get(`/status/${runId}${dagId ? `?dag_id=${dagId}` : ''}`),
 }
 
+// ── Promotion ──────────────────────────────────────────────────────
+export const promotionApi = {
+  getSummary: () => api.get('/promotion/summary'),
+  getRequests: () => api.get('/promotion/requests'),
+  submit: (files, fromEnv, toEnv, notes) =>
+    api.post('/promotion/submit', { files, from_env: fromEnv, to_env: toEnv, notes: notes || null }),
+  approve: (requestId) => api.post(`/promotion/approve/${requestId}`),
+  deploy: (requestId) => api.post(`/promotion/deploy/${requestId}`),
+}
+
 export default api

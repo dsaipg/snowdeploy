@@ -2,9 +2,9 @@ import config from '../config'
 
 export default function Layout({ user, onLogout, activeTab, setActiveTab, children }) {
   const tabs = [
-    { id: 'files', label: '📂 Files' },
-    { id: 'editor', label: '✏️ Editor' },
-    { id: 'deploy', label: '🚀 Deploy' },
+    { id: 'files',   label: '📂 Files' },
+    { id: 'editor',  label: '✏️ Editor' },
+    { id: 'promote', label: '🔁 Promote' },
     { id: 'history', label: '📋 History' },
   ]
 

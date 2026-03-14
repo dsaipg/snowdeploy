@@ -1,0 +1,479 @@
+/**
+ * PromotionPanel.jsx — Environment promotion flow
+ *
+ * Analysts select files and submit them for review.
+ * Once approved (auto in mock mode, via GitHub PR in github mode),
+ * a lead clicks Deploy to trigger Airflow against the target environment.
+ *
+ * Pipeline:  Dev  →  QA  →  Prod
+ */
+import { useState, useEffect, useCallback } from 'react'
+import { filesApi, promotionApi } from '../api/client'
+
+const ENV_LABELS = { dev: 'Dev', qa: 'QA', prod: 'Prod' }
+const ENV_COLORS = {
+  dev:  { bg: '#0d2137', border: '#1d4ed8', text: '#93c5fd', dot: '#3b82f6' },
+  qa:   { bg: '#1a1a0d', border: '#a16207', text: '#fde68a', dot: '#eab308' },
+  prod: { bg: '#0d2116', border: '#15803d', text: '#86efac', dot: '#22c55e' },
+}
+const STATUS_CONFIG = {
+  open:     { label: 'Awaiting approval', color: '#f59e0b', bg: '#1c1500' },
+  approved: { label: 'Approved',          color: '#22c55e', bg: '#0d1f0d' },
+  deployed: { label: 'Deployed',          color: '#64748b', bg: '#0f172a' },
+  rejected: { label: 'Rejected',          color: '#ef4444', bg: '#1c0a0a' },
+}
+
+function fmt(iso) {
+  if (!iso) return '—'
+  return new Date(iso).toLocaleString(undefined, {
+    month: 'short', day: 'numeric',
+    hour: '2-digit', minute: '2-digit',
+  })
+}
+
+export default function PromotionPanel() {
+  const [files, setFiles]             = useState([])
+  const [summary, setSummary]         = useState(null)
+  const [requests, setRequests]       = useState([])
+  const [selectedFiles, setSelectedFiles] = useState([])
+  const [targetEnv, setTargetEnv]     = useState('qa')   // qa | prod
+  const [notes, setNotes]             = useState('')
+  const [submitting, setSubmitting]   = useState(false)
+  const [actionLoading, setActionLoading] = useState({})  // requestId → 'approve'|'deploy'
+  const [error, setError]             = useState(null)
+  const [success, setSuccess]         = useState(null)
+
+  const load = useCallback(async () => {
+    try {
+      const [filesRes, summaryRes, requestsRes] = await Promise.all([
+        filesApi.listFiles(),
+        promotionApi.getSummary(),
+        promotionApi.getRequests(),
+      ])
+      setFiles(filesRes.data.files || [])
+      setSummary(summaryRes.data)
+      setRequests(requestsRes.data || [])
+    } catch (e) {
+      setError('Failed to load promotion data')
+    }
+  }, [])
+
+  useEffect(() => {
+    load()
+    const interval = setInterval(load, 15000)
+    return () => clearInterval(interval)
+  }, [load])
+
+  const toggleFile = (path) => {
+    setSelectedFiles(prev =>
+      prev.includes(path) ? prev.filter(p => p !== path) : [...prev, path]
+    )
+  }
+
+  const handleSubmit = async () => {
+    if (!selectedFiles.length) return
+    setSubmitting(true)
+    setError(null)
+    setSuccess(null)
+    try {
+      await promotionApi.submit(selectedFiles, 'dev', targetEnv, notes)
+      setSelectedFiles([])
+      setNotes('')
+      setSuccess(`Submitted ${selectedFiles.length} file(s) for ${ENV_LABELS[targetEnv]} review`)
+      await load()
+    } catch (e) {
+      setError(e.response?.data?.detail || 'Submission failed')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleApprove = async (requestId) => {
+    setActionLoading(p => ({ ...p, [requestId]: 'approve' }))
+    setError(null)
+    try {
+      await promotionApi.approve(requestId)
+      await load()
+    } catch (e) {
+      setError(e.response?.data?.detail || 'Approval failed')
+    } finally {
+      setActionLoading(p => ({ ...p, [requestId]: null }))
+    }
+  }
+
+  const handleDeploy = async (requestId) => {
+    setActionLoading(p => ({ ...p, [requestId]: 'deploy' }))
+    setError(null)
+    try {
+      await promotionApi.deploy(requestId)
+      setSuccess('Deployment triggered — check the History tab for status')
+      await load()
+    } catch (e) {
+      setError(e.response?.data?.detail || 'Deploy failed')
+    } finally {
+      setActionLoading(p => ({ ...p, [requestId]: null }))
+    }
+  }
+
+  const activeRequests = requests.filter(r => r.status !== 'deployed' && r.status !== 'rejected')
+  const recentDeployed = requests.filter(r => r.status === 'deployed').slice(-5).reverse()
+
+  return (
+    <div style={s.page}>
+
+      {/* ── Pipeline visualization ──────────────────────────────── */}
+      <div style={s.pipeline}>
+        {['dev', 'qa', 'prod'].map((env, i) => {
+          const c = ENV_COLORS[env]
+          const count = env === 'dev'
+            ? files.length
+            : env === 'qa'
+            ? (summary?.qa_deployed_count ?? '—')
+            : (summary?.prod_deployed_count ?? '—')
+          return (
+            <div key={env} style={s.pipelineRow}>
+              {i > 0 && <div style={s.arrow}>→</div>}
+              <div style={{ ...s.envBox, background: c.bg, borderColor: c.border }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ ...s.envDot, background: c.dot }} />
+                  <span style={{ ...s.envLabel, color: c.text }}>{ENV_LABELS[env]}</span>
+                </div>
+                <span style={{ ...s.envCount, color: c.text }}>{count} files</span>
+                <span style={{ ...s.envDesc, color: c.text }}>
+                  {env === 'dev'  ? 'Write & save SQL' :
+                   env === 'qa'   ? 'Needs lead approval' :
+                                    'Needs senior approval'}
+                </span>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      <div style={s.body}>
+
+        {/* ── Left: Submit form ──────────────────────────────────── */}
+        <div style={s.submitPanel}>
+          <div style={s.sectionHeader}>Submit for Review</div>
+
+          {/* Target environment selector */}
+          <div style={s.field}>
+            <label style={s.label}>Promote to</label>
+            <div style={s.envToggle}>
+              {['qa', 'prod'].map(env => (
+                <button
+                  key={env}
+                  style={{ ...s.envToggleBtn, ...(targetEnv === env ? s.envToggleBtnActive : {}) }}
+                  onClick={() => setTargetEnv(env)}
+                >
+                  {ENV_LABELS[env]}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* File selector */}
+          <div style={s.field}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+              <label style={s.label}>Select files</label>
+              <div style={{ display: 'flex', gap: 6 }}>
+                <button style={s.bulkBtn} onClick={() => setSelectedFiles(files.map(f => f.path))}>All</button>
+                <button style={s.bulkBtn} onClick={() => setSelectedFiles([])}>None</button>
+              </div>
+            </div>
+            <div style={s.fileList}>
+              {files.length === 0 && (
+                <div style={s.emptyFiles}>No files in your team folder yet</div>
+              )}
+              {files.map(f => (
+                <label key={f.path} style={s.fileRow}>
+                  <input
+                    type="checkbox"
+                    checked={selectedFiles.includes(f.path)}
+                    onChange={() => toggleFile(f.path)}
+                    style={{ accentColor: '#3b82f6' }}
+                  />
+                  <span style={s.fileName}>{f.path}</span>
+                  {f.subfolder && (
+                    <span style={s.folderBadge}>{f.subfolder}</span>
+                  )}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Notes */}
+          <div style={s.field}>
+            <label style={s.label}>Notes (optional)</label>
+            <textarea
+              value={notes}
+              onChange={e => setNotes(e.target.value)}
+              placeholder="e.g. Adds user segment column for Q2 report"
+              style={s.textarea}
+              rows={2}
+            />
+          </div>
+
+          {error && <div style={s.errorBanner}>{error}</div>}
+          {success && <div style={s.successBanner}>{success}</div>}
+
+          <button
+            style={{ ...s.submitBtn, opacity: (!selectedFiles.length || submitting) ? 0.5 : 1 }}
+            disabled={!selectedFiles.length || submitting}
+            onClick={handleSubmit}
+          >
+            {submitting ? 'Submitting…' : `Submit ${selectedFiles.length || ''} file(s) to ${ENV_LABELS[targetEnv]}`}
+          </button>
+        </div>
+
+        {/* ── Right: Active promotions ───────────────────────────── */}
+        <div style={s.reviewsPanel}>
+          <div style={s.sectionHeader}>
+            Active Reviews
+            {activeRequests.length > 0 && (
+              <span style={s.badge}>{activeRequests.length}</span>
+            )}
+          </div>
+
+          {activeRequests.length === 0 && (
+            <div style={s.emptyState}>
+              No pending reviews.
+              <br />Select files and submit to start a promotion.
+            </div>
+          )}
+
+          {activeRequests.map(req => {
+            const sc = STATUS_CONFIG[req.status] || STATUS_CONFIG.open
+            const loading = actionLoading[req.id]
+            return (
+              <div key={req.id} style={{ ...s.reqCard, background: sc.bg, borderColor: sc.color + '44' }}>
+                <div style={s.reqHeader}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ ...s.statusDot, background: sc.color }} />
+                    <span style={{ ...s.statusLabel, color: sc.color }}>{sc.label}</span>
+                    <span style={s.envPill}>
+                      {ENV_LABELS[req.from_env]} → {ENV_LABELS[req.to_env]}
+                    </span>
+                  </div>
+                  <span style={s.reqTime}>{fmt(req.submitted_at)}</span>
+                </div>
+
+                <div style={s.reqMeta}>
+                  Submitted by <strong style={{ color: '#e2e8f0' }}>{req.submitted_by}</strong>
+                </div>
+
+                <div style={s.fileChips}>
+                  {req.files.map(f => (
+                    <span key={f} style={s.chip}>{f}</span>
+                  ))}
+                </div>
+
+                {req.notes && (
+                  <div style={s.reqNotes}>{req.notes}</div>
+                )}
+
+                {req.pr_url && (
+                  <a href={req.pr_url} target="_blank" rel="noopener noreferrer" style={s.prLink}>
+                    View GitHub PR →
+                  </a>
+                )}
+
+                <div style={s.reqActions}>
+                  {req.status === 'open' && (
+                    <button
+                      style={s.approveBtn}
+                      disabled={!!loading}
+                      onClick={() => handleApprove(req.id)}
+                    >
+                      {loading === 'approve' ? 'Approving…' : 'Approve'}
+                    </button>
+                  )}
+                  {req.status === 'approved' && (
+                    <button
+                      style={s.deployBtn}
+                      disabled={!!loading}
+                      onClick={() => handleDeploy(req.id)}
+                    >
+                      {loading === 'deploy' ? 'Deploying…' : `Deploy to ${ENV_LABELS[req.to_env]}`}
+                    </button>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+
+          {/* Recent deployed */}
+          {recentDeployed.length > 0 && (
+            <>
+              <div style={{ ...s.sectionHeader, marginTop: 24 }}>Recently Deployed</div>
+              {recentDeployed.map(req => (
+                <div key={req.id} style={s.deployedRow}>
+                  <span style={s.deployedEnv}>{ENV_LABELS[req.from_env]} → {ENV_LABELS[req.to_env]}</span>
+                  <span style={s.deployedFiles}>{req.files.join(', ')}</span>
+                  <span style={s.deployedTime}>{fmt(req.deployed_at)}</span>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const s = {
+  page: { display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, gap: 16 },
+  pipeline: {
+    display: 'flex', alignItems: 'center', gap: 0,
+    background: '#161b27', border: '1px solid #1e293b',
+    borderRadius: 10, padding: '16px 24px', flexShrink: 0,
+  },
+  pipelineRow: { display: 'flex', alignItems: 'center' },
+  arrow: { fontSize: 20, color: '#334155', margin: '0 12px' },
+  envBox: {
+    display: 'flex', flexDirection: 'column', gap: 4,
+    border: '1px solid', borderRadius: 8,
+    padding: '12px 20px', minWidth: 150,
+  },
+  envDot: { width: 8, height: 8, borderRadius: '50%', flexShrink: 0 },
+  envLabel: { fontSize: 14, fontWeight: 700 },
+  envCount: { fontSize: 22, fontWeight: 700 },
+  envDesc: { fontSize: 11, opacity: 0.7 },
+  body: { display: 'flex', gap: 16, flex: 1, minHeight: 0 },
+  submitPanel: {
+    display: 'flex', flexDirection: 'column', gap: 12,
+    background: '#161b27', border: '1px solid #1e293b',
+    borderRadius: 10, padding: 20, width: 340, flexShrink: 0,
+    overflowY: 'auto',
+  },
+  reviewsPanel: {
+    display: 'flex', flexDirection: 'column', gap: 10,
+    background: '#161b27', border: '1px solid #1e293b',
+    borderRadius: 10, padding: 20, flex: 1, overflowY: 'auto',
+  },
+  sectionHeader: {
+    fontSize: 12, fontWeight: 700, color: '#64748b',
+    textTransform: 'uppercase', letterSpacing: '0.08em',
+    display: 'flex', alignItems: 'center', gap: 8,
+  },
+  badge: {
+    background: '#1e293b', color: '#94a3b8',
+    borderRadius: 10, padding: '1px 7px', fontSize: 11,
+  },
+  field: { display: 'flex', flexDirection: 'column', gap: 4 },
+  label: { fontSize: 12, color: '#64748b', fontWeight: 500 },
+  envToggle: { display: 'flex', gap: 6 },
+  envToggleBtn: {
+    flex: 1, padding: '7px 0', border: '1px solid #1e293b',
+    borderRadius: 6, background: 'transparent',
+    color: '#64748b', fontSize: 13, cursor: 'pointer',
+  },
+  envToggleBtnActive: {
+    background: '#1e3a5f', borderColor: '#2563eb', color: '#93c5fd', fontWeight: 600,
+  },
+  fileList: {
+    border: '1px solid #1e293b', borderRadius: 6,
+    maxHeight: 220, overflowY: 'auto',
+    background: '#0f1117',
+  },
+  emptyFiles: { color: '#475569', fontSize: 12, padding: '12px 16px', textAlign: 'center' },
+  fileRow: {
+    display: 'flex', alignItems: 'center', gap: 8,
+    padding: '7px 12px', cursor: 'pointer',
+    borderBottom: '1px solid #1e293b',
+    color: '#94a3b8', fontSize: 12,
+  },
+  fileName: { flex: 1, fontFamily: 'monospace' },
+  folderBadge: {
+    fontSize: 10, color: '#475569',
+    background: '#1e293b', borderRadius: 4,
+    padding: '1px 5px',
+  },
+  bulkBtn: {
+    background: 'transparent', border: '1px solid #1e293b',
+    borderRadius: 4, padding: '2px 8px',
+    color: '#64748b', fontSize: 11, cursor: 'pointer',
+  },
+  textarea: {
+    background: '#0f1117', border: '1px solid #1e293b',
+    borderRadius: 6, padding: '8px 12px',
+    color: '#e2e8f0', fontSize: 13, resize: 'none',
+    fontFamily: 'inherit', outline: 'none',
+  },
+  errorBanner: {
+    background: '#1c0a0a', border: '1px solid #dc2626',
+    borderRadius: 6, padding: '8px 12px',
+    color: '#fca5a5', fontSize: 12,
+  },
+  successBanner: {
+    background: '#0d1f0d', border: '1px solid #16a34a',
+    borderRadius: 6, padding: '8px 12px',
+    color: '#86efac', fontSize: 12,
+  },
+  submitBtn: {
+    background: '#2563eb', color: '#fff',
+    border: 'none', borderRadius: 7,
+    padding: '10px 0', fontSize: 13, fontWeight: 600,
+    cursor: 'pointer', transition: 'opacity 0.15s',
+  },
+  emptyState: {
+    color: '#475569', fontSize: 13, textAlign: 'center',
+    padding: '32px 0', lineHeight: 1.6,
+  },
+  reqCard: {
+    border: '1px solid', borderRadius: 8,
+    padding: '14px 16px',
+    display: 'flex', flexDirection: 'column', gap: 8,
+  },
+  reqHeader: { display: 'flex', alignItems: 'center', justifyContent: 'space-between' },
+  statusDot: { width: 8, height: 8, borderRadius: '50%', flexShrink: 0 },
+  statusLabel: { fontSize: 12, fontWeight: 600 },
+  envPill: {
+    fontSize: 11, color: '#64748b',
+    background: '#1e293b', borderRadius: 10,
+    padding: '1px 8px',
+  },
+  reqTime: { fontSize: 11, color: '#475569' },
+  reqMeta: { fontSize: 12, color: '#64748b' },
+  fileChips: { display: 'flex', flexWrap: 'wrap', gap: 4 },
+  chip: {
+    fontSize: 11, fontFamily: 'monospace',
+    color: '#93c5fd', background: '#0d2137',
+    border: '1px solid #1d4ed844',
+    borderRadius: 4, padding: '2px 7px',
+  },
+  reqNotes: {
+    fontSize: 12, color: '#94a3b8',
+    fontStyle: 'italic',
+  },
+  prLink: {
+    fontSize: 12, color: '#60a5fa',
+    textDecoration: 'none',
+  },
+  reqActions: { display: 'flex', gap: 8, marginTop: 4 },
+  approveBtn: {
+    background: '#15803d', color: '#dcfce7',
+    border: 'none', borderRadius: 6,
+    padding: '6px 14px', fontSize: 12, fontWeight: 600,
+    cursor: 'pointer',
+  },
+  deployBtn: {
+    background: '#1d4ed8', color: '#dbeafe',
+    border: 'none', borderRadius: 6,
+    padding: '6px 14px', fontSize: 12, fontWeight: 600,
+    cursor: 'pointer',
+  },
+  deployedRow: {
+    display: 'flex', alignItems: 'center', gap: 10,
+    padding: '7px 10px',
+    background: '#0f172a', borderRadius: 6,
+    fontSize: 12,
+  },
+  deployedEnv: {
+    color: '#22c55e', fontWeight: 600,
+    background: '#0d2116', borderRadius: 4,
+    padding: '2px 7px', flexShrink: 0,
+  },
+  deployedFiles: { color: '#64748b', fontFamily: 'monospace', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
+  deployedTime: { color: '#334155', flexShrink: 0 },
+}

@@ -123,6 +123,45 @@ class DeployHistoryResponse(BaseModel):
     total: int
 
 
+# ── Promotion ─────────────────────────────────────────────────────────
+class PromotionStatus(str, Enum):
+    open = "open"
+    approved = "approved"
+    deployed = "deployed"
+    rejected = "rejected"
+
+
+class PromotionRequest(BaseModel):
+    id: str
+    team_id: str
+    from_env: str
+    to_env: str
+    files: List[str]
+    status: PromotionStatus
+    submitted_by: str
+    submitted_at: datetime
+    reviewed_by: Optional[str] = None
+    reviewed_at: Optional[datetime] = None
+    deployed_at: Optional[datetime] = None
+    notes: Optional[str] = None
+    pr_url: Optional[str] = None
+    pr_number: Optional[int] = None
+
+
+class SubmitPromotionRequest(BaseModel):
+    files: List[str]
+    from_env: str = Field("dev", description="Source environment: dev | qa")
+    to_env: str = Field("qa", description="Target environment: qa | prod")
+    notes: Optional[str] = None
+
+
+class PromotionSummary(BaseModel):
+    pending_qa: List[PromotionRequest]
+    pending_prod: List[PromotionRequest]
+    qa_deployed_count: int
+    prod_deployed_count: int
+
+
 # ── Teams / Config ────────────────────────────────────────────────────
 class TeamInfo(BaseModel):
     id: str

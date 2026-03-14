@@ -4,8 +4,8 @@ import Login from './components/Login'
 import Layout from './components/Layout'
 import FileBrowser from './components/FileBrowser'
 import SqlEditor from './components/SqlEditor'
-import DeployPanel from './components/DeployPanel'
 import HistoryPanel from './components/HistoryPanel'
+import PromotionPanel from './components/PromotionPanel'
 
 export default function App() {
   const [user, setUser] = useState(null)
@@ -78,11 +78,11 @@ export default function App() {
           }}
         />
       )}
-      {activeTab === 'deploy' && (
-        <DeployPanel />
-      )}
       {activeTab === 'history' && (
         <HistoryPanel />
+      )}
+      {activeTab === 'promote' && (
+        <PromotionPanel />
       )}
     </Layout>
   )
