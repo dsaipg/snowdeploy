@@ -91,5 +91,5 @@ const styles = {
     transition: 'all 0.15s',
   },
   navTabActive: { color: '#e2e8f0', borderBottomColor: '#2563eb' },
-  content: { flex: 1, overflow: 'auto', padding: '24px' },
+  content: { flex: 1, minHeight: 0, overflow: 'hidden', padding: '24px', display: 'flex', flexDirection: 'column' },
 }

@@ -1,8 +1,71 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import Editor from '@monaco-editor/react'
 import { filesApi } from '../api/client'
 
 const SUBFOLDERS = ['tables/core', 'tables/staging', 'views', 'procedures', 'migrations', 'scripts']
+
+// ── SQL linting rules (only enforced in migrations/) ──────────────────────
+const LINT_RULES = [
+  {
+    id: 'add-column-no-if-not-exists',
+    severity: 'error',
+    pattern: /ALTER\s+TABLE\s+\S+\s+ADD\s+COLUMN(?!\s+IF\s+NOT\s+EXISTS)/gi,
+    message: 'ADD COLUMN without IF NOT EXISTS — will fail if column already exists.',
+    fix: 'Use ADD COLUMN IF NOT EXISTS',
+  },
+  {
+    id: 'drop-column',
+    severity: 'warning',
+    pattern: /ALTER\s+TABLE\s+\S+\s+DROP\s+COLUMN/gi,
+    message: 'DROP COLUMN is destructive and irreversible.',
+    fix: 'Ensure this is intentional and reviewed before deploying to prod',
+  },
+  {
+    id: 'rename-column',
+    severity: 'warning',
+    pattern: /ALTER\s+TABLE\s+\S+\s+RENAME\s+COLUMN/gi,
+    message: 'RENAME COLUMN may break views or procedures referencing the old name.',
+    fix: 'Check all dependent views and procedures first',
+  },
+  {
+    id: 'create-table-no-if-not-exists',
+    severity: 'warning',
+    pattern: /CREATE\s+TABLE(?!\s+IF\s+NOT\s+EXISTS)/gi,
+    message: 'CREATE TABLE without IF NOT EXISTS — belongs in tables/ not migrations/.',
+    fix: 'Move to tables/core or tables/staging, or add IF NOT EXISTS',
+  },
+  {
+    id: 'truncate',
+    severity: 'error',
+    pattern: /\bTRUNCATE\b/gi,
+    message: 'TRUNCATE deletes all rows — should never be in a migration.',
+    fix: 'Remove this statement',
+  },
+  {
+    id: 'drop-table',
+    severity: 'error',
+    pattern: /\bDROP\s+TABLE\b/gi,
+    message: 'DROP TABLE is destructive — requires explicit manual review.',
+    fix: 'Do not deploy via portal — run manually with approval',
+  },
+]
+
+function lintSql(content) {
+  // Strip comment lines before linting
+  const stripped = content
+    .split('\n')
+    .filter(line => !line.trim().startsWith('--'))
+    .join('\n')
+
+  const issues = []
+  for (const rule of LINT_RULES) {
+    rule.pattern.lastIndex = 0
+    if (rule.pattern.test(stripped)) {
+      issues.push(rule)
+    }
+  }
+  return issues
+}
 
 function parseFilePath(path) {
   if (!path) return { subfolder: '', filename: '' }
@@ -18,9 +81,13 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
   const [commitMessage, setCommitMessage] = useState('')
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [status, setStatus] = useState(null) // {type: 'success'|'error', msg}
+  const [status, setStatus] = useState(null)
   const [showTemplates, setShowTemplates] = useState(false)
+  const [lintDismissed, setLintDismissed] = useState(false)
   const editorRef = useRef(null)
+
+  // Re-show lint panel whenever subfolder or content changes
+  useEffect(() => { setLintDismissed(false) }, [subfolder, content])
 
   // Load a file when initialFile changes
   useEffect(() => {
@@ -42,6 +109,13 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
       .catch(() => setStatus({ type: 'error', msg: `Failed to load ${initialFile}` }))
       .finally(() => setLoading(false))
   }, [initialFile])
+
+  const lintIssues = useMemo(() => {
+    if (subfolder !== 'migrations') return []
+    return lintSql(content)
+  }, [subfolder, content])
+
+  const hasErrors = lintIssues.some(i => i.severity === 'error')
 
   const handleSave = async () => {
     const name = filename.trim()
@@ -94,7 +168,6 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
     setCommitMessage('')
   }
 
-  // Auto-generate filename suggestion
   const suggestFilename = () => {
     if (filename) return
     const today = new Date().toISOString().slice(0, 10).replace(/-/g, '')
@@ -132,19 +205,13 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
           <button style={styles.toolBtn} onClick={handleNew}>New</button>
 
           <div style={{ position: 'relative' }}>
-            <button
-              style={styles.toolBtn}
-              onClick={() => setShowTemplates(v => !v)}
-            >Templates ▾</button>
-
+            <button style={styles.toolBtn} onClick={() => setShowTemplates(v => !v)}>
+              Templates ▾
+            </button>
             {showTemplates && templates?.length > 0 && (
               <div style={styles.dropdown}>
                 {templates.map(tmpl => (
-                  <button
-                    key={tmpl.name}
-                    style={styles.dropdownItem}
-                    onClick={() => insertTemplate(tmpl)}
-                  >
+                  <button key={tmpl.name} style={styles.dropdownItem} onClick={() => insertTemplate(tmpl)}>
                     <span style={{ fontWeight: 600, color: '#e2e8f0', fontSize: 13 }}>{tmpl.name}</span>
                     <span style={{ color: '#64748b', fontSize: 11 }}>{tmpl.description}</span>
                   </button>
@@ -154,7 +221,7 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
           </div>
 
           <input
-            style={{ ...styles.filenameInput, maxWidth: 240, fontSize: 12, color: '#64748b' }}
+            style={{ ...styles.filenameInput, maxWidth: 240, fontSize: 12, color: '#64748b', background: '#161b27', border: '1px solid #1e293b', borderRadius: 6, padding: '6px 10px' }}
             value={commitMessage}
             onChange={e => setCommitMessage(e.target.value)}
             placeholder="Commit message (optional)"
@@ -172,8 +239,43 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
 
       {/* Status bar */}
       {status && (
-        <div style={{ ...styles.statusBar, background: status.type === 'success' ? '#0d2d1e' : '#1a0e0e', borderColor: status.type === 'success' ? '#16a34a' : '#ef4444', color: status.type === 'success' ? '#86efac' : '#fca5a5' }}>
+        <div style={{
+          ...styles.statusBar,
+          background: status.type === 'success' ? '#0d2d1e' : '#1a0e0e',
+          borderColor: status.type === 'success' ? '#16a34a' : '#ef4444',
+          color: status.type === 'success' ? '#86efac' : '#fca5a5',
+        }}>
           {status.msg}
+        </div>
+      )}
+
+      {/* ── Lint panel (migrations/ only) ── */}
+      {lintIssues.length > 0 && !lintDismissed && (
+        <div style={{ ...styles.lintPanel, borderColor: hasErrors ? '#ef4444' : '#f59e0b' }}>
+          <div style={styles.lintHeader}>
+            <span style={{ ...styles.lintTitle, color: hasErrors ? '#fca5a5' : '#fcd34d' }}>
+              {hasErrors ? '🚫' : '⚠️'} Migration lint — {lintIssues.length} issue{lintIssues.length > 1 ? 's' : ''} found
+            </span>
+            <button style={styles.lintDismiss} onClick={() => setLintDismissed(true)}>✕</button>
+          </div>
+          <div style={styles.lintList}>
+            {lintIssues.map(issue => (
+              <div key={issue.id} style={styles.lintItem}>
+                <span style={{
+                  ...styles.lintBadge,
+                  background: issue.severity === 'error' ? '#450a0a' : '#1c1408',
+                  color: issue.severity === 'error' ? '#fca5a5' : '#fcd34d',
+                  borderColor: issue.severity === 'error' ? '#7f1d1d' : '#92400e',
+                }}>
+                  {issue.severity}
+                </span>
+                <div style={styles.lintText}>
+                  <span style={{ color: '#e2e8f0', fontSize: 13 }}>{issue.message}</span>
+                  <span style={{ color: '#64748b', fontSize: 11 }}>→ {issue.fix}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
@@ -214,7 +316,7 @@ const styles = {
   wrap: { display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 },
   toolbar: {
     display: 'flex', alignItems: 'center', gap: 12,
-    padding: '8px 0', marginBottom: 8, flexWrap: 'wrap',
+    padding: '8px 0', marginBottom: 8, flexWrap: 'wrap', flexShrink: 0,
   },
   filenameWrap: {
     display: 'flex', alignItems: 'center', gap: 4,
@@ -229,31 +331,58 @@ const styles = {
   folderHint: { fontSize: 12, color: '#475569', whiteSpace: 'nowrap' },
   filenameInput: {
     background: 'transparent', border: 'none', outline: 'none',
-    color: '#e2e8f0', fontSize: 13, fontFamily: 'monospace', flex: 1,
-    minWidth: 80,
+    color: '#e2e8f0', fontSize: 13, fontFamily: 'monospace', flex: 1, minWidth: 80,
   },
   toolbarActions: { display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' },
   toolBtn: {
     background: '#1e293b', border: '1px solid #334155',
     borderRadius: 6, padding: '6px 12px',
-    color: '#94a3b8', fontSize: 12, cursor: 'pointer',
-    whiteSpace: 'nowrap',
+    color: '#94a3b8', fontSize: 12, cursor: 'pointer', whiteSpace: 'nowrap',
   },
   saveBtn: {
-    background: '#1d4ed8', border: 'none',
-    borderRadius: 6, padding: '7px 16px',
-    color: '#fff', fontSize: 13, fontWeight: 600, cursor: 'pointer',
-    whiteSpace: 'nowrap',
+    background: '#1d4ed8', border: 'none', borderRadius: 6, padding: '7px 16px',
+    color: '#fff', fontSize: 13, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap',
   },
   statusBar: {
-    padding: '8px 14px', borderRadius: 7,
-    border: '1px solid', fontSize: 13, marginBottom: 8,
+    padding: '8px 14px', borderRadius: 7, border: '1px solid',
+    fontSize: 13, marginBottom: 8, flexShrink: 0,
   },
+
+  // Lint panel
+  lintPanel: {
+    border: '1px solid', borderRadius: 8,
+    marginBottom: 8, overflow: 'hidden', flexShrink: 0,
+    background: '#0f1117',
+  },
+  lintHeader: {
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+    padding: '8px 14px', borderBottom: '1px solid #1e293b',
+  },
+  lintTitle: { fontSize: 13, fontWeight: 600 },
+  lintDismiss: {
+    background: 'none', border: 'none', color: '#475569',
+    cursor: 'pointer', fontSize: 14, padding: '0 4px',
+  },
+  lintList: { display: 'flex', flexDirection: 'column', gap: 0 },
+  lintItem: {
+    display: 'flex', alignItems: 'flex-start', gap: 10,
+    padding: '8px 14px', borderBottom: '1px solid #1e293b',
+  },
+  lintBadge: {
+    fontSize: 10, fontWeight: 700, border: '1px solid',
+    borderRadius: 4, padding: '2px 6px', flexShrink: 0,
+    textTransform: 'uppercase', letterSpacing: '0.5px', marginTop: 1,
+  },
+  lintText: { display: 'flex', flexDirection: 'column', gap: 2 },
+
   editorWrap: {
     flex: 1, minHeight: 0, borderRadius: 10, overflow: 'hidden',
     border: '1px solid #1e293b',
   },
-  editorLoading: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#475569' },
+  editorLoading: {
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    height: '100%', color: '#475569',
+  },
   dropdown: {
     position: 'absolute', top: '110%', left: 0, zIndex: 50,
     background: '#161b27', border: '1px solid #334155',
@@ -262,9 +391,7 @@ const styles = {
     boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
   },
   dropdownItem: {
-    background: 'none', border: 'none',
-    borderRadius: 6, padding: '8px 12px',
-    cursor: 'pointer', textAlign: 'left',
-    display: 'flex', flexDirection: 'column', gap: 2,
+    background: 'none', border: 'none', borderRadius: 6, padding: '8px 12px',
+    cursor: 'pointer', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: 2,
   },
 }

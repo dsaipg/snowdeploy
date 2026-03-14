@@ -76,6 +76,8 @@ services:
     container_name: sql-portal-frontend
     ports:
       - "5173:5173"
+    volumes:
+      - ./frontend/src:/app/src         # live reload for source changes
     environment:
       VITE_API_URL: "http://localhost:8000"
       VITE_APP_NAME: "SQL Deployment Portal"

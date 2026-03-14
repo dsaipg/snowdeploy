@@ -61,10 +61,12 @@ export default function App() {
       setActiveTab={setActiveTab}
     >
       {activeTab === 'files' && (
-        <FileBrowser
-          onOpenFile={handleOpenFile}
-          onNewFile={handleNewFile}
-        />
+        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
+          <FileBrowser
+            onOpenFile={handleOpenFile}
+            onNewFile={handleNewFile}
+          />
+        </div>
       )}
       {activeTab === 'editor' && (
         <SqlEditor
