@@ -1,0 +1,137 @@
+# SQL Deployment Portal — Feature Tracker
+
+## Vision
+Self-service portal where analysts write SQL, submit for review, and promote through
+Dev → QA → Prod without thinking about Git or branches. Airflow handles execution
+against Snowflake. Git is the audit trail — invisible to analysts.
+
+---
+
+## Built
+
+### Core (Initial)
+- [x] FastAPI backend + React/Vite frontend in Docker Compose
+- [x] Mock auth (any username/password, team chosen at login)
+- [x] JWT session management (8hr expiry, localStorage)
+- [x] Team isolation — each team has its own folder in the git repo
+- [x] File browser with folder tree (tables/core, tables/staging, views, procedures, migrations, scripts)
+- [x] Monaco SQL editor with subfolder selector and file templates
+- [x] SQL linter in migrations/ folder (flags non-idempotent ALTERs, DROP TABLE, TRUNCATE)
+- [x] Git-backed file save/delete (commit per save, author tracked)
+- [x] Mock Airflow client (simulates DAG runs with task-level progress)
+- [x] Deployment history panel
+
+### Promotion Flow (Mar 2026)
+- [x] Dev → QA → Prod pipeline with approval gates
+- [x] Analyst selects files + target env + notes → submits for review
+- [x] Mock mode: auto-approves after 30s, or manual Approve button
+- [x] GitHub mode: creates real PRs, polls for merge (set PROMOTION_MODE=github)
+- [x] Once approved: Deploy button triggers Airflow for target environment
+- [x] Promotion state persisted to `.portal/promotions.json` in repo dir
+- [x] Removed raw Deploy tab — Promote is the only deployment path
+
+---
+
+## Planned (Priority Order)
+
+### 2. SSO / OAuth Login
+- [ ] Wire backend auth_mode=oauth to a real IdP (Okta / Azure AD / Google)
+- [ ] Analysts log in with existing company accounts — no new passwords
+- [ ] Role from SSO groups: analyst vs lead (lead can approve, analyst cannot)
+- [ ] Backend scaffold already exists in `auth.py`
+- **Needs:** IdP details (which provider? client ID, tenant ID)
+
+### 3. Audit Log
+- [ ] Persistent log of: who submitted, who approved, who deployed, to which env, when
+- [ ] UI panel (simple table, filterable by date/user/env)
+- [ ] Export to CSV
+- **Note:** data already exists in promotion_service, needs proper storage + UI
+
+### 4. Deploy Status in Promote Tab
+- [ ] After clicking Deploy, show Airflow run status inline (no need to switch to History)
+- [ ] Green checkmark on success, red failure with error message
+- [ ] Poll existing `/status/{run_id}` endpoint from PromotionPanel
+- **Effort:** small
+
+### 5. Slack Notifications
+- [ ] "Alice submitted users.sql for QA review" → pings team lead channel
+- [ ] "QA deploy succeeded for team-alpha" → notify analyst
+- [ ] Needs: Slack webhook URL per team (add to teams.yaml)
+- **Effort:** small
+
+### 6. Environment Diff View
+- [ ] "These 3 files are in QA but not yet in Prod" — show pending changes per stage
+- [ ] Helps leads know exactly what's waiting for sign-off
+- **Effort:** medium
+
+### 7. Rollback
+- [ ] One-click revert of last deploy per environment
+- [ ] Reverts the git commit and re-runs the previous version via Airflow
+- **Effort:** medium
+
+### 8. Scheduled Jobs (Airflow stub → real)
+- [ ] "Schedule" toggle on promotion — set cron expression (daily, weekly, hourly, custom)
+- [ ] Save schedule metadata to `snowdeploy.yaml` alongside the SQL
+- [ ] When Airflow is wired up: reads yaml and creates/updates DAG automatically
+- [ ] Show scheduled jobs list with next-run time
+- **Effort:** medium (stub is small; real Airflow wiring is larger)
+
+### 9. Schema Browser (optional, later)
+- [ ] Read-only Snowflake connection to browse existing tables/columns
+- [ ] Autocomplete in SQL editor (table names, column names)
+- [ ] Decision: NOT adding this until analysts ask for it
+  - Adds credential management + Snowflake cost (warehouse spin-up per query)
+
+---
+
+## Architecture Notes
+
+| Layer | Tech | Mode |
+|---|---|---|
+| Frontend | React 18 + Vite + Monaco Editor | http://localhost:5173 |
+| Backend | FastAPI (Python) | http://localhost:8000 |
+| Auth | mock / jwt / oauth (set AUTH_MODE) | currently: mock |
+| Git | local / remote (set GIT_MODE) | currently: local |
+| Airflow | mock / live (set AIRFLOW_MODE) | currently: mock |
+| Promotion | mock / github (set PROMOTION_MODE) | currently: mock |
+| Storage | git repo volume + .portal/promotions.json | |
+
+## Key Files
+```
+backend/
+  config.py              — all settings (env vars)
+  models.py              — Pydantic models
+  git_service.py         — git read/write ops
+  airflow_client.py      — Airflow mock + live
+  promotion_service.py   — promotion state machine
+  routers/
+    auth_router.py
+    files_router.py
+    deploy_router.py
+    promotion_router.py
+    status_router.py
+
+frontend/src/
+  App.jsx                — tab routing
+  components/
+    Layout.jsx           — top bar + nav tabs
+    FileBrowser.jsx      — folder tree + file list
+    SqlEditor.jsx        — Monaco editor + linter
+    PromotionPanel.jsx   — Dev→QA→Prod pipeline UI
+    HistoryPanel.jsx     — deployment history
+  api/client.js          — Axios API client
+
+config/
+  teams.yaml             — team definitions + SQL templates
+```
+
+## Folder Convention (in git repo)
+```
+{team-folder}/
+  tables/core/       — CREATE TABLE (idempotent, IF NOT EXISTS)
+  tables/staging/    — staging/landing tables
+  views/             — CREATE OR REPLACE VIEW
+  procedures/        — CREATE OR REPLACE PROCEDURE
+  migrations/        — numbered ALTERs (001_, 002_...) — linter enforced
+  scripts/           — one-off/dev scripts, never auto-deployed
+```
