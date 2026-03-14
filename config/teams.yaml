@@ -1,0 +1,87 @@
+# ─────────────────────────────────────────────
+# teams.yaml  —  Team configuration
+# Add / remove teams here. No code changes needed.
+# ─────────────────────────────────────────────
+
+teams:
+  - id: team_a
+    name: "Team Alpha"
+    folder: "team-a"                     # subfolder in the git repo
+    snowflake_schema: "TEAM_A_SCHEMA"    # Snowflake schema this team owns
+    snowflake_database: "ANALYTICS_DB"
+    snowflake_role: "TEAM_A_ROLE"
+    airflow_dag_id: "sql_deploy_dag"     # can override per team if needed
+    members:                             # SSO group names or user emails
+      - "team-a-developers"              # SSO group (preferred)
+      - "alice@company.com"             # or individual emails
+      - "bob@company.com"
+
+  - id: team_b
+    name: "Team Beta"
+    folder: "team-b"
+    snowflake_schema: "TEAM_B_SCHEMA"
+    snowflake_database: "ANALYTICS_DB"
+    snowflake_role: "TEAM_B_ROLE"
+    airflow_dag_id: "sql_deploy_dag"
+    members:
+      - "team-b-developers"
+      - "carol@company.com"
+
+  - id: team_c
+    name: "Team Gamma"
+    folder: "team-c"
+    snowflake_schema: "TEAM_C_SCHEMA"
+    snowflake_database: "ANALYTICS_DB"
+    snowflake_role: "TEAM_C_ROLE"
+    airflow_dag_id: "sql_deploy_dag"
+    members:
+      - "team-c-developers"
+      - "dave@company.com"
+
+# ─────────────────────────────────────────────
+# SQL Templates — shown in the editor dropdown
+# ─────────────────────────────────────────────
+sql_templates:
+  - name: "Create Table"
+    description: "Standard CREATE TABLE statement"
+    content: |
+      CREATE TABLE IF NOT EXISTS {schema}.{table_name} (
+          id         NUMBER AUTOINCREMENT PRIMARY KEY,
+          created_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+          updated_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP()
+      );
+
+  - name: "Add Column"
+    description: "ALTER TABLE to add a column"
+    content: |
+      ALTER TABLE {schema}.{table_name}
+          ADD COLUMN {column_name} {data_type};
+
+  - name: "Create View"
+    description: "Standard CREATE OR REPLACE VIEW"
+    content: |
+      CREATE OR REPLACE VIEW {schema}.{view_name} AS
+      SELECT
+          *
+      FROM {schema}.{source_table}
+      WHERE 1=1;
+
+  - name: "Insert Data"
+    description: "INSERT INTO statement"
+    content: |
+      INSERT INTO {schema}.{table_name} (
+          column1,
+          column2
+      )
+      VALUES (
+          :value1,
+          :value2
+      );
+
+  - name: "Create Index"
+    description: "CREATE INDEX on a table"
+    content: |
+      -- Note: Snowflake does not use traditional indexes.
+      -- Use CLUSTER BY for micro-partition optimization:
+      ALTER TABLE {schema}.{table_name}
+          CLUSTER BY ({column_name});

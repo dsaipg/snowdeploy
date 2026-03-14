@@ -1,0 +1,142 @@
+"""
+models.py — Pydantic request/response models
+"""
+from pydantic import BaseModel, Field
+from typing import Optional, List
+from enum import Enum
+from datetime import datetime
+
+
+# ── Auth ──────────────────────────────────────────────────────────────
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+    team_id: Optional[str] = None  # Only used in mock mode
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    expires_in: int
+    user: "UserInfo"
+
+
+class UserInfo(BaseModel):
+    username: str
+    email: str
+    display_name: str
+    team_id: str
+    team_name: str
+    team_folder: str
+
+
+# ── Files ─────────────────────────────────────────────────────────────
+class SqlFile(BaseModel):
+    name: str                       # filename e.g. "20260313_create_orders.sql"
+    path: str                       # relative path in repo e.g. "team-a/20260313_create_orders.sql"
+    size_bytes: int
+    last_modified: Optional[datetime] = None
+    last_commit_message: Optional[str] = None
+    last_commit_author: Optional[str] = None
+
+
+class FileListResponse(BaseModel):
+    team_id: str
+    team_folder: str
+    files: List[SqlFile]
+
+
+class FileContentResponse(BaseModel):
+    path: str
+    content: str
+    encoding: str = "utf-8"
+
+
+class SaveFileRequest(BaseModel):
+    filename: str = Field(..., description="Filename only, no path. e.g. create_orders.sql")
+    content: str = Field(..., description="SQL content")
+    commit_message: Optional[str] = None
+
+
+class SaveFileResponse(BaseModel):
+    path: str
+    commit_sha: str
+    message: str
+
+
+class DeleteFileRequest(BaseModel):
+    filename: str
+    commit_message: Optional[str] = None
+
+
+# ── Deploy ────────────────────────────────────────────────────────────
+class DeployRequest(BaseModel):
+    files: List[str] = Field(..., description="List of filenames to deploy (from team folder)")
+    environment: str = Field("dev", description="Target environment: dev | staging | prod")
+    notes: Optional[str] = Field(None, description="Optional deployment notes")
+
+
+class DeployResponse(BaseModel):
+    run_id: str
+    dag_id: str
+    team_id: str
+    status: str
+    triggered_at: datetime
+    files: List[str]
+    airflow_run_url: Optional[str] = None
+
+
+# ── Status ────────────────────────────────────────────────────────────
+class TaskStatus(str, Enum):
+    queued = "queued"
+    running = "running"
+    success = "success"
+    failed = "failed"
+    skipped = "skipped"
+
+
+class DagTask(BaseModel):
+    task_id: str
+    status: TaskStatus
+    start_time: Optional[datetime] = None
+    end_time: Optional[datetime] = None
+    log: Optional[str] = None
+
+
+class DeployStatusResponse(BaseModel):
+    run_id: str
+    dag_id: str
+    team_id: str
+    overall_status: TaskStatus
+    triggered_at: datetime
+    started_at: Optional[datetime] = None
+    finished_at: Optional[datetime] = None
+    tasks: List[DagTask]
+    files: List[str]
+    error_message: Optional[str] = None
+
+
+class DeployHistoryResponse(BaseModel):
+    runs: List[DeployStatusResponse]
+    total: int
+
+
+# ── Teams / Config ────────────────────────────────────────────────────
+class TeamInfo(BaseModel):
+    id: str
+    name: str
+    folder: str
+    snowflake_schema: str
+    snowflake_database: str
+
+
+class SqlTemplate(BaseModel):
+    name: str
+    description: str
+    content: str
+
+
+class AppConfigResponse(BaseModel):
+    app_name: str
+    teams: List[TeamInfo]
+    sql_templates: List[SqlTemplate]

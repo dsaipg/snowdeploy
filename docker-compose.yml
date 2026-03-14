@@ -1,0 +1,90 @@
+version: "3.9"
+
+# ─────────────────────────────────────────────────────
+# SQL Deployment Portal — Docker Compose
+#
+# Usage:
+#   docker-compose up --build
+#
+# Services:
+#   backend  — FastAPI on :8000
+#   frontend — React (Vite) on :5173
+#
+# To switch modes, edit the environment vars below
+# or create a .env file alongside this file.
+# ─────────────────────────────────────────────────────
+
+services:
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sql-portal-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app              # live reload in dev
+      - ./config:/app/../config     # teams.yaml
+      - git-repo:/app/repo          # persistent git repo volume
+    environment:
+      # ── App ───────────────────────────────────────
+      APP_NAME: "SQL Deployment Portal"
+      DEBUG: "true"
+      FRONTEND_URL: "http://localhost:5173"
+
+      # ── Auth ──────────────────────────────────────
+      # Options: mock | jwt | oauth
+      AUTH_MODE: "mock"
+      JWT_SECRET: "dev-secret-change-in-prod"
+      JWT_EXPIRE_MINUTES: "480"
+
+      # Uncomment for OAuth mode:
+      # OAUTH_CLIENT_ID: ""
+      # OAUTH_CLIENT_SECRET: ""
+      # OAUTH_TOKEN_URL: ""
+      # OAUTH_USERINFO_URL: ""
+
+      # ── Git ───────────────────────────────────────
+      # Options: local | remote
+      GIT_MODE: "local"
+      GIT_REPO_PATH: "./repo"
+      GIT_SERVICE_ACCOUNT_USER: "sql-portal-bot"
+      GIT_SERVICE_ACCOUNT_EMAIL: "sql-portal@company.com"
+
+      # Uncomment for remote Git:
+      # GIT_REPO_URL: "https://github.com/your-org/sql-repo.git"
+      # GIT_BRANCH: "main"
+
+      # ── Airflow ───────────────────────────────────
+      # Options: mock | live
+      AIRFLOW_MODE: "mock"
+      AIRFLOW_BASE_URL: "http://airflow:8080"
+      AIRFLOW_USERNAME: "admin"
+      AIRFLOW_PASSWORD: "admin"
+      AIRFLOW_DEFAULT_DAG_ID: "sql_deploy_dag"
+
+      # ── Config ────────────────────────────────────
+      TEAMS_CONFIG_PATH: "../config/teams.yaml"
+
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sql-portal-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: "http://localhost:8000"
+      VITE_APP_NAME: "SQL Deployment Portal"
+      VITE_AUTH_MODE: "mock"
+      VITE_STATUS_POLL_MS: "3000"
+      VITE_HISTORY_LIMIT: "10"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  git-repo:
