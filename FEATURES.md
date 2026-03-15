@@ -51,6 +51,20 @@ against Snowflake. Git is the audit trail — invisible to analysts.
 
 ## Planned (Priority Order)
 
+### 1a. Role Enforcement (analysts cannot approve their own work)
+- [ ] Backend permission check on `/promotion/approve` — only `lead` role can approve
+- [ ] Backend permission check on `/promotion/deploy` — only `lead` role can deploy
+- [ ] UI hides Approve/Deploy buttons for analysts
+- [ ] teams.yaml `role: analyst | lead` already defined — just needs enforcement
+- **Why it matters:** currently any analyst can approve their own promotion, bypassing the review process
+- **Effort:** small
+
+### 1b. Security Hardening
+- [ ] Rate limiting on `/auth/login` — prevent brute force attacks
+- [ ] Warn if `JWT_SECRET` is still the default dev value on startup
+- [ ] Move passwords out of teams.yaml into env vars or secrets manager (before prod)
+- **Effort:** small
+
 ### 2. SSO / OAuth Login
 - [ ] Wire backend auth_mode=oauth to a real IdP (Okta / Azure AD / Google)
 - [ ] Analysts log in with existing company accounts — no new passwords
