@@ -89,8 +89,16 @@ async def deploy_promotion(request_id: str, user: UserInfo = Depends(get_current
         raise HTTPException(400, f"Cannot deploy: status is '{req.status}' (must be 'approved')")
 
     team_cfg = _get_team_config(user.team_id)
-    dag_id = team_cfg.get("airflow_dag_id", settings.airflow_default_dag_id)
     snowflake_schema = team_cfg.get("snowflake_schema", "")
+
+    # Build a meaningful dag_id: {team_id}__{folder}__{filename}__{env}
+    # For multi-file promotions use the first file; truncate to keep it readable
+    first_file = req.files[0].replace("/", "_").replace(".sql", "") if req.files else "batch"
+    if len(req.files) > 1:
+        first_file += f"_plus{len(req.files) - 1}"
+    dag_id = f"{user.team_id}__{first_file}__{req.to_env}"
+    # Airflow dag_id max length is 250 chars; trim if needed
+    dag_id = dag_id[:250]
 
     try:
         deploy_resp = await airflow_client.trigger_dag(

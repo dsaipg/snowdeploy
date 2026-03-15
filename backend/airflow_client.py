@@ -40,7 +40,8 @@ async def trigger_dag(
     notes: Optional[str] = None,
 ) -> DeployResponse:
 
-    run_id = f"portal_{team_id}_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')}_{uuid.uuid4().hex[:6]}"
+    # run_id format: portal__{dag_id}__{timestamp} — uniquely identifies this execution
+    run_id = f"portal__{dag_id}__{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')}"
     triggered_at = datetime.now(timezone.utc)
 
     if settings.airflow_mode == "mock":
