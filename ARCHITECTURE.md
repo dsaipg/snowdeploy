@@ -106,6 +106,31 @@ everywhere without showing ID again.
 - JWT expired → full login form shown again
 - "Not you?" clears localStorage, shows full form
 
+### Named Users (Mock Mode)
+Users are defined directly in `config/teams.yaml`. On login, the backend looks
+up the username across all teams and auto-resolves which team they belong to —
+no team dropdown on the login screen.
+
+```yaml
+users:
+  - username: alice
+    display_name: "Alice Chen"
+    password: "password"    # plaintext OK for dev — use SSO in prod
+    role: analyst
+```
+
+If no users are configured for a team, the old behaviour applies (any
+username/password accepted, team chosen from dropdown). This ensures
+backwards compatibility.
+
+### Returning User Experience
+1. Alice logs in for the first time — enters username + password
+2. JWT stored in browser localStorage
+3. Next visit — portal shows: **"Welcome back, Alice Chen / Team Alpha"**
+   with a one-click **Sign in** button — no credentials re-entered
+4. **"Not you?"** link clears localStorage and shows the full login form
+5. If JWT has expired (after 8 hours) — full login form shown automatically
+
 ### Auth Modes (set AUTH_MODE in docker-compose.yml)
 | Mode | Description |
 |---|---|
@@ -408,3 +433,45 @@ docker-compose restart backend
 
 ### Change session length
 Set `JWT_EXPIRE_MINUTES` in `docker-compose.yml`. Default is 480 (8 hours).
+
+---
+
+## Key Files
+
+```
+backend/
+  config.py              — all settings loaded from env vars
+  models.py              — Pydantic request/response models
+  auth.py                — JWT creation, validation, mock/jwt/oauth login
+  git_service.py         — git read/write ops (local + remote modes)
+  airflow_client.py      — Airflow mock + live DAG trigger/status
+  promotion_service.py   — promotion state machine, GitHub PR integration
+  lock_service.py        — in-memory file lock store
+  routers/
+    auth_router.py       — POST /auth/login, GET /auth/teams
+    files_router.py      — CRUD /files
+    deploy_router.py     — POST /deploy, GET /deploy/history
+    status_router.py     — GET /status/{run_id}
+    promotion_router.py  — GET|POST /promotion/*
+    lock_router.py       — GET|POST|DELETE|PUT /locks/*
+
+frontend/src/
+  App.jsx                — tab routing, session restore
+  config.js              — VITE_ env vars
+  components/
+    Layout.jsx           — top bar + nav tabs
+    Login.jsx            — login form + returning user one-click
+    FileBrowser.jsx      — folder tree + file list + lock badges
+    SqlEditor.jsx        — Monaco editor + linter + lock acquire/release
+    PromotionPanel.jsx   — Dev→QA→Prod pipeline UI
+    HistoryPanel.jsx     — deployment history
+  api/client.js          — Axios client (authApi, filesApi, deployApi,
+                           statusApi, promotionApi, lockApi)
+
+config/
+  teams.yaml             — team definitions, users, SQL templates
+
+docker-compose.yml       — all environment configuration
+FEATURES.md              — product roadmap (what's built, what's planned)
+ARCHITECTURE.md          — this file
+```

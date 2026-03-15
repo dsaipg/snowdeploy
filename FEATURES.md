@@ -28,7 +28,24 @@ against Snowflake. Git is the audit trail — invisible to analysts.
 - [x] GitHub mode: creates real PRs, polls for merge (set PROMOTION_MODE=github)
 - [x] Once approved: Deploy button triggers Airflow for target environment
 - [x] Promotion state persisted to `.portal/promotions.json` in repo dir
+- [x] promotions.json committed to git on every state change (full audit trail)
 - [x] Removed raw Deploy tab — Promote is the only deployment path
+
+### Named Users + Improved Login (Mar 2026)
+- [x] Users defined in teams.yaml with username/password/role/display_name
+- [x] Team auto-resolved from username on login — no team dropdown
+- [x] Returning user one-click sign-in (JWT stored in localStorage)
+- [x] "Not you?" link clears session and shows full login form
+- [x] Fallback: if no users configured, old behaviour applies (any username accepted)
+
+### File Locking (Mar 2026)
+- [x] Lock acquired when analyst opens a file in the editor
+- [x] Lock released when file is saved/closed or tab navigates away
+- [x] Heartbeat every 5 minutes keeps lock alive while actively editing
+- [x] Locks auto-expire after 30 minutes (handles browser crashes)
+- [x] File browser shows 🔒 badge with editor's name on locked files
+- [x] Warning modal if another analyst tries to open a locked file
+- [x] Locks are in-memory only — cleared on backend restart
 
 ---
 
@@ -100,28 +117,32 @@ against Snowflake. Git is the audit trail — invisible to analysts.
 backend/
   config.py              — all settings (env vars)
   models.py              — Pydantic models
+  auth.py                — JWT + mock/jwt/oauth login
   git_service.py         — git read/write ops
   airflow_client.py      — Airflow mock + live
   promotion_service.py   — promotion state machine
+  lock_service.py        — in-memory file locking
   routers/
     auth_router.py
     files_router.py
     deploy_router.py
     promotion_router.py
+    lock_router.py
     status_router.py
 
 frontend/src/
   App.jsx                — tab routing
   components/
     Layout.jsx           — top bar + nav tabs
-    FileBrowser.jsx      — folder tree + file list
-    SqlEditor.jsx        — Monaco editor + linter
+    Login.jsx            — login + returning user
+    FileBrowser.jsx      — folder tree + file list + lock badges
+    SqlEditor.jsx        — Monaco editor + linter + locking
     PromotionPanel.jsx   — Dev→QA→Prod pipeline UI
     HistoryPanel.jsx     — deployment history
   api/client.js          — Axios API client
 
 config/
-  teams.yaml             — team definitions + SQL templates
+  teams.yaml             — team definitions, users, SQL templates
 ```
 
 ## Folder Convention (in git repo)
