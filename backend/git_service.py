@@ -94,11 +94,16 @@ def init_repo():
     if settings.git_mode == "remote":
         if not GIT_AVAILABLE:
             raise RuntimeError("gitpython is required for remote git mode. pip install gitpython")
-        if not os.path.exists(os.path.join(repo_path, ".git")):
+        git_dir = os.path.join(repo_path, ".git")
+        if not os.path.exists(git_dir):
             git.Repo.clone_from(settings.git_repo_url, repo_path, branch=settings.git_branch)
         else:
             repo = git.Repo(repo_path)
-            repo.remotes.origin.pull()
+            # If no origin remote (e.g. was previously local), add it and pull
+            if "origin" not in [r.name for r in repo.remotes]:
+                repo.create_remote("origin", settings.git_repo_url)
+            repo.remotes.origin.fetch()
+            repo.git.reset("--hard", f"origin/{settings.git_branch}")
 
 
 def _get_repo() -> Optional["git.Repo"]:
@@ -114,8 +119,9 @@ def _get_repo() -> Optional["git.Repo"]:
 def _pull_latest():
     if settings.git_mode == "remote" and GIT_AVAILABLE:
         repo = _get_repo()
-        if repo:
-            repo.remotes.origin.pull()
+        if repo and "origin" in [r.name for r in repo.remotes]:
+            repo.remotes.origin.fetch()
+            repo.git.reset("--hard", f"origin/{settings.git_branch}")
 
 
 # ── Read operations ────────────────────────────────────────────────────

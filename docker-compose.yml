@@ -47,14 +47,12 @@ services:
 
       # ── Git ───────────────────────────────────────
       # Options: local | remote
-      GIT_MODE: "local"
+      GIT_MODE: "remote"
       GIT_REPO_PATH: "./repo"
+      GIT_REPO_URL: "https://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@github.com/dsaipg/snowdeploy-sample.git"
+      GIT_BRANCH: "main"
       GIT_SERVICE_ACCOUNT_USER: "sql-portal-bot"
       GIT_SERVICE_ACCOUNT_EMAIL: "sql-portal@company.com"
-
-      # Uncomment for remote Git:
-      # GIT_REPO_URL: "https://github.com/your-org/sql-repo.git"
-      # GIT_BRANCH: "main"
 
       # ── Airflow ───────────────────────────────────
       # Options: mock | live
@@ -66,11 +64,10 @@ services:
 
       # ── Promotion ─────────────────────────────────
       # Options: mock | github
-      PROMOTION_MODE: "mock"
+      PROMOTION_MODE: "github"
       MOCK_APPROVAL_DELAY_S: "30"
-      # Uncomment for real GitHub PRs:
-      # GITHUB_TOKEN: ""
-      # GITHUB_REPO: "org/repo"
+      GITHUB_TOKEN: "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"
+      GITHUB_REPO: "dsaipg/snowdeploy-sample"
 
       # ── Config ────────────────────────────────────
       TEAMS_CONFIG_PATH: "../config/teams.yaml"
