@@ -82,7 +82,7 @@ export default function App() {
         <HistoryPanel />
       )}
       {activeTab === 'promote' && (
-        <PromotionPanel />
+        <PromotionPanel user={user} />
       )}
     </Layout>
   )

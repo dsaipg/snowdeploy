@@ -28,6 +28,7 @@ class UserInfo(BaseModel):
     team_id: str
     team_name: str
     team_folder: str
+    role: str = "analyst"   # analyst | lead
 
 
 # ── Files ─────────────────────────────────────────────────────────────

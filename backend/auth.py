@@ -30,6 +30,7 @@ def create_access_token(user: UserInfo) -> str:
         "team_id": user.team_id,
         "team_name": user.team_name,
         "team_folder": user.team_folder,
+        "role": user.role,
         "exp": expire,
     }
     return jwt.encode(payload, settings.jwt_secret, algorithm=settings.jwt_algorithm)
@@ -85,6 +86,7 @@ def mock_login(username: str, password: str, team_id: Optional[str]) -> UserInfo
                     team_id=team["id"],
                     team_name=team["name"],
                     team_folder=team["folder"],
+                    role=user.get("role", "analyst"),
                 )
 
     # Fallback: no users configured — accept any username (original behaviour)
@@ -159,6 +161,7 @@ async def get_current_user(
         team_id=payload["team_id"],
         team_name=payload["team_name"],
         team_folder=payload["team_folder"],
+        role=payload.get("role", "analyst"),
     )
 
 

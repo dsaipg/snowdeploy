@@ -63,7 +63,9 @@ async def submit(body: SubmitPromotionRequest, user: UserInfo = Depends(get_curr
 
 @router.post("/approve/{request_id}", response_model=PromotionRequest)
 async def approve(request_id: str, user: UserInfo = Depends(get_current_user)):
-    """Manually approve a promotion (primarily for mock mode)."""
+    """Manually approve a promotion (primarily for mock mode). Leads only."""
+    if user.role != "lead":
+        raise HTTPException(403, "Only leads can approve promotions")
     if settings.promotion_mode == "github":
         raise HTTPException(400, "Approvals happen via GitHub PR in github mode")
     req = promotion_service.approve_promotion(user.team_id, request_id, user.display_name)
@@ -74,7 +76,9 @@ async def approve(request_id: str, user: UserInfo = Depends(get_current_user)):
 
 @router.post("/deploy/{request_id}")
 async def deploy_promotion(request_id: str, user: UserInfo = Depends(get_current_user)):
-    """Trigger an Airflow deploy for an approved promotion, then mark it deployed."""
+    """Trigger an Airflow deploy for an approved promotion, then mark it deployed. Leads only."""
+    if user.role != "lead":
+        raise HTTPException(403, "Only leads can deploy")
     requests = promotion_service.get_requests(user.team_id)
     req = next((r for r in requests if r.id == request_id), None)
     if not req:

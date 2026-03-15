@@ -31,7 +31,8 @@ function fmt(iso) {
   })
 }
 
-export default function PromotionPanel() {
+export default function PromotionPanel({ user }) {
+  const isLead = user?.role === 'lead'
   const [files, setFiles]             = useState([])
   const [summary, setSummary]         = useState(null)
   const [requests, setRequests]       = useState([])
@@ -305,22 +306,30 @@ export default function PromotionPanel() {
 
                 <div style={s.reqActions}>
                   {req.status === 'open' && (
-                    <button
-                      style={s.approveBtn}
-                      disabled={!!loading}
-                      onClick={() => handleApprove(req.id)}
-                    >
-                      {loading === 'approve' ? 'Approving…' : 'Approve'}
-                    </button>
+                    isLead ? (
+                      <button
+                        style={s.approveBtn}
+                        disabled={!!loading}
+                        onClick={() => handleApprove(req.id)}
+                      >
+                        {loading === 'approve' ? 'Approving…' : 'Approve'}
+                      </button>
+                    ) : (
+                      <span style={s.waitingLabel}>Waiting for lead approval</span>
+                    )
                   )}
                   {req.status === 'approved' && (
-                    <button
-                      style={s.deployBtn}
-                      disabled={!!loading}
-                      onClick={() => handleDeploy(req.id)}
-                    >
-                      {loading === 'deploy' ? 'Deploying…' : `Deploy to ${ENV_LABELS[req.to_env]}`}
-                    </button>
+                    isLead ? (
+                      <button
+                        style={s.deployBtn}
+                        disabled={!!loading}
+                        onClick={() => handleDeploy(req.id)}
+                      >
+                        {loading === 'deploy' ? 'Deploying…' : `Deploy to ${ENV_LABELS[req.to_env]}`}
+                      </button>
+                    ) : (
+                      <span style={s.waitingLabel}>Approved — waiting for lead to deploy</span>
+                    )
                   )}
                 </div>
               </div>
@@ -558,6 +567,7 @@ const s = {
     padding: '6px 14px', fontSize: 12, fontWeight: 600,
     cursor: 'pointer',
   },
+  waitingLabel: { fontSize: 12, color: '#475569', fontStyle: 'italic' },
   deployBtn: {
     background: '#1d4ed8', color: '#dbeafe',
     border: 'none', borderRadius: 6,
