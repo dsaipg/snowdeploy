@@ -7,8 +7,8 @@
  *
  * Pipeline:  Dev  →  QA  →  Prod
  */
-import { useState, useEffect, useCallback } from 'react'
-import { filesApi, promotionApi } from '../api/client'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { filesApi, promotionApi, statusApi } from '../api/client'
 
 const ENV_LABELS = { dev: 'Dev', qa: 'QA', prod: 'Prod' }
 const ENV_COLORS = {
@@ -40,8 +40,10 @@ export default function PromotionPanel() {
   const [notes, setNotes]             = useState('')
   const [submitting, setSubmitting]   = useState(false)
   const [actionLoading, setActionLoading] = useState({})  // requestId → 'approve'|'deploy'
+  const [airflowRuns, setAirflowRuns] = useState({})      // requestId → { run_id, dag_id, statusData }
   const [error, setError]             = useState(null)
   const [success, setSuccess]         = useState(null)
+  const pollRef = useRef({})
 
   const load = useCallback(async () => {
     try {
@@ -105,8 +107,10 @@ export default function PromotionPanel() {
     setActionLoading(p => ({ ...p, [requestId]: 'deploy' }))
     setError(null)
     try {
-      await promotionApi.deploy(requestId)
-      setSuccess('Deployment triggered — check the History tab for status')
+      const res = await promotionApi.deploy(requestId)
+      const { run_id, dag_id } = res.data
+      setAirflowRuns(p => ({ ...p, [requestId]: { run_id, dag_id, statusData: null } }))
+      startPolling(requestId, run_id, dag_id)
       await load()
     } catch (e) {
       setError(e.response?.data?.detail || 'Deploy failed')
@@ -114,6 +118,27 @@ export default function PromotionPanel() {
       setActionLoading(p => ({ ...p, [requestId]: null }))
     }
   }
+
+  const startPolling = useCallback((requestId, run_id, dag_id) => {
+    if (pollRef.current[requestId]) clearInterval(pollRef.current[requestId])
+    const interval = setInterval(async () => {
+      try {
+        const res = await statusApi.getStatus(run_id, dag_id)
+        const statusData = res.data
+        setAirflowRuns(p => ({ ...p, [requestId]: { run_id, dag_id, statusData } }))
+        if (['success', 'failed'].includes(statusData.overall_status)) {
+          clearInterval(pollRef.current[requestId])
+          delete pollRef.current[requestId]
+        }
+      } catch { /* non-fatal */ }
+    }, 3000)
+    pollRef.current[requestId] = interval
+  }, [])
+
+  // Cleanup polling on unmount
+  useEffect(() => {
+    return () => Object.values(pollRef.current).forEach(clearInterval)
+  }, [])
 
   const activeRequests = requests.filter(r => r.status !== 'deployed' && r.status !== 'rejected')
   const recentDeployed = requests.filter(r => r.status === 'deployed').slice(-5).reverse()
@@ -306,19 +331,95 @@ export default function PromotionPanel() {
           {recentDeployed.length > 0 && (
             <>
               <div style={{ ...s.sectionHeader, marginTop: 24 }}>Recently Deployed</div>
-              {recentDeployed.map(req => (
-                <div key={req.id} style={s.deployedRow}>
-                  <span style={s.deployedEnv}>{ENV_LABELS[req.from_env]} → {ENV_LABELS[req.to_env]}</span>
-                  <span style={s.deployedFiles}>{req.files.join(', ')}</span>
-                  <span style={s.deployedTime}>{fmt(req.deployed_at)}</span>
-                </div>
-              ))}
+              {recentDeployed.map(req => {
+                const run = airflowRuns[req.id]
+                return (
+                  <div key={req.id} style={s.deployedCard}>
+                    <div style={s.deployedRow}>
+                      <span style={s.deployedEnv}>{ENV_LABELS[req.from_env]} → {ENV_LABELS[req.to_env]}</span>
+                      <span style={s.deployedFiles}>{req.files.join(', ')}</span>
+                      <span style={s.deployedTime}>{fmt(req.deployed_at)}</span>
+                    </div>
+                    {run && <AirflowStatus run={run} />}
+                  </div>
+                )
+              })}
             </>
           )}
         </div>
       </div>
     </div>
   )
+}
+
+const TASK_STATUS_COLOR = {
+  queued:  '#475569',
+  running: '#22d3ee',
+  success: '#22c55e',
+  failed:  '#ef4444',
+  skipped: '#64748b',
+}
+
+function AirflowStatus({ run }) {
+  const { statusData } = run
+  if (!statusData) {
+    return (
+      <div style={as.wrap}>
+        <span style={as.spinner}>⟳</span>
+        <span style={{ color: '#64748b', fontSize: 12 }}>Triggering Airflow…</span>
+      </div>
+    )
+  }
+
+  const { overall_status, tasks, started_at, finished_at } = statusData
+  const isRunning = overall_status === 'running' || overall_status === 'queued'
+  const statusColor = TASK_STATUS_COLOR[overall_status] || '#64748b'
+
+  return (
+    <div style={as.wrap}>
+      <div style={as.header}>
+        <span style={{ ...as.badge, color: statusColor, borderColor: statusColor + '44', background: statusColor + '11' }}>
+          {isRunning ? '⟳ ' : overall_status === 'success' ? '✓ ' : '✗ '}
+          Airflow: {overall_status}
+        </span>
+        {finished_at && (
+          <span style={as.time}>finished {new Date(finished_at).toLocaleTimeString()}</span>
+        )}
+      </div>
+      {tasks?.length > 0 && (
+        <div style={as.tasks}>
+          {tasks.map(task => (
+            <div key={task.task_id} style={as.taskRow}>
+              <span style={{ ...as.taskDot, background: TASK_STATUS_COLOR[task.status] || '#475569' }} />
+              <span style={as.taskName}>{task.task_id.replace(/^run_sql_\d+_/, '')}</span>
+              <span style={{ ...as.taskStatus, color: TASK_STATUS_COLOR[task.status] || '#475569' }}>
+                {task.status}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+const as = {
+  wrap: {
+    marginTop: 8, padding: '8px 10px',
+    background: '#0a0f1a', borderRadius: 6,
+    border: '1px solid #1e293b',
+  },
+  header: { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 },
+  badge: {
+    fontSize: 11, fontWeight: 600, border: '1px solid',
+    borderRadius: 4, padding: '2px 7px',
+  },
+  time: { fontSize: 11, color: '#475569' },
+  tasks: { display: 'flex', flexDirection: 'column', gap: 3, marginTop: 4 },
+  taskRow: { display: 'flex', alignItems: 'center', gap: 6 },
+  taskDot: { width: 6, height: 6, borderRadius: '50%', flexShrink: 0 },
+  taskName: { fontSize: 11, fontFamily: 'monospace', color: '#94a3b8', flex: 1 },
+  taskStatus: { fontSize: 11, fontWeight: 500 },
 }
 
 const s = {
@@ -463,10 +564,12 @@ const s = {
     padding: '6px 14px', fontSize: 12, fontWeight: 600,
     cursor: 'pointer',
   },
+  deployedCard: {
+    background: '#0f172a', borderRadius: 6,
+    padding: '7px 10px', marginBottom: 4,
+  },
   deployedRow: {
     display: 'flex', alignItems: 'center', gap: 10,
-    padding: '7px 10px',
-    background: '#0f172a', borderRadius: 6,
     fontSize: 12,
   },
   deployedEnv: {
