@@ -166,12 +166,18 @@ class PromotionSummary(BaseModel):
 
 
 # ── Teams / Config ────────────────────────────────────────────────────
+class SnowflakeEnvConfig(BaseModel):
+    database: str = ""
+    schema: str = ""
+    warehouse: str = ""
+    role: str = ""
+
+
 class TeamInfo(BaseModel):
     id: str
     name: str
     folder: str
-    snowflake_schema: str
-    snowflake_database: str
+    snowflake: dict = {}  # env → SnowflakeEnvConfig
 
 
 class SqlTemplate(BaseModel):

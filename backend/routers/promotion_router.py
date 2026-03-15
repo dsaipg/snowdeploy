@@ -90,7 +90,11 @@ async def deploy_promotion(request_id: str, user: UserInfo = Depends(get_current
         raise HTTPException(400, f"Cannot deploy: status is '{req.status}' (must be 'approved')")
 
     team_cfg = _get_team_config(user.team_id)
-    snowflake_schema = team_cfg.get("snowflake_schema", "")
+    sf = team_cfg.get("snowflake", {}).get(req.to_env, {})
+    snowflake_schema    = sf.get("schema", "")
+    snowflake_database  = sf.get("database", "")
+    snowflake_warehouse = sf.get("warehouse", "")
+    snowflake_role      = sf.get("role", "")
 
     # Build a meaningful dag_id: {team_id}__{folder}__{filename}__{env}
     # For multi-file promotions use the first file; truncate to keep it readable
@@ -108,6 +112,9 @@ async def deploy_promotion(request_id: str, user: UserInfo = Depends(get_current
             files=req.files,
             environment=req.to_env,
             snowflake_schema=snowflake_schema,
+            snowflake_database=snowflake_database,
+            snowflake_warehouse=snowflake_warehouse,
+            snowflake_role=snowflake_role,
             dag_id=dag_id,
             notes=req.notes,
             schedule=req.schedule,

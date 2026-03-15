@@ -36,7 +36,10 @@ async def trigger_dag(
     files: list[str],
     environment: str,
     snowflake_schema: str,
-    dag_id: str,
+    snowflake_database: str = "",
+    snowflake_warehouse: str = "",
+    snowflake_role: str = "",
+    dag_id: str = "sql_deploy_dag",
     notes: Optional[str] = None,
     schedule: Optional[str] = None,
 ) -> DeployResponse:
@@ -72,7 +75,10 @@ async def trigger_dag(
         "team_folder": team_folder,
         "files": files,
         "environment": environment,
+        "snowflake_database": snowflake_database,
         "snowflake_schema": snowflake_schema,
+        "snowflake_warehouse": snowflake_warehouse,
+        "snowflake_role": snowflake_role,
         "notes": notes or "",
         "schedule": schedule or "",
     }

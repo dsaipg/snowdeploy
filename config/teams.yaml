@@ -7,10 +7,23 @@ teams:
   - id: team_a
     name: "Team Alpha"
     folder: "team-a"
-    snowflake_schema: "TEAM_A_SCHEMA"
-    snowflake_database: "ANALYTICS_DB"
-    snowflake_role: "TEAM_A_ROLE"
     airflow_dag_id: "sql_deploy_dag"
+    snowflake:
+      dev:
+        database: "ANALYTICS_DB"
+        schema: "TEAM_A_DEV"
+        warehouse: "TEAM_A_WH"
+        role: "TEAM_A_DEV_ROLE"
+      qa:
+        database: "ANALYTICS_DB"
+        schema: "TEAM_A_QA"
+        warehouse: "TEAM_A_WH"
+        role: "TEAM_A_QA_ROLE"
+      prod:
+        database: "ANALYTICS_DB"
+        schema: "TEAM_A_PROD"
+        warehouse: "TEAM_A_WH"
+        role: "TEAM_A_PROD_ROLE"
     users:
       - username: alice
         display_name: "Alice Chen"
@@ -22,10 +35,23 @@ teams:
   - id: team_b
     name: "Team Beta"
     folder: "team-b"
-    snowflake_schema: "TEAM_B_SCHEMA"
-    snowflake_database: "ANALYTICS_DB"
-    snowflake_role: "TEAM_B_ROLE"
     airflow_dag_id: "sql_deploy_dag"
+    snowflake:
+      dev:
+        database: "ANALYTICS_DB"
+        schema: "TEAM_B_DEV"
+        warehouse: "TEAM_B_WH"
+        role: "TEAM_B_DEV_ROLE"
+      qa:
+        database: "ANALYTICS_DB"
+        schema: "TEAM_B_QA"
+        warehouse: "TEAM_B_WH"
+        role: "TEAM_B_QA_ROLE"
+      prod:
+        database: "ANALYTICS_DB"
+        schema: "TEAM_B_PROD"
+        warehouse: "TEAM_B_WH"
+        role: "TEAM_B_PROD_ROLE"
     users:
       - username: rita
         display_name: "Rita Patel"
