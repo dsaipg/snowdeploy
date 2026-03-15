@@ -15,11 +15,9 @@ teams:
       - username: alice
         display_name: "Alice Chen"
         password: "password"          # dev only — use SSO in production
-        role: analyst
       - username: bob
         display_name: "Bob Smith"
         password: "password"
-        role: lead
 
   - id: team_b
     name: "Team Beta"
@@ -32,7 +30,6 @@ teams:
       - username: rita
         display_name: "Rita Patel"
         password: "password"
-        role: analyst
 
 # ─────────────────────────────────────────────
 # SQL Templates — shown in the editor dropdown

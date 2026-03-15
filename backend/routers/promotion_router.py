@@ -63,11 +63,15 @@ async def submit(body: SubmitPromotionRequest, user: UserInfo = Depends(get_curr
 
 @router.post("/approve/{request_id}", response_model=PromotionRequest)
 async def approve(request_id: str, user: UserInfo = Depends(get_current_user)):
-    """Manually approve a promotion (primarily for mock mode). Leads only."""
-    if user.role != "lead":
-        raise HTTPException(403, "Only leads can approve promotions")
+    """Anyone on the team can approve, except the person who submitted it."""
     if settings.promotion_mode == "github":
         raise HTTPException(400, "Approvals happen via GitHub PR in github mode")
+    requests = promotion_service.get_requests(user.team_id)
+    target = next((r for r in requests if r.id == request_id), None)
+    if not target:
+        raise HTTPException(404, "Promotion request not found")
+    if target.submitted_by == user.display_name:
+        raise HTTPException(403, "You cannot approve your own submission")
     req = promotion_service.approve_promotion(user.team_id, request_id, user.display_name)
     if not req:
         raise HTTPException(404, "Promotion request not found or not in 'open' status")
@@ -76,9 +80,7 @@ async def approve(request_id: str, user: UserInfo = Depends(get_current_user)):
 
 @router.post("/deploy/{request_id}")
 async def deploy_promotion(request_id: str, user: UserInfo = Depends(get_current_user)):
-    """Trigger an Airflow deploy for an approved promotion, then mark it deployed. Leads only."""
-    if user.role != "lead":
-        raise HTTPException(403, "Only leads can deploy")
+    """Anyone on the team can deploy an approved promotion."""
     requests = promotion_service.get_requests(user.team_id)
     req = next((r for r in requests if r.id == request_id), None)
     if not req:

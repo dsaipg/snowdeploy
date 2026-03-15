@@ -28,7 +28,7 @@ class UserInfo(BaseModel):
     team_id: str
     team_name: str
     team_folder: str
-    role: str = "analyst"   # analyst | lead
+    role: str = "member"    # kept for JWT compat; not used for authorization
 
 
 # ── Files ─────────────────────────────────────────────────────────────

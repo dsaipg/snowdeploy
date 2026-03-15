@@ -32,7 +32,6 @@ function fmt(iso) {
 }
 
 export default function PromotionPanel({ user }) {
-  const isLead = user?.role === 'lead'
   const [files, setFiles]             = useState([])
   const [summary, setSummary]         = useState(null)
   const [requests, setRequests]       = useState([])
@@ -306,7 +305,9 @@ export default function PromotionPanel({ user }) {
 
                 <div style={s.reqActions}>
                   {req.status === 'open' && (
-                    isLead ? (
+                    req.submitted_by === user?.display_name ? (
+                      <span style={s.waitingLabel}>Waiting for a teammate to approve</span>
+                    ) : (
                       <button
                         style={s.approveBtn}
                         disabled={!!loading}
@@ -314,22 +315,16 @@ export default function PromotionPanel({ user }) {
                       >
                         {loading === 'approve' ? 'Approving…' : 'Approve'}
                       </button>
-                    ) : (
-                      <span style={s.waitingLabel}>Waiting for lead approval</span>
                     )
                   )}
                   {req.status === 'approved' && (
-                    isLead ? (
-                      <button
-                        style={s.deployBtn}
-                        disabled={!!loading}
-                        onClick={() => handleDeploy(req.id)}
-                      >
-                        {loading === 'deploy' ? 'Deploying…' : `Deploy to ${ENV_LABELS[req.to_env]}`}
-                      </button>
-                    ) : (
-                      <span style={s.waitingLabel}>Approved — waiting for lead to deploy</span>
-                    )
+                    <button
+                      style={s.deployBtn}
+                      disabled={!!loading}
+                      onClick={() => handleDeploy(req.id)}
+                    >
+                      {loading === 'deploy' ? 'Deploying…' : `Deploy to ${ENV_LABELS[req.to_env]}`}
+                    </button>
                   )}
                 </div>
               </div>
