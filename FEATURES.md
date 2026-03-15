@@ -32,7 +32,7 @@ against Snowflake. Git is the audit trail — invisible to analysts.
 - [x] Removed raw Deploy tab — Promote is the only deployment path
 
 ### Named Users + Improved Login (Mar 2026)
-- [x] Users defined in teams.yaml with username/password/role/display_name
+- [x] Users defined in teams.yaml with username/password/display_name (no role field)
 - [x] Team auto-resolved from username on login — no team dropdown
 - [x] Returning user one-click sign-in (JWT stored in localStorage)
 - [x] "Not you?" link clears session and shows full login form
@@ -51,13 +51,12 @@ against Snowflake. Git is the audit trail — invisible to analysts.
 
 ## Planned (Priority Order)
 
-### 1a. Role Enforcement (analysts cannot approve their own work)
-- [ ] Backend permission check on `/promotion/approve` — only `lead` role can approve
-- [ ] Backend permission check on `/promotion/deploy` — only `lead` role can deploy
-- [ ] UI hides Approve/Deploy buttons for analysts
-- [ ] teams.yaml `role: analyst | lead` already defined — just needs enforcement
-- **Why it matters:** currently any analyst can approve their own promotion, bypassing the review process
-- **Effort:** small
+### 1a. Approval Enforcement — Flat Model (Mar 2026) ✅
+- [x] Anyone on the team can approve a promotion — no lead/analyst distinction
+- [x] The submitter cannot approve their own submission (enforced at API level)
+- [x] UI shows "Waiting for a teammate to approve" to the submitter
+- [x] UI shows Approve button to all other team members
+- [x] role: field removed from teams.yaml — no role concept in the system
 
 ### 1b. Security Hardening
 - [ ] Rate limiting on `/auth/login` — prevent brute force attacks

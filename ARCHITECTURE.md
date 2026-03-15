@@ -54,6 +54,7 @@ docker-compose logs -f backend
 | Username | Password | Team |
 |---|---|---|
 | alice | password | Team Alpha |
+| bob | password | Team Alpha |
 | rita | password | Team Beta |
 
 ---
@@ -116,12 +117,11 @@ users:
   - username: alice
     display_name: "Alice Chen"
     password: "password"    # plaintext OK for dev — use SSO in prod
-    role: analyst
 ```
 
-If no users are configured for a team, the old behaviour applies (any
-username/password accepted, team chosen from dropdown). This ensures
-backwards compatibility.
+No `role:` field — the approval model is flat. If no users are configured
+for a team, the old behaviour applies (any username/password accepted,
+team chosen from dropdown).
 
 ### Returning User Experience
 1. Alice logs in for the first time — enters username + password
@@ -158,11 +158,9 @@ teams:
       - username: alice
         display_name: "Alice Chen"
         password: "password"          # plaintext in dev — use SSO in prod
-        role: analyst                 # analyst | lead
       - username: bob
         display_name: "Bob Smith"
         password: "password"
-        role: lead
 ```
 
 ### Team Isolation
@@ -192,11 +190,10 @@ Isolation is enforced at two levels:
 2. Run `docker-compose restart backend`
 3. User can log in immediately
 
-### Roles (planned — not yet enforced in UI)
-| Role | Permissions |
-|---|---|
-| `analyst` | Can save files, submit for promotion |
-| `lead` | Can approve promotions, deploy to QA and Prod |
+### Approval Model (flat)
+There are no roles. Any team member can approve a promotion request,
+**except the person who submitted it**. This is enforced at the API level
+(`/promotion/approve` checks `submitted_by != current user`).
 
 ---
 
@@ -338,6 +335,23 @@ The portal triggers Airflow DAG runs to actually execute SQL on Snowflake.
 | `mock` | Simulates DAG runs with fake progress. No Airflow needed. |
 | `live` | Calls real Airflow REST API v1. |
 
+### How Airflow Should Execute SQL (ideal flow)
+```
+1. Analyst saves file → committed to git (SHA recorded)
+2. Promotion submitted → promotions.json records file + commit_sha
+3. Teammate approves
+4. Deploy clicked → portal calls Airflow REST API with file path + commit SHA
+5. Airflow DAG:
+   a. git checkout <sha> -- team-a/tables/core/users.sql
+   b. Read file content
+   c. Connect to Snowflake (target env credentials)
+   d. Execute SQL against TEAM_A_QA (or _PROD) schema
+   e. Report success/failure → portal polls /status/{run_id}
+```
+
+The commit SHA is passed so that **exactly the approved version** runs —
+even if the file was edited between QA approval and Prod deploy.
+
 ### DAG Payload
 When a deployment is triggered, the portal sends:
 ```json
@@ -345,6 +359,7 @@ When a deployment is triggered, the portal sends:
   "team_id": "team_a",
   "team_folder": "team-a",
   "files": ["tables/core/users.sql", "views/v_revenue.sql"],
+  "commit_sha": "abc1234",
   "environment": "qa",
   "snowflake_schema": "TEAM_A_SCHEMA",
   "notes": "optional notes"
