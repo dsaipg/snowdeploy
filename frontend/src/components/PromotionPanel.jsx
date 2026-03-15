@@ -184,8 +184,8 @@ export default function PromotionPanel({ user }) {
                 <span style={{ ...s.envCount, color: c.text }}>{count} files</span>
                 <span style={{ ...s.envDesc, color: c.text }}>
                   {env === 'dev'  ? 'Write & save SQL' :
-                   env === 'qa'   ? 'Needs lead approval' :
-                                    'Needs senior approval'}
+                   env === 'qa'   ? 'Needs PR approval' :
+                                    'Needs data owner approval'}
                 </span>
               </div>
             </div>
