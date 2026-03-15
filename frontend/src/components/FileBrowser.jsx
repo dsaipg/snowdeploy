@@ -2,22 +2,24 @@ import { useState, useEffect } from 'react'
 import { filesApi, lockApi } from '../api/client'
 
 const FOLDER_META = {
-  'tables/core':    { label: 'core',       icon: '🗃', color: '#60a5fa', indent: true },
-  'tables/staging': { label: 'staging',    icon: '📥', color: '#a78bfa', indent: true },
-  'views':          { label: 'views',      icon: '👁', color: '#34d399', indent: false },
-  'procedures':     { label: 'procedures', icon: '⚙',  color: '#fbbf24', indent: false },
-  'migrations':     { label: 'migrations', icon: '🔢', color: '#f87171', indent: false },
-  'scripts':        { label: 'scripts',    icon: '📝', color: '#94a3b8', indent: false },
+  'schema_table_ddls/bronze': { label: 'bronze', icon: '🥉', color: '#cd7f32', indent: true },
+  'schema_table_ddls/silver': { label: 'silver', icon: '🥈', color: '#a8a9ad', indent: true },
+  'schema_table_ddls/gold':   { label: 'gold',   icon: '🥇', color: '#fbbf24', indent: true },
+  'views':             { label: 'views',      icon: '👁', color: '#34d399', indent: false },
+  'procedures':        { label: 'procedures', icon: '⚙',  color: '#f87171', indent: false },
+  'alter_ddls':        { label: 'alter_ddls', icon: '🔢', color: '#818cf8', indent: false },
+  'sql_scripts':           { label: 'sql_scripts',    icon: '📝', color: '#94a3b8', indent: false },
 }
 
 // Always show these folders, even if empty
 const ALL_FOLDERS = [
-  { key: 'tables/core',    header: null },
-  { key: 'tables/staging', header: null },
-  { key: 'views',          header: null },
-  { key: 'procedures',     header: null },
-  { key: 'migrations',     header: null },
-  { key: 'scripts',        header: null },
+  { key: 'schema_table_ddls/bronze', header: null },
+  { key: 'schema_table_ddls/silver', header: null },
+  { key: 'schema_table_ddls/gold',   header: null },
+  { key: 'views',             header: null },
+  { key: 'procedures',        header: null },
+  { key: 'alter_ddls',        header: null },
+  { key: 'sql_scripts',           header: null },
 ]
 
 const FOLDER_ORDER = ALL_FOLDERS.map(f => f.key)
@@ -130,10 +132,10 @@ export default function FileBrowser({ onOpenFile, onNewFile }) {
           <div style={styles.sidebar}>
             <div style={styles.sidebarLabel}>FOLDERS</div>
 
-            {/* tables group header */}
+            {/* schema_table_ddls group header */}
             <div style={styles.groupHeader}>
               <span style={{ fontSize: 13 }}>🗃</span>
-              <span style={{ color: '#60a5fa', fontSize: 12, fontWeight: 600 }}>tables</span>
+              <span style={{ color: '#94a3b8', fontSize: 12, fontWeight: 600 }}>schema_table_ddls</span>
             </div>
 
             {ALL_FOLDERS.map(({ key }) => {

@@ -14,9 +14,9 @@ against Snowflake. Git is the audit trail — invisible to analysts.
 - [x] Mock auth (any username/password, team chosen at login)
 - [x] JWT session management (8hr expiry, localStorage)
 - [x] Team isolation — each team has its own folder in the git repo
-- [x] File browser with folder tree (tables/core, tables/staging, views, procedures, migrations, scripts)
+- [x] File browser with folder tree (schema_table_ddls/bronze, schema_table_ddls/silver, schema_table_ddls/gold, views, procedures, alter_ddls, sql_scripts)
 - [x] Monaco SQL editor with subfolder selector and file templates
-- [x] SQL linter in migrations/ folder (flags non-idempotent ALTERs, DROP TABLE, TRUNCATE)
+- [x] SQL linter in alter_ddls/ folder (flags non-idempotent ALTERs, DROP TABLE, TRUNCATE)
 - [x] Git-backed file save/delete (commit per save, author tracked)
 - [x] Mock Airflow client (simulates DAG runs with task-level progress)
 - [x] Deployment history panel
@@ -161,10 +161,11 @@ config/
 ## Folder Convention (in git repo)
 ```
 {team-folder}/
-  tables/core/       — CREATE TABLE (idempotent, IF NOT EXISTS)
-  tables/staging/    — staging/landing tables
+  schema_table_ddls/bronze/ — raw/landing layer CREATE TABLE statements
+  schema_table_ddls/silver/ — cleaned/conformed layer CREATE TABLE statements
+  schema_table_ddls/gold/   — business/reporting layer CREATE TABLE statements
   views/             — CREATE OR REPLACE VIEW
   procedures/        — CREATE OR REPLACE PROCEDURE
-  migrations/        — numbered ALTERs (001_, 002_...) — linter enforced
-  scripts/           — one-off/dev scripts, never auto-deployed
+  alter_ddls/        — numbered ALTERs (001_, 002_...) — linter enforced
+  sql_scripts/           — one-off/dev sql_scripts, never auto-deployed
 ```

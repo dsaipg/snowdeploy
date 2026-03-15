@@ -168,11 +168,13 @@ Each team has its own subfolder in the git repo:
 ```
 repo/
   team-a/          ← Alice and Bob see only this
-    tables/core/
+    schema_table_ddls/bronze/
+    schema_table_ddls/silver/
+    schema_table_ddls/gold/
     views/
-    migrations/
+    alter_ddls/
   team-b/          ← Rita sees only this
-    tables/core/
+    schema_table_ddls/bronze/
 ```
 
 Isolation is enforced at two levels:
@@ -206,12 +208,13 @@ with the analyst's name as the author.
 ```
 repo/
   team-a/
-    tables/core/users.sql
-    tables/staging/stg_events.sql
+    schema_table_ddls/bronze/raw_events.sql
+    schema_table_ddls/silver/events.sql
+    schema_table_ddls/gold/revenue_summary.sql
     views/v_active_users.sql
     procedures/sp_refresh.sql
-    migrations/001_add_segment.sql
-    scripts/seed_dev.sql
+    alter_ddls/001_add_segment.sql
+    sql_scripts/seed_dev.sql
   team-b/
     ...
   .portal/
@@ -235,15 +238,16 @@ GIT_BRANCH: "develop"
 ### Folder Convention
 | Folder | Purpose | Deploy behaviour |
 |---|---|---|
-| `tables/core` | `CREATE TABLE` — production tables | Manual only |
-| `tables/staging` | `CREATE TABLE` — staging/landing tables | Manual only |
+| `schema_table_ddls/bronze` | Raw/landing layer `CREATE TABLE` statements | Manual only |
+| `schema_table_ddls/silver` | Cleaned/conformed layer `CREATE TABLE` statements | Manual only |
+| `schema_table_ddls/gold` | Business/reporting layer `CREATE TABLE` statements | Manual only |
 | `views/` | `CREATE OR REPLACE VIEW` — idempotent | Safe to always run |
 | `procedures/` | `CREATE OR REPLACE PROCEDURE` | Safe to always run |
-| `migrations/` | Numbered `ALTER` scripts | Run once, in order |
-| `scripts/` | One-off dev scripts | Never auto-deploy |
+| `alter_ddls/` | Numbered `ALTER` sql_scripts | Run once, in order |
+| `sql_scripts/` | One-off dev sql_scripts | Never auto-deploy |
 
-### SQL Linter (migrations/ only)
-The editor automatically lints SQL in the `migrations/` folder:
+### SQL Linter (alter_ddls/ only)
+The editor automatically lints SQL in the `alter_ddls/` folder:
 | Rule | Severity | Reason |
 |---|---|---|
 | `ADD COLUMN` without `IF NOT EXISTS` | Error | Will crash on re-run |

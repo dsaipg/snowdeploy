@@ -2,9 +2,9 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import Editor from '@monaco-editor/react'
 import { filesApi, lockApi } from '../api/client'
 
-const SUBFOLDERS = ['tables/core', 'tables/staging', 'views', 'procedures', 'migrations', 'scripts']
+const SUBFOLDERS = ['schema_table_ddls/bronze', 'schema_table_ddls/silver', 'schema_table_ddls/gold', 'views', 'procedures', 'alter_ddls', 'sql_scripts']
 
-// ── SQL linting rules (only enforced in migrations/) ──────────────────────
+// ── SQL linting rules (only enforced in alter_ddls/) ──────────────────────
 const LINT_RULES = [
   {
     id: 'add-column-no-if-not-exists',
@@ -31,7 +31,7 @@ const LINT_RULES = [
     id: 'create-table-no-if-not-exists',
     severity: 'warning',
     pattern: /CREATE\s+TABLE(?!\s+IF\s+NOT\s+EXISTS)/gi,
-    message: 'CREATE TABLE without IF NOT EXISTS — belongs in tables/ not migrations/.',
+    message: 'CREATE TABLE without IF NOT EXISTS — belongs in tables/ not alter_ddls/.',
     fix: 'Move to tables/core or tables/staging, or add IF NOT EXISTS',
   },
   {
@@ -129,7 +129,7 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
   }, [initialFile])
 
   const lintIssues = useMemo(() => {
-    if (subfolder !== 'migrations') return []
+    if (subfolder !== 'alter_ddls') return []
     return lintSql(content)
   }, [subfolder, content])
 
@@ -267,7 +267,7 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
         </div>
       )}
 
-      {/* ── Lint panel (migrations/ only) ── */}
+      {/* ── Lint panel (alter_ddls/ only) ── */}
       {lintIssues.length > 0 && !lintDismissed && (
         <div style={{ ...styles.lintPanel, borderColor: hasErrors ? '#ef4444' : '#f59e0b' }}>
           <div style={styles.lintHeader}>
