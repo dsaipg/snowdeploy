@@ -71,10 +71,8 @@ sql_templates:
           :value2
       );
 
-  - name: "Create Index"
-    description: "CREATE INDEX on a table"
+  - name: "Clustering Key"
+    description: "Set CLUSTER BY for micro-partition optimization"
     content: |
-      -- Note: Snowflake does not use traditional indexes.
-      -- Use CLUSTER BY for micro-partition optimization:
       ALTER TABLE {schema}.{table_name}
           CLUSTER BY ({column_name});

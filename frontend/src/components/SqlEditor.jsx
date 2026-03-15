@@ -76,7 +76,7 @@ function parseFilePath(path) {
 
 export default function SqlEditor({ initialFile, templates, onFileSaved }) {
   const [filename, setFilename] = useState('')
-  const [subfolder, setSubfolder] = useState('tables/core')
+  const [subfolder, setSubfolder] = useState('schema_table_ddls/bronze')
   const [content, setContent] = useState('-- Write your SQL here\n')
   const [commitMessage, setCommitMessage] = useState('')
   const [saving, setSaving] = useState(false)
@@ -111,7 +111,7 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
   useEffect(() => {
     if (!initialFile) {
       setFilename('')
-      setSubfolder('tables/core')
+      setSubfolder('schema_table_ddls/bronze')
       setContent('-- Write your SQL here\n')
       return
     }
