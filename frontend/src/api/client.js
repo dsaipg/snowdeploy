@@ -65,6 +65,14 @@ export const statusApi = {
     api.get(`/status/${runId}${dagId ? `?dag_id=${dagId}` : ''}`),
 }
 
+// ── Locks ──────────────────────────────────────────────────────────
+export const lockApi = {
+  list: () => api.get('/locks'),
+  acquire: (filePath) => api.post(`/locks/${filePath}`),
+  release: (filePath) => api.delete(`/locks/${filePath}`),
+  heartbeat: (filePath) => api.put(`/locks/${filePath}/heartbeat`),
+}
+
 // ── Promotion ──────────────────────────────────────────────────────
 export const promotionApi = {
   getSummary: () => api.get('/promotion/summary'),

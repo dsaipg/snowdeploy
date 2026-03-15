@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import Editor from '@monaco-editor/react'
-import { filesApi } from '../api/client'
+import { filesApi, lockApi } from '../api/client'
 
 const SUBFOLDERS = ['tables/core', 'tables/staging', 'views', 'procedures', 'migrations', 'scripts']
 
@@ -88,6 +88,24 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
 
   // Re-show lint panel whenever subfolder or content changes
   useEffect(() => { setLintDismissed(false) }, [subfolder, content])
+
+  // Acquire lock when a file is opened, release on cleanup
+  useEffect(() => {
+    if (!initialFile) return
+    lockApi.acquire(initialFile).catch(() => {/* non-fatal — lock warning shown in FileBrowser */})
+    return () => {
+      lockApi.release(initialFile).catch(() => {})
+    }
+  }, [initialFile])
+
+  // Heartbeat every 5 minutes to keep lock alive
+  useEffect(() => {
+    if (!initialFile) return
+    const interval = setInterval(() => {
+      lockApi.heartbeat(initialFile).catch(() => {})
+    }, 5 * 60 * 1000)
+    return () => clearInterval(interval)
+  }, [initialFile])
 
   // Load a file when initialFile changes
   useEffect(() => {

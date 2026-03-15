@@ -12,6 +12,7 @@ from routers.files_router import router as files_router
 from routers.deploy_router import router as deploy_router
 from routers.status_router import router as status_router
 from routers.promotion_router import router as promotion_router
+from routers.lock_router import router as lock_router
 import git_service
 import promotion_service
 
@@ -55,6 +56,7 @@ app.include_router(files_router)
 app.include_router(deploy_router)
 app.include_router(status_router)
 app.include_router(promotion_router)
+app.include_router(lock_router)
 
 
 # ── Public endpoints ───────────────────────────────────────────────────

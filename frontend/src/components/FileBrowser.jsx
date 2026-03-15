@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { filesApi } from '../api/client'
+import { filesApi, lockApi } from '../api/client'
 
 const FOLDER_META = {
   'tables/core':    { label: 'core',       icon: '🗃', color: '#60a5fa', indent: true },
@@ -34,29 +34,46 @@ function formatSize(bytes) {
 
 export default function FileBrowser({ onOpenFile, onNewFile }) {
   const [files, setFiles] = useState([])
+  const [locks, setLocks] = useState({})   // path → lock object
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [selectedFolder, setSelectedFolder] = useState(null)
   const [search, setSearch] = useState('')
   const [deleteConfirm, setDeleteConfirm] = useState(null)
   const [deleting, setDeleting] = useState(false)
+  const [lockWarning, setLockWarning] = useState(null)  // file being opened while locked
 
   const loadFiles = () => {
     setLoading(true)
-    filesApi.listFiles()
-      .then(res => {
-        const f = res.data.files
-        setFiles(f)
-        setError('')
-        if (!selectedFolder) {
-          setSelectedFolder(ALL_FOLDERS[0].key)
+    Promise.all([filesApi.listFiles(), lockApi.list()])
+      .then(([filesRes, locksRes]) => {
+        setFiles(filesRes.data.files)
+        const lockMap = {}
+        for (const lock of (locksRes.data || [])) {
+          lockMap[lock.file_path] = lock
         }
+        setLocks(lockMap)
+        setError('')
+        if (!selectedFolder) setSelectedFolder(ALL_FOLDERS[0].key)
       })
       .catch(() => setError('Failed to load files.'))
       .finally(() => setLoading(false))
   }
 
-  useEffect(() => { loadFiles() }, [])
+  useEffect(() => {
+    loadFiles()
+    const interval = setInterval(loadFiles, 30000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const handleOpenFile = (file) => {
+    const lock = locks[file.path]
+    if (lock) {
+      setLockWarning({ file, lock })
+    } else {
+      onOpenFile(file.path)
+    }
+  }
 
   const handleDelete = async (file) => {
     setDeleting(true)
@@ -176,28 +193,55 @@ export default function FileBrowser({ onOpenFile, onNewFile }) {
                 <div style={styles.emptyFolder}>
                   {search ? `No files matching "${search}"` : 'No files in this folder'}
                 </div>
-              ) : filteredFiles.map(file => (
-                <div key={file.path} style={styles.fileRow}>
-                  <span style={styles.colName}>
-                    <span style={{ fontSize: 13 }}>🗒</span>
-                    <span style={styles.fileName}>{file.name}</span>
-                  </span>
-                  <span style={styles.colMeta}>{formatDate(file.last_modified)}</span>
-                  <span style={styles.colMeta}>{formatSize(file.size_bytes)}</span>
-                  <span style={styles.colCommit}>
-                    {file.last_commit_message
-                      ? file.last_commit_message.slice(0, 50) + (file.last_commit_message.length > 50 ? '…' : '')
-                      : <span style={{ color: '#334155' }}>—</span>}
-                  </span>
-                  <span style={styles.colActions}>
-                    <button style={styles.actionBtn} onClick={() => onOpenFile(file.path)}>Open</button>
-                    <button
-                      style={{ ...styles.actionBtn, ...styles.deleteBtn }}
-                      onClick={() => setDeleteConfirm(file)}
-                    >Delete</button>
-                  </span>
-                </div>
-              ))}
+              ) : filteredFiles.map(file => {
+                const lock = locks[file.path]
+                return (
+                  <div key={file.path} style={styles.fileRow}>
+                    <span style={styles.colName}>
+                      <span style={{ fontSize: 13 }}>{lock ? '🔒' : '🗒'}</span>
+                      <span style={styles.fileName}>{file.name}</span>
+                      {lock && <span style={styles.lockBadge}>{lock.display_name}</span>}
+                    </span>
+                    <span style={styles.colMeta}>{formatDate(file.last_modified)}</span>
+                    <span style={styles.colMeta}>{formatSize(file.size_bytes)}</span>
+                    <span style={styles.colCommit}>
+                      {file.last_commit_message
+                        ? file.last_commit_message.slice(0, 50) + (file.last_commit_message.length > 50 ? '…' : '')
+                        : <span style={{ color: '#334155' }}>—</span>}
+                    </span>
+                    <span style={styles.colActions}>
+                      <button style={styles.actionBtn} onClick={() => handleOpenFile(file)}>Open</button>
+                      <button
+                        style={{ ...styles.actionBtn, ...styles.deleteBtn }}
+                        onClick={() => setDeleteConfirm(file)}
+                      >Delete</button>
+                    </span>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Lock warning modal */}
+      {lockWarning && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modal}>
+            <h3 style={{ color: '#f1f5f9', marginBottom: 12 }}>File is being edited</h3>
+            <p style={{ color: '#94a3b8', marginBottom: 8, fontSize: 14 }}>
+              <strong style={{ color: '#fcd34d' }}>{lockWarning.lock.display_name}</strong> is currently editing{' '}
+              <strong style={{ color: '#e2e8f0' }}>{lockWarning.file.name}</strong>.
+            </p>
+            <p style={{ color: '#64748b', marginBottom: 20, fontSize: 13 }}>
+              You can still open it, but your changes may conflict with theirs.
+            </p>
+            <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
+              <button style={styles.actionBtn} onClick={() => setLockWarning(null)}>Cancel</button>
+              <button
+                style={{ ...styles.actionBtn, background: '#1e3a5f', borderColor: '#2563eb', color: '#93c5fd' }}
+                onClick={() => { onOpenFile(lockWarning.file.path); setLockWarning(null) }}
+              >Open anyway</button>
             </div>
           </div>
         </div>
@@ -339,6 +383,11 @@ const styles = {
     color: '#94a3b8', fontSize: 12, cursor: 'pointer', whiteSpace: 'nowrap',
   },
   deleteBtn: { background: '#1a0e0e', borderColor: '#7f1d1d', color: '#fca5a5' },
+  lockBadge: {
+    fontSize: 10, color: '#fcd34d', background: '#1c1400',
+    border: '1px solid #92400e', borderRadius: 4,
+    padding: '1px 6px', flexShrink: 0, whiteSpace: 'nowrap',
+  },
   modalOverlay: {
     position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)',
     display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100,
