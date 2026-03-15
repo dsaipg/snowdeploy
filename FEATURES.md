@@ -42,10 +42,9 @@ against Snowflake. Git is the audit trail — invisible to analysts.
 - **Needs:** IdP details (which provider? client ID, tenant ID)
 
 ### 3. Audit Log
-- [ ] Persistent log of: who submitted, who approved, who deployed, to which env, when
-- [ ] UI panel (simple table, filterable by date/user/env)
-- [ ] Export to CSV
-- **Note:** data already exists in promotion_service, needs proper storage + UI
+- [x] promotions.json committed to git on every state change (submit/approve/deploy)
+- [ ] UI panel showing git log for the team's folder (who saved what, when)
+- **Note:** Git is the audit trail — no separate database needed
 
 ### 4. Deploy Status in Promote Tab
 - [ ] After clicking Deploy, show Airflow run status inline (no need to switch to History)

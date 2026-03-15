@@ -50,6 +50,27 @@ def _save():
     p = _persist_path()
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(_store, default=str, indent=2))
+    _commit_promotions(p)
+
+
+def _commit_promotions(p: Path):
+    """Commit promotions.json to git so every state change is in the audit trail."""
+    try:
+        import git
+        repo_path = os.path.abspath(settings.git_repo_path)
+        repo = git.Repo(repo_path)
+        relative = str(p.relative_to(Path(repo_path)))
+        repo.index.add([relative])
+        if repo.is_dirty(index=True):
+            repo.index.commit(
+                "audit: update promotions.json",
+                author=git.Actor(settings.git_service_account_user, settings.git_service_account_email),
+                committer=git.Actor(settings.git_service_account_user, settings.git_service_account_email),
+            )
+            if settings.git_mode == "remote":
+                repo.remotes.origin.push()
+    except Exception:
+        pass  # non-fatal — file is still saved to disk
 
 
 def _team_requests(team_id: str) -> list[dict]:
