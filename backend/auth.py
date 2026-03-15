@@ -68,13 +68,29 @@ def resolve_team_for_user(email: str, groups: list[str]) -> Optional[dict]:
 # ── Mock auth ──────────────────────────────────────────────────────────
 def mock_login(username: str, password: str, team_id: Optional[str]) -> UserInfo:
     """
-    In mock mode: any username/password is accepted.
-    team_id must match a team in teams.yaml.
+    In mock mode: validate username/password against users list in teams.yaml.
+    Team is auto-resolved from the username — no team dropdown needed.
+    Falls back to accepting any username if no users are configured (backwards compat).
     """
+    # Try to find the user in teams.yaml
+    for team in TEAMS:
+        for user in team.get("users", []):
+            if user["username"].lower() == username.lower():
+                if user.get("password") and user["password"] != password:
+                    raise HTTPException(status_code=401, detail="Incorrect password")
+                return UserInfo(
+                    username=user["username"],
+                    email=f"{user['username']}@mock.local",
+                    display_name=user.get("display_name", username.title()),
+                    team_id=team["id"],
+                    team_name=team["name"],
+                    team_folder=team["folder"],
+                )
+
+    # Fallback: no users configured — accept any username (original behaviour)
     team = get_team_by_id(team_id) if team_id else (TEAMS[0] if TEAMS else None)
     if not team:
-        raise HTTPException(status_code=400, detail=f"Team '{team_id}' not found in teams.yaml")
-
+        raise HTTPException(status_code=401, detail=f"User '{username}' not found. Check teams.yaml.")
     return UserInfo(
         username=username,
         email=f"{username}@mock.local",

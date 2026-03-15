@@ -6,15 +6,20 @@
 teams:
   - id: team_a
     name: "Team Alpha"
-    folder: "team-a"                     # subfolder in the git repo
-    snowflake_schema: "TEAM_A_SCHEMA"    # Snowflake schema this team owns
+    folder: "team-a"
+    snowflake_schema: "TEAM_A_SCHEMA"
     snowflake_database: "ANALYTICS_DB"
     snowflake_role: "TEAM_A_ROLE"
-    airflow_dag_id: "sql_deploy_dag"     # can override per team if needed
-    members:                             # SSO group names or user emails
-      - "team-a-developers"              # SSO group (preferred)
-      - "alice@company.com"             # or individual emails
-      - "bob@company.com"
+    airflow_dag_id: "sql_deploy_dag"
+    users:
+      - username: alice
+        display_name: "Alice Chen"
+        password: "password"          # dev only — use SSO in production
+        role: analyst
+      - username: bob
+        display_name: "Bob Smith"
+        password: "password"
+        role: lead
 
   - id: team_b
     name: "Team Beta"
@@ -23,20 +28,11 @@ teams:
     snowflake_database: "ANALYTICS_DB"
     snowflake_role: "TEAM_B_ROLE"
     airflow_dag_id: "sql_deploy_dag"
-    members:
-      - "team-b-developers"
-      - "carol@company.com"
-
-  - id: team_c
-    name: "Team Gamma"
-    folder: "team-c"
-    snowflake_schema: "TEAM_C_SCHEMA"
-    snowflake_database: "ANALYTICS_DB"
-    snowflake_role: "TEAM_C_ROLE"
-    airflow_dag_id: "sql_deploy_dag"
-    members:
-      - "team-c-developers"
-      - "dave@company.com"
+    users:
+      - username: rita
+        display_name: "Rita Patel"
+        password: "password"
+        role: analyst
 
 # ─────────────────────────────────────────────
 # SQL Templates — shown in the editor dropdown
