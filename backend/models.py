@@ -147,6 +147,7 @@ class PromotionRequest(BaseModel):
     notes: Optional[str] = None
     pr_url: Optional[str] = None
     pr_number: Optional[int] = None
+    schedule: Optional[str] = None  # cron expression if scheduled, None if one-time
 
 
 class SubmitPromotionRequest(BaseModel):
@@ -154,6 +155,7 @@ class SubmitPromotionRequest(BaseModel):
     from_env: str = Field("dev", description="Source environment: dev | qa")
     to_env: str = Field("qa", description="Target environment: qa | prod")
     notes: Optional[str] = None
+    schedule: Optional[str] = Field(None, description="Cron expression e.g. '0 6 * * *' for daily at 6am. None = one-time deploy.")
 
 
 class PromotionSummary(BaseModel):

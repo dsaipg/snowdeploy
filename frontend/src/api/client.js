@@ -77,8 +77,8 @@ export const lockApi = {
 export const promotionApi = {
   getSummary: () => api.get('/promotion/summary'),
   getRequests: () => api.get('/promotion/requests'),
-  submit: (files, fromEnv, toEnv, notes) =>
-    api.post('/promotion/submit', { files, from_env: fromEnv, to_env: toEnv, notes: notes || null }),
+  submit: (files, fromEnv, toEnv, notes, schedule) =>
+    api.post('/promotion/submit', { files, from_env: fromEnv, to_env: toEnv, notes: notes || null, schedule: schedule || null }),
   approve: (requestId) => api.post(`/promotion/approve/${requestId}`),
   deploy: (requestId) => api.post(`/promotion/deploy/${requestId}`),
 }

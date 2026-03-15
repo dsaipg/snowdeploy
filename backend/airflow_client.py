@@ -38,6 +38,7 @@ async def trigger_dag(
     snowflake_schema: str,
     dag_id: str,
     notes: Optional[str] = None,
+    schedule: Optional[str] = None,
 ) -> DeployResponse:
 
     # run_id format: portal__{dag_id}__{timestamp} — uniquely identifies this execution
@@ -53,6 +54,7 @@ async def trigger_dag(
             "files": files,
             "triggered_at": triggered_at,
             "environment": environment,
+            "schedule": schedule,
         }
         return DeployResponse(
             run_id=run_id,
@@ -72,6 +74,7 @@ async def trigger_dag(
         "environment": environment,
         "snowflake_schema": snowflake_schema,
         "notes": notes or "",
+        "schedule": schedule or "",
     }
 
     async with httpx.AsyncClient() as client:

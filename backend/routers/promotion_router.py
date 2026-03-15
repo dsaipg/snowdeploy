@@ -58,6 +58,7 @@ async def submit(body: SubmitPromotionRequest, user: UserInfo = Depends(get_curr
         files=body.files,
         submitted_by=user.display_name,
         notes=body.notes,
+        schedule=body.schedule,
     )
 
 
@@ -109,6 +110,7 @@ async def deploy_promotion(request_id: str, user: UserInfo = Depends(get_current
             snowflake_schema=snowflake_schema,
             dag_id=dag_id,
             notes=req.notes,
+            schedule=req.schedule,
         )
     except Exception as e:
         raise HTTPException(502, f"Failed to trigger deployment: {e}")

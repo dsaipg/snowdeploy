@@ -185,6 +185,7 @@ def submit_promotion(
     files: list[str],
     submitted_by: str,
     notes: Optional[str] = None,
+    schedule: Optional[str] = None,
 ) -> PromotionRequest:
     req: dict = {
         "id": str(uuid.uuid4()),
@@ -201,6 +202,7 @@ def submit_promotion(
         "notes": notes,
         "pr_url": None,
         "pr_number": None,
+        "schedule": schedule,
     }
 
     if settings.promotion_mode == "github" and settings.github_token and settings.github_repo:

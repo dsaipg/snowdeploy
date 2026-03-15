@@ -11,6 +11,17 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { filesApi, promotionApi, statusApi } from '../api/client'
 
 const ENV_LABELS = { dev: 'Dev', qa: 'QA', prod: 'Prod' }
+const SCHEDULABLE_FOLDERS = ['procedures', 'sql_scripts']
+const DAY_MAP = { monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6, sunday: 0 }
+
+function buildCron(type, time, day, custom) {
+  if (type === 'custom') return custom.trim()
+  const [h, m] = (time || '06:00').split(':')
+  if (type === 'hourly') return `0 * * * *`
+  if (type === 'daily')  return `${m} ${h} * * *`
+  if (type === 'weekly') return `${m} ${h} * * ${DAY_MAP[day] ?? 1}`
+  return ''
+}
 const ENV_COLORS = {
   dev:  { bg: '#0d2137', border: '#1d4ed8', text: '#93c5fd', dot: '#3b82f6' },
   qa:   { bg: '#1a1a0d', border: '#a16207', text: '#fde68a', dot: '#eab308' },
@@ -38,6 +49,11 @@ export default function PromotionPanel({ user }) {
   const [selectedFiles, setSelectedFiles] = useState([])
   const [targetEnv, setTargetEnv]     = useState('qa')   // qa | prod
   const [notes, setNotes]             = useState('')
+  const [schedEnabled, setSchedEnabled] = useState(false)
+  const [schedType, setSchedType]     = useState('daily')   // hourly|daily|weekly|custom
+  const [schedTime, setSchedTime]     = useState('06:00')
+  const [schedDay, setSchedDay]       = useState('monday')
+  const [schedCustom, setSchedCustom] = useState('')
   const [submitting, setSubmitting]   = useState(false)
   const [actionLoading, setActionLoading] = useState({})  // requestId → 'approve'|'deploy'
   const [airflowRuns, setAirflowRuns] = useState({})      // requestId → { run_id, dag_id, statusData }
@@ -77,11 +93,13 @@ export default function PromotionPanel({ user }) {
     setSubmitting(true)
     setError(null)
     setSuccess(null)
+    const schedule = schedEnabled ? buildCron(schedType, schedTime, schedDay, schedCustom) : null
     try {
-      await promotionApi.submit(selectedFiles, 'dev', targetEnv, notes)
+      await promotionApi.submit(selectedFiles, 'dev', targetEnv, notes, schedule)
       setSelectedFiles([])
       setNotes('')
-      setSuccess(`Submitted ${selectedFiles.length} file(s) for ${ENV_LABELS[targetEnv]} review`)
+      setSchedEnabled(false)
+      setSuccess(`Submitted ${selectedFiles.length} file(s) for ${ENV_LABELS[targetEnv]} review${schedule ? ` — scheduled: ${schedule}` : ''}`)
       await load()
     } catch (e) {
       setError(e.response?.data?.detail || 'Submission failed')
@@ -239,6 +257,83 @@ export default function PromotionPanel({ user }) {
             />
           </div>
 
+          {/* Schedule toggle — only shown when schedulable files selected */}
+          {selectedFiles.some(f => SCHEDULABLE_FOLDERS.some(sf => f.startsWith(sf))) && (
+            <div style={s.scheduleBox}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={schedEnabled}
+                  onChange={e => setSchedEnabled(e.target.checked)}
+                  style={{ accentColor: '#6366f1' }}
+                />
+                <span style={{ fontSize: 12, color: '#a5b4fc', fontWeight: 600 }}>Run on a schedule</span>
+              </label>
+
+              {schedEnabled && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
+                  {/* Type selector */}
+                  <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+                    {['hourly', 'daily', 'weekly', 'custom'].map(t => (
+                      <button
+                        key={t}
+                        style={{ ...s.schedTypeBtn, ...(schedType === t ? s.schedTypeBtnActive : {}) }}
+                        onClick={() => setSchedType(t)}
+                      >
+                        {t}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Time picker (not for hourly or custom) */}
+                  {(schedType === 'daily' || schedType === 'weekly') && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={s.schedLabel}>at (UTC)</span>
+                      <input
+                        type="time"
+                        value={schedTime}
+                        onChange={e => setSchedTime(e.target.value)}
+                        style={s.schedInput}
+                      />
+                    </div>
+                  )}
+
+                  {/* Day picker (weekly only) */}
+                  {schedType === 'weekly' && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={s.schedLabel}>on</span>
+                      <select
+                        value={schedDay}
+                        onChange={e => setSchedDay(e.target.value)}
+                        style={s.schedInput}
+                      >
+                        {Object.keys(DAY_MAP).map(d => (
+                          <option key={d} value={d}>{d.charAt(0).toUpperCase() + d.slice(1)}</option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
+                  {/* Custom cron */}
+                  {schedType === 'custom' && (
+                    <input
+                      type="text"
+                      value={schedCustom}
+                      onChange={e => setSchedCustom(e.target.value)}
+                      placeholder="e.g. 0 6 * * 1-5"
+                      style={s.schedInput}
+                    />
+                  )}
+
+                  {/* Preview */}
+                  <div style={s.schedPreview}>
+                    cron: <code style={{ color: '#a5b4fc' }}>{buildCron(schedType, schedTime, schedDay, schedCustom) || '—'}</code>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
           {error && <div style={s.errorBanner}>{error}</div>}
           {success && <div style={s.successBanner}>{success}</div>}
 
@@ -295,6 +390,9 @@ export default function PromotionPanel({ user }) {
 
                 {req.notes && (
                   <div style={s.reqNotes}>{req.notes}</div>
+                )}
+                {req.schedule && (
+                  <div style={s.schedPill}>🕐 Scheduled: <code style={{ color: '#a5b4fc' }}>{req.schedule}</code></div>
                 )}
 
                 {req.pr_url && (
@@ -584,4 +682,32 @@ const s = {
   },
   deployedFiles: { color: '#64748b', fontFamily: 'monospace', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
   deployedTime: { color: '#334155', flexShrink: 0 },
+  scheduleBox: {
+    background: '#0f0f1a', border: '1px solid #3730a3',
+    borderRadius: 7, padding: '10px 12px',
+  },
+  schedTypeBtn: {
+    background: 'transparent', border: '1px solid #1e293b',
+    borderRadius: 4, padding: '3px 10px',
+    color: '#64748b', fontSize: 11, cursor: 'pointer',
+  },
+  schedTypeBtnActive: {
+    background: '#1e1b4b', borderColor: '#6366f1', color: '#a5b4fc', fontWeight: 600,
+  },
+  schedLabel: { fontSize: 11, color: '#64748b', flexShrink: 0 },
+  schedInput: {
+    background: '#0f1117', border: '1px solid #1e293b',
+    borderRadius: 5, padding: '4px 8px',
+    color: '#e2e8f0', fontSize: 12, outline: 'none', flex: 1,
+  },
+  schedPreview: {
+    fontSize: 11, color: '#475569',
+    background: '#0a0f1a', borderRadius: 4,
+    padding: '4px 8px',
+  },
+  schedPill: {
+    fontSize: 11, color: '#64748b',
+    background: '#0f0f1a', border: '1px solid #3730a3',
+    borderRadius: 4, padding: '3px 8px',
+  },
 }
