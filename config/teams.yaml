@@ -28,9 +28,11 @@ teams:
       - username: alice
         display_name: "Alice Chen"
         password: "password"          # dev only — use SSO in production
+        github_username: "dsaipg"
       - username: bob
         display_name: "Bob Smith"
         password: "password"
+        github_username: "cldpd-code"
 
   - id: team_b
     name: "Team Beta"

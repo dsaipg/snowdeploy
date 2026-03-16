@@ -106,8 +106,23 @@ def _check_github_pr_merged(pr_number: int) -> Optional[bool]:
         return None
 
 
+def _get_team_reviewers(team_id: str, submitted_by_github: Optional[str] = None) -> list[str]:
+    """Return GitHub usernames of all team members except the submitter."""
+    from config import TEAMS
+    team = next((t for t in TEAMS if t["id"] == team_id), None)
+    if not team:
+        return []
+    reviewers = []
+    for user in team.get("users", []):
+        gh = user.get("github_username")
+        if gh and gh != submitted_by_github:
+            reviewers.append(gh)
+    return reviewers
+
+
 def _create_github_pr(team_id: str, from_env: str, to_env: str,
-                      files: list[str], submitted_by: str, notes: Optional[str]) -> dict:
+                      files: list[str], submitted_by: str, notes: Optional[str],
+                      submitted_by_github: Optional[str] = None) -> dict:
     branch_map = {"dev": "develop", "qa": "qa", "prod": "main"}
     head = branch_map.get(from_env, from_env)
     base = branch_map.get(to_env, to_env)
@@ -132,13 +147,34 @@ def _create_github_pr(team_id: str, from_env: str, to_env: str,
     )
 
     with httpx.Client(timeout=15) as client:
-        resp = client.post(
+        # Check if a PR already exists for this head→base
+        existing = client.get(
             f"https://api.github.com/repos/{settings.github_repo}/pulls",
             headers=_github_headers(),
-            json={"title": title, "head": head, "base": base, "body": body},
+            params={"head": f"{settings.github_repo.split('/')[0]}:{head}", "base": base, "state": "open"},
         )
-        resp.raise_for_status()
-        return resp.json()
+        existing_prs = existing.json() if existing.status_code == 200 else []
+        if existing_prs:
+            pr = existing_prs[0]
+        else:
+            resp = client.post(
+                f"https://api.github.com/repos/{settings.github_repo}/pulls",
+                headers=_github_headers(),
+                json={"title": title, "head": head, "base": base, "body": body},
+            )
+            resp.raise_for_status()
+            pr = resp.json()
+
+        # Request reviewers so teammates get email notifications
+        reviewers = _get_team_reviewers(team_id, submitted_by_github)
+        if reviewers and pr.get("number"):
+            client.post(
+                f"https://api.github.com/repos/{settings.github_repo}/pulls/{pr['number']}/requested_reviewers",
+                headers=_github_headers(),
+                json={"reviewers": reviewers},
+            )
+
+    return pr
 
 
 # ── Core operations ────────────────────────────────────────────────────
@@ -207,7 +243,15 @@ def submit_promotion(
 
     if settings.promotion_mode == "github" and settings.github_token and settings.github_repo:
         try:
-            pr = _create_github_pr(team_id, from_env, to_env, files, submitted_by, notes)
+            from config import TEAMS
+            team = next((t for t in TEAMS if t["id"] == team_id), None)
+            submitter_github = None
+            if team:
+                for u in team.get("users", []):
+                    if u.get("display_name") == submitted_by:
+                        submitter_github = u.get("github_username")
+                        break
+            pr = _create_github_pr(team_id, from_env, to_env, files, submitted_by, notes, submitter_github)
             req["pr_url"] = pr.get("html_url")
             req["pr_number"] = pr.get("number")
         except Exception as e:
