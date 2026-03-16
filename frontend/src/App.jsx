@@ -8,13 +8,18 @@ import HistoryPanel from './components/HistoryPanel'
 import PromotionPanel from './components/PromotionPanel'
 
 export default function App() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(() => {
+    try {
+      const stored = localStorage.getItem('sql_portal_user')
+      const token = localStorage.getItem('sql_portal_token')
+      return stored && token ? JSON.parse(stored) : null
+    } catch {
+      return null
+    }
+  })
   const [appConfig, setAppConfig] = useState(null)
   const [activeTab, setActiveTab] = useState('files')
   const [openFile, setOpenFile] = useState(null)   // filename to open in editor
-
-  // Session is restored via Login component's returning-user card
-  // (Login reads localStorage and calls onLogin on one-click sign-in)
 
   // Load app config (templates, team info) once logged in
   useEffect(() => {
