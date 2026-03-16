@@ -36,7 +36,7 @@ services:
       # ── Auth ──────────────────────────────────────
       # Options: mock | jwt | oauth
       AUTH_MODE: "mock"
-      JWT_SECRET: "dev-secret-change-in-prod"
+      JWT_SECRET: "${JWT_SECRET:-dev-secret-change-in-prod}"
       JWT_EXPIRE_MINUTES: "480"
 
       # Uncomment for OAuth mode:
@@ -49,7 +49,7 @@ services:
       # Options: local | remote
       GIT_MODE: "remote"
       GIT_REPO_PATH: "./repo"
-      GIT_REPO_URL: "https://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@github.com/dsaipg/snowdeploy-sample.git"
+      GIT_REPO_URL: "${GIT_REPO_URL}"
       GIT_BRANCH: "develop"
       GIT_SERVICE_ACCOUNT_USER: "sql-portal-bot"
       GIT_SERVICE_ACCOUNT_EMAIL: "sql-portal@company.com"
@@ -66,7 +66,7 @@ services:
       # Options: mock | github
       PROMOTION_MODE: "github"
       MOCK_APPROVAL_DELAY_S: "30"
-      GITHUB_TOKEN: "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"
+      GITHUB_TOKEN: "${GITHUB_TOKEN}"
       GITHUB_REPO: "dsaipg/snowdeploy-sample"
 
       # ── Config ────────────────────────────────────

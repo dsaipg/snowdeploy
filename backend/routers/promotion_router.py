@@ -9,6 +9,7 @@ Endpoints:
   POST /promotion/deploy/{id}      — trigger Airflow deploy for an approved promotion
 """
 from fastapi import APIRouter, Depends, HTTPException
+from typing import Optional
 
 from auth import get_current_user
 from config import settings, TEAMS
@@ -21,6 +22,7 @@ from models import (
 )
 import promotion_service
 import airflow_client
+import dag_yaml_service
 
 router = APIRouter(prefix="/promotion", tags=["promotion"])
 
@@ -132,4 +134,25 @@ async def deploy_promotion(request_id: str, user: UserInfo = Depends(get_current
 
     promotion_service.mark_deployed(user.team_id, request_id)
 
-    return {"run_id": deploy_resp.run_id, "dag_id": deploy_resp.dag_id, "promotion_id": request_id}
+    # If this promotion has a cron schedule, write / update the dag-factory YAML
+    # and commit it to git so MWAA picks it up automatically.
+    dag_yaml_id: Optional[str] = None
+    if req.schedule:
+        try:
+            dag_yaml_id = dag_yaml_service.upsert_scheduled_dag(
+                team_id=user.team_id,
+                team_folder=user.team_folder,
+                files=req.files,
+                env=req.to_env,
+                schedule=req.schedule,
+                notes=req.notes,
+                team_cfg=team_cfg,
+            )
+        except Exception as e:
+            # Non-fatal — deployment already succeeded; log the YAML failure
+            print(f"[dag_yaml] Failed to write dag_factory.yaml: {e}")
+
+    result = {"run_id": deploy_resp.run_id, "dag_id": deploy_resp.dag_id, "promotion_id": request_id}
+    if dag_yaml_id:
+        result["scheduled_dag_id"] = dag_yaml_id
+    return result

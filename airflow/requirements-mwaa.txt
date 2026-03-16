@@ -1,0 +1,5 @@
+# MWAA requirements.txt
+# Upload this to the S3 requirements file configured in your MWAA environment.
+
+dag-factory>=0.19.0
+apache-airflow-providers-snowflake>=5.0.0
