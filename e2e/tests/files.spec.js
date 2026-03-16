@@ -118,7 +118,14 @@ test.describe('FILES — Folder tree and file list', () => {
     const openBtn = alicePage.getByRole('button', { name: 'Open' }).first();
     if (await openBtn.isVisible({ timeout: 5000 })) {
       await openBtn.click();
-      await alicePage.waitForTimeout(1500);
+      await alicePage.waitForTimeout(1000);
+
+      // Dismiss lock warning if another test left a stale lock
+      const openAnyway = alicePage.getByRole('button', { name: /Open anyway/i });
+      if (await openAnyway.isVisible({ timeout: 2000 }).catch(() => false)) {
+        await openAnyway.click();
+      }
+      await alicePage.waitForTimeout(2000); // give lock time to register
 
       // Bob opens Files tab
       const bobCtx = await browser.newContext();
@@ -126,10 +133,10 @@ test.describe('FILES — Folder tree and file list', () => {
       await login(bobPage, 'bob');
       await goToTab(bobPage, 'Files');
       await bobPage.getByText('views').first().click();
-      await bobPage.waitForTimeout(2500);
+      await bobPage.waitForTimeout(3500);
 
       // 🔒 lock badge with alice's name should be visible
-      await expect(bobPage.getByText('Alice Chen').first()).toBeVisible({ timeout: 8000 });
+      await expect(bobPage.getByText('Alice Chen').first()).toBeVisible({ timeout: 10000 });
       await bobCtx.close();
     }
   });

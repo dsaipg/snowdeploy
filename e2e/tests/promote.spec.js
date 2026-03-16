@@ -2,6 +2,23 @@
 const { test, expect } = require('@playwright/test');
 const { login, goToTab, API } = require('./helpers');
 
+// Clear all promotion requests for alice + bob teams before/after each test
+// to prevent accumulated test state from interfering.
+async function clearPromotions(request) {
+  for (const username of ['alice', 'bob']) {
+    try {
+      const loginRes = await request.post(`${API}/auth/login`, {
+        data: { username, password: 'password' },
+      });
+      if (!loginRes.ok()) continue;
+      const { access_token } = await loginRes.json();
+      await request.delete(`${API}/promotion/requests`, {
+        headers: { Authorization: `Bearer ${access_token}` },
+      });
+    } catch { /* non-fatal */ }
+  }
+}
+
 // Helper: alice submits one file, returns the page
 async function aliceSubmitsOneFile(page) {
   await login(page, 'alice');
@@ -14,6 +31,14 @@ async function aliceSubmitsOneFile(page) {
 }
 
 test.describe('PROMOTE — Submission and approval flow', () => {
+
+  test.beforeEach(async ({ request }) => {
+    await clearPromotions(request);
+  });
+
+  test.afterEach(async ({ request }) => {
+    await clearPromotions(request);
+  });
 
   test('PROMOTE-001: Promote tab visible and clickable after login', async ({ page }) => {
     await login(page, 'alice');

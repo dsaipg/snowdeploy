@@ -83,6 +83,7 @@ export const promotionApi = {
     api.post('/promotion/submit', { files, from_env: fromEnv, to_env: toEnv, notes: notes || null, schedule: schedule || null }),
   approve: (requestId) => api.post(`/promotion/approve/${requestId}`),
   deploy: (requestId) => api.post(`/promotion/deploy/${requestId}`),
+  clearRequests: () => api.delete('/promotion/requests'),  // debug/test only
 }
 
 export default api

@@ -290,6 +290,12 @@ def approve_promotion(team_id: str, request_id: str, reviewed_by: str) -> Option
     return None
 
 
+def clear_requests(team_id: str) -> None:
+    """Remove all promotion requests for a team. Debug/test use only."""
+    _store[team_id] = []
+    _save()
+
+
 def mark_deployed(team_id: str, request_id: str) -> Optional[PromotionRequest]:
     for req in _team_requests(team_id):
         if req["id"] == request_id and req["status"] == PromotionStatus.approved:

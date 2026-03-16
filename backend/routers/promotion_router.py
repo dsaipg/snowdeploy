@@ -79,6 +79,14 @@ async def approve(request_id: str, user: UserInfo = Depends(get_current_user)):
     return req
 
 
+@router.delete("/requests", status_code=204)
+async def clear_requests(user: UserInfo = Depends(get_current_user)):
+    """Debug/test only — clears all promotion requests for the current team."""
+    if not settings.debug:
+        raise HTTPException(403, "Only available in debug mode")
+    promotion_service.clear_requests(user.team_id)
+
+
 @router.post("/deploy/{request_id}")
 async def deploy_promotion(request_id: str, user: UserInfo = Depends(get_current_user)):
     """Anyone on the team can deploy an approved promotion."""
