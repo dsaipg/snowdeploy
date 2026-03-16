@@ -60,15 +60,13 @@ export default function App() {
       activeTab={activeTab}
       setActiveTab={setActiveTab}
     >
-      {activeTab === 'files' && (
-        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
-          <FileBrowser
-            onOpenFile={handleOpenFile}
-            onNewFile={handleNewFile}
-          />
-        </div>
-      )}
-      {activeTab === 'editor' && (
+      <div style={{ display: activeTab === 'files' ? 'flex' : 'none', flexDirection: 'column', flex: 1, minHeight: 0 }}>
+        <FileBrowser
+          onOpenFile={handleOpenFile}
+          onNewFile={handleNewFile}
+        />
+      </div>
+      <div style={{ display: activeTab === 'editor' ? 'flex' : 'none', flexDirection: 'column', flex: 1, minHeight: 0 }}>
         <SqlEditor
           initialFile={openFile}
           templates={appConfig?.sql_templates || []}
@@ -76,13 +74,13 @@ export default function App() {
             setOpenFile(filename)
           }}
         />
-      )}
-      {activeTab === 'history' && (
+      </div>
+      <div style={{ display: activeTab === 'history' ? 'flex' : 'none', flexDirection: 'column', flex: 1, minHeight: 0 }}>
         <HistoryPanel />
-      )}
-      {activeTab === 'promote' && (
+      </div>
+      <div style={{ display: activeTab === 'promote' ? 'flex' : 'none', flexDirection: 'column', flex: 1, minHeight: 0 }}>
         <PromotionPanel user={user} />
-      )}
+      </div>
     </Layout>
   )
 }
