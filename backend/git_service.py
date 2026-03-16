@@ -103,7 +103,7 @@ def init_repo():
             if "origin" not in [r.name for r in repo.remotes]:
                 repo.create_remote("origin", settings.git_repo_url)
             repo.remotes.origin.fetch()
-            repo.git.reset("--hard", f"origin/{settings.git_branch}")
+            repo.git.checkout("-B", settings.git_branch, f"origin/{settings.git_branch}")
 
 
 def _get_repo() -> Optional["git.Repo"]:
@@ -121,7 +121,7 @@ def _pull_latest():
         repo = _get_repo()
         if repo and "origin" in [r.name for r in repo.remotes]:
             repo.remotes.origin.fetch()
-            repo.git.reset("--hard", f"origin/{settings.git_branch}")
+            repo.git.checkout("-B", settings.git_branch, f"origin/{settings.git_branch}")
 
 
 # ── Read operations ────────────────────────────────────────────────────
