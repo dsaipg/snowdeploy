@@ -162,6 +162,11 @@ def _create_github_pr(team_id: str, from_env: str, to_env: str,
                 headers=_github_headers(),
                 json={"title": title, "head": head, "base": base, "body": body},
             )
+            if resp.status_code == 422:
+                errors = resp.json().get("errors", [])
+                if any("no commits between" in str(e).lower() or "pull request already exists" in str(e).lower() for e in errors):
+                    raise ValueError(f"No new changes on '{head}' to promote to '{base}'. Save the file first to create a new commit.")
+                raise ValueError(f"GitHub PR error: {resp.json().get('message', resp.text)}")
             resp.raise_for_status()
             pr = resp.json()
 
