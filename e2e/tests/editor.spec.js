@@ -2,6 +2,20 @@
 const { test, expect } = require('@playwright/test');
 const { login, goToTab, uniqueFile } = require('./helpers');
 
+// Set Monaco editor content via the public API (textarea is not directly editable)
+async function fillMonaco(page, sql) {
+  // Wait for Monaco to initialise
+  await page.waitForFunction(
+    () => window.monaco?.editor?.getEditors?.()?.length > 0,
+    { timeout: 10000 }
+  );
+  await page.evaluate((sql) => {
+    const editors = window.monaco?.editor?.getEditors?.() || [];
+    if (editors.length > 0) editors[0].setValue(sql);
+  }, sql);
+  await page.waitForTimeout(300);
+}
+
 test.describe('EDITOR — Save and file management', () => {
 
   test('EDITOR-001: Editor tab shows subfolder select, filename input, Save button', async ({ page }) => {
@@ -32,14 +46,9 @@ test.describe('EDITOR — Save and file management', () => {
     const filename = uniqueFile('e2e_view');
 
     await page.locator('select').first().selectOption('views');
-    await page.getByPlaceholder('filename.sql').clear();
     await page.getByPlaceholder('filename.sql').fill(filename);
-    // Type SQL into Monaco editor
-    await page.locator('.monaco-editor').click();
-    await page.keyboard.press('Control+a');
-    await page.keyboard.type('CREATE OR REPLACE VIEW e2e_test AS SELECT 1 AS col;');
+    await fillMonaco(page, 'CREATE OR REPLACE VIEW e2e_test AS SELECT 1 AS col;');
     await page.getByRole('button', { name: /💾 Save|Save/i }).click();
-    // Should show success status bar
     await expect(page.getByText(/✓ Saved|commit:/i)).toBeVisible({ timeout: 20000 });
   });
 
@@ -50,20 +59,19 @@ test.describe('EDITOR — Save and file management', () => {
 
     await page.locator('select').first().selectOption('views');
     await page.getByPlaceholder('filename.sql').fill(filename);
-    await page.locator('.monaco-editor').click();
-    await page.keyboard.press('Control+a');
-    await page.keyboard.type('SELECT 2;');
+    await fillMonaco(page, 'SELECT 2 AS sha_test;');
     await page.getByRole('button', { name: /💾 Save|Save/i }).click();
-    // Status bar should show 7-char commit SHA
     await expect(page.getByText(/commit: [a-f0-9]{7}/i)).toBeVisible({ timeout: 20000 });
   });
 
   test('EDITOR-005: save with empty filename shows error', async ({ page }) => {
     await login(page, 'alice');
     await goToTab(page, 'Editor');
-    await page.getByPlaceholder('filename.sql').clear();
+    // Use New button to guarantee empty filename state
+    await page.getByRole('button', { name: /^New$/i }).click();
     await page.getByRole('button', { name: /💾 Save|Save/i }).click();
-    await expect(page.getByText(/enter a filename|filename/i)).toBeVisible({ timeout: 5000 });
+    // App shows: "Enter a filename before saving."
+    await expect(page.getByText(/enter a filename before saving/i)).toBeVisible({ timeout: 5000 });
   });
 
   test('EDITOR-006: filename without .sql gets .sql appended automatically', async ({ page }) => {
@@ -72,11 +80,9 @@ test.describe('EDITOR — Save and file management', () => {
     const base = `e2e_noext_${Date.now()}`;
     await page.locator('select').first().selectOption('views');
     await page.getByPlaceholder('filename.sql').fill(base); // no .sql
-    await page.locator('.monaco-editor').click();
-    await page.keyboard.press('Control+a');
-    await page.keyboard.type('SELECT 3;');
+    await fillMonaco(page, 'SELECT 3 AS no_ext;');
     await page.getByRole('button', { name: /💾 Save|Save/i }).click();
-    // Status bar should show the name with .sql
+    // Status bar should show the name with .sql appended
     await expect(page.getByText(new RegExp(`${base}\\.sql`, 'i'))).toBeVisible({ timeout: 20000 });
   });
 
@@ -84,72 +90,79 @@ test.describe('EDITOR — Save and file management', () => {
     await login(page, 'alice');
     await goToTab(page, 'Files');
     await page.getByText('views').first().click();
-    await page.waitForTimeout(1500);
+    await page.waitForTimeout(2000);
 
-    const sqlFile = page.getByText(/\.sql/i).first();
-    if (await sqlFile.isVisible()) {
-      await sqlFile.click();
-      await page.waitForTimeout(2000);
-      // Monaco should have content (not blank)
-      const editorText = await page.locator('.monaco-editor .view-lines').textContent();
-      expect(editorText?.trim().length).toBeGreaterThan(0);
+    const openBtn = page.getByRole('button', { name: 'Open' }).first();
+    await expect(openBtn).toBeVisible({ timeout: 8000 });
+    await openBtn.click();
+    await page.waitForTimeout(1000);
+
+    // If a lock warning dialog appears, dismiss it with "Open anyway"
+    const openAnyway = page.getByRole('button', { name: /Open anyway/i });
+    if (await openAnyway.isVisible({ timeout: 2000 }).catch(() => false)) {
+      await openAnyway.click();
     }
+
+    // Wait for Monaco to initialise and file to load
+    await page.waitForFunction(
+      () => {
+        const editors = window.monaco?.editor?.getEditors?.() || [];
+        if (editors.length === 0) return false;
+        const val = editors[0].getValue();
+        return val.trim().length > 0;
+      },
+      { timeout: 15000 }
+    );
+    const content = await page.evaluate(() => {
+      const editors = window.monaco?.editor?.getEditors?.() || [];
+      return editors.length > 0 ? editors[0].getValue() : '';
+    });
+    expect(content.trim().length).toBeGreaterThan(0);
   });
 
   test('EDITOR-008: SQL linter fires in alter_ddls/ — DROP TABLE shows error panel', async ({ page }) => {
     await login(page, 'alice');
     await goToTab(page, 'Editor');
     await page.locator('select').first().selectOption('alter_ddls');
-    await page.locator('.monaco-editor').click();
-    await page.keyboard.press('Control+a');
-    await page.keyboard.type('DROP TABLE users;');
+    await fillMonaco(page, 'DROP TABLE users;');
     await page.waitForTimeout(1000);
-    // Lint panel should show
-    await expect(page.getByText(/DROP TABLE is destructive|destructive/i)).toBeVisible({ timeout: 5000 });
+    await expect(page.getByText(/DROP TABLE is destructive/i)).toBeVisible({ timeout: 5000 });
   });
 
   test('EDITOR-009: SQL linter fires — TRUNCATE shows error', async ({ page }) => {
     await login(page, 'alice');
     await goToTab(page, 'Editor');
     await page.locator('select').first().selectOption('alter_ddls');
-    await page.locator('.monaco-editor').click();
-    await page.keyboard.press('Control+a');
-    await page.keyboard.type('TRUNCATE TABLE orders;');
+    await fillMonaco(page, 'TRUNCATE TABLE orders;');
     await page.waitForTimeout(1000);
-    await expect(page.getByText(/TRUNCATE deletes|migration/i)).toBeVisible({ timeout: 5000 });
+    await expect(page.getByText(/TRUNCATE deletes all rows/i)).toBeVisible({ timeout: 5000 });
   });
 
   test('EDITOR-010: SQL linter fires — ADD COLUMN without IF NOT EXISTS shows error', async ({ page }) => {
     await login(page, 'alice');
     await goToTab(page, 'Editor');
     await page.locator('select').first().selectOption('alter_ddls');
-    await page.locator('.monaco-editor').click();
-    await page.keyboard.press('Control+a');
-    await page.keyboard.type('ALTER TABLE users ADD COLUMN email VARCHAR(255);');
+    await fillMonaco(page, 'ALTER TABLE users ADD COLUMN email VARCHAR(255);');
     await page.waitForTimeout(1000);
-    await expect(page.getByText(/IF NOT EXISTS|already exists/i)).toBeVisible({ timeout: 5000 });
+    await expect(page.getByText(/ADD COLUMN without IF NOT EXISTS/i)).toBeVisible({ timeout: 5000 });
   });
 
   test('EDITOR-011: SQL linter fires — DROP COLUMN shows warning', async ({ page }) => {
     await login(page, 'alice');
     await goToTab(page, 'Editor');
     await page.locator('select').first().selectOption('alter_ddls');
-    await page.locator('.monaco-editor').click();
-    await page.keyboard.press('Control+a');
-    await page.keyboard.type('ALTER TABLE users DROP COLUMN email;');
+    await fillMonaco(page, 'ALTER TABLE users DROP COLUMN email;');
     await page.waitForTimeout(1000);
-    await expect(page.getByText(/DROP COLUMN is destructive|irreversible/i)).toBeVisible({ timeout: 5000 });
+    await expect(page.getByText(/DROP COLUMN is destructive/i)).toBeVisible({ timeout: 5000 });
   });
 
   test('EDITOR-012: SQL linter does NOT fire in views/ folder', async ({ page }) => {
     await login(page, 'alice');
     await goToTab(page, 'Editor');
     await page.locator('select').first().selectOption('views');
-    await page.locator('.monaco-editor').click();
-    await page.keyboard.press('Control+a');
-    await page.keyboard.type('DROP TABLE users;');
+    await fillMonaco(page, 'DROP TABLE users;');
     await page.waitForTimeout(1500);
-    // Lint panel should NOT appear for views subfolder
+    // Lint panel must NOT appear for views/ subfolder
     await expect(page.getByText(/DROP TABLE is destructive/i)).not.toBeVisible();
   });
 
@@ -157,23 +170,20 @@ test.describe('EDITOR — Save and file management', () => {
     await login(page, 'alice');
     await goToTab(page, 'Editor');
     await page.getByRole('button', { name: /Templates/i }).click();
-    // Template dropdown should show items from teams.yaml templates
     await expect(page.getByText(/Create Table|Add Column|Create View/i).first()).toBeVisible({ timeout: 5000 });
   });
 
   test('EDITOR-014: selecting a template inserts SQL into editor', async ({ page }) => {
     await login(page, 'alice');
     await goToTab(page, 'Editor');
-    // Clear editor first
-    await page.locator('.monaco-editor').click();
-    await page.keyboard.press('Control+a');
-    await page.keyboard.press('Delete');
-
     await page.getByRole('button', { name: /Templates/i }).click();
     await page.getByText('Create Table').first().click();
-    await page.waitForTimeout(500);
-    const editorText = await page.locator('.monaco-editor .view-lines').textContent();
-    expect(editorText).toContain('CREATE TABLE');
+    await page.waitForTimeout(800); // Monaco renders async
+    const val = await page.evaluate(() => {
+      const editors = window.monaco?.editor?.getEditors?.() || [];
+      return editors.length > 0 ? editors[0].getValue() : '';
+    });
+    expect(val).toContain('CREATE TABLE');
   });
 
   test('EDITOR-015: New button clears filename and resets editor', async ({ page }) => {
@@ -181,7 +191,6 @@ test.describe('EDITOR — Save and file management', () => {
     await goToTab(page, 'Editor');
     await page.getByPlaceholder('filename.sql').fill('some_existing_file.sql');
     await page.getByRole('button', { name: /^New$/i }).click();
-    // Filename should be cleared
     const val = await page.getByPlaceholder('filename.sql').inputValue();
     expect(val).toBe('');
   });
@@ -199,9 +208,7 @@ test.describe('EDITOR — Save and file management', () => {
     await page.locator('select').first().selectOption('views');
     await page.getByPlaceholder('filename.sql').fill(filename);
     await page.getByPlaceholder('Commit message (optional)').fill('e2e: custom commit message test');
-    await page.locator('.monaco-editor').click();
-    await page.keyboard.press('Control+a');
-    await page.keyboard.type('SELECT 99;');
+    await fillMonaco(page, 'SELECT 99 AS msg_test;');
     await page.getByRole('button', { name: /💾 Save|Save/i }).click();
     await expect(page.getByText(/✓ Saved|commit:/i)).toBeVisible({ timeout: 20000 });
   });

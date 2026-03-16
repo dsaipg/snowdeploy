@@ -21,10 +21,12 @@ api.interceptors.request.use((req) => {
 api.interceptors.response.use(
   (res) => res,
   (err) => {
-    if (err.response?.status === 401) {
+    // Don't redirect on login endpoint 401s — let the form show the error
+    const isLoginEndpoint = err.config?.url?.includes('/auth/login')
+    if (err.response?.status === 401 && !isLoginEndpoint) {
       localStorage.removeItem('sql_portal_token')
       localStorage.removeItem('sql_portal_user')
-      window.location.href = '/login'
+      window.location.href = '/'
     }
     return Promise.reject(err)
   }

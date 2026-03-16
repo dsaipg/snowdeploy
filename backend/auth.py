@@ -89,7 +89,11 @@ def mock_login(username: str, password: str, team_id: Optional[str]) -> UserInfo
                     role=user.get("role", "analyst"),
                 )
 
-    # Fallback: no users configured — accept any username (original behaviour)
+    # If any team has users configured, reject unknown usernames (no fallback)
+    if any(team.get("users") for team in TEAMS):
+        raise HTTPException(status_code=401, detail=f"User '{username}' not found. Check teams.yaml.")
+
+    # Fallback: no users configured in any team — accept any username (backwards compat)
     team = get_team_by_id(team_id) if team_id else (TEAMS[0] if TEAMS else None)
     if not team:
         raise HTTPException(status_code=401, detail=f"User '{username}' not found. Check teams.yaml.")

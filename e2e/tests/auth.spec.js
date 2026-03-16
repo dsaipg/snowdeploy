@@ -1,6 +1,6 @@
 // AUTH — Login, session, returning user, team isolation
 const { test, expect } = require('@playwright/test');
-const { login, clearSession, goToTab, BASE } = require('./helpers');
+const { login, clearSession, BASE } = require('./helpers');
 
 test.describe('AUTH — Login', () => {
 
@@ -34,8 +34,9 @@ test.describe('AUTH — Login', () => {
     await page.getByPlaceholder('e.g. alice').fill('alice');
     await page.locator('input[type="password"]').fill('wrongpassword');
     await page.getByRole('button', { name: 'Sign In' }).click();
-    await expect(page.getByText(/invalid|incorrect|failed/i)).toBeVisible({ timeout: 8000 });
-    // Should stay on login page
+    // Actual error text from the app: "Login failed. Please try again."
+    await expect(page.getByText(/login failed|invalid|incorrect/i)).toBeVisible({ timeout: 8000 });
+    // Must stay on login page
     await expect(page.getByPlaceholder('e.g. alice')).toBeVisible();
   });
 
@@ -44,36 +45,36 @@ test.describe('AUTH — Login', () => {
     await page.getByPlaceholder('e.g. alice').fill('nobody');
     await page.locator('input[type="password"]').fill('password');
     await page.getByRole('button', { name: 'Sign In' }).click();
-    await expect(page.getByText(/invalid|incorrect|failed/i)).toBeVisible({ timeout: 8000 });
+    await expect(page.getByText(/login failed|invalid|incorrect|not found/i)).toBeVisible({ timeout: 8000 });
   });
 
   test('AUTH-007: empty fields — HTML required validation prevents submit', async ({ page }) => {
     await clearSession(page);
     await page.getByRole('button', { name: 'Sign In' }).click();
-    // HTML5 required should block — stays on login
+    // HTML5 required blocks form — stays on login
     await expect(page.getByPlaceholder('e.g. alice')).toBeVisible();
-    // Nav tabs should NOT appear
     await expect(page.getByRole('button', { name: /Files/i })).not.toBeVisible();
   });
 
   test('AUTH-008: returning user card shown on second visit', async ({ page }) => {
     await login(page, 'alice', 'password');
-    // Go back to login by reloading (session still in localStorage)
+    // Stay on BASE — reload triggers the returning-user card (SPA, no /login route)
     await page.goto(BASE);
-    // Should show returning user card with alice's name
-    await expect(page.getByText('Alice Chen')).toBeVisible();
-    // One-click Sign in button
-    await expect(page.getByRole('button', { name: 'Sign in' })).toBeVisible();
-    // Should NOT show the username input
+    await page.waitForTimeout(500);
+    // Returning user card shows alice's name and one-click Sign in
+    await expect(page.getByText('Alice Chen')).toBeVisible({ timeout: 5000 });
+    await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toBeVisible();
+    // Full form inputs should NOT be shown
     await expect(page.getByPlaceholder('e.g. alice')).not.toBeVisible();
   });
 
   test('AUTH-009: "Not you? Sign in differently" clears session and shows full form', async ({ page }) => {
     await login(page, 'alice', 'password');
     await page.goto(BASE);
+    await page.waitForTimeout(500);
+    // Click "Not you?" link
     await page.getByText(/not you/i).click();
-    // Full form should appear
-    await expect(page.getByPlaceholder('e.g. alice')).toBeVisible();
+    await expect(page.getByPlaceholder('e.g. alice')).toBeVisible({ timeout: 5000 });
     await expect(page.locator('input[type="password"]')).toBeVisible();
   });
 
@@ -90,16 +91,16 @@ test.describe('AUTH — Login', () => {
   test('AUTH-012: Sign out clears session and shows login form', async ({ page }) => {
     await login(page, 'alice', 'password');
     await page.getByRole('button', { name: /sign out/i }).click();
-    // Login form should reappear
-    await expect(page.getByPlaceholder('e.g. alice')).toBeVisible();
+    await expect(page.getByPlaceholder('e.g. alice')).toBeVisible({ timeout: 5000 });
   });
 
   test('AUTH-013: one-click returning user sign-in works without re-entering credentials', async ({ page }) => {
     await login(page, 'alice', 'password');
+    // Reload BASE — returning user card appears
     await page.goto(BASE);
-    // Click the one-click Sign in button
-    await page.getByRole('button', { name: 'Sign in' }).click();
-    // Should be in the app immediately
+    await page.waitForTimeout(500);
+    await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+    // App shell should be visible immediately (no API call needed — token in localStorage)
     await expect(page.getByRole('button', { name: /Files/i })).toBeVisible({ timeout: 5000 });
   });
 

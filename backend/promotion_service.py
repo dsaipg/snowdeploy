@@ -187,6 +187,29 @@ def get_requests(team_id: str) -> list[PromotionRequest]:
     raw = _team_requests(team_id)
     changed = False
 
+    if settings.promotion_mode == "github":
+        # Check all open GitHub PRs concurrently using a thread pool
+        import concurrent.futures
+        open_reqs = [req for req in raw if req["status"] == "open" and req.get("pr_number")]
+        # Deduplicate PR numbers to avoid redundant GitHub API calls
+        unique_pr_numbers = list({req["pr_number"] for req in open_reqs})
+        if unique_pr_numbers:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=min(5, len(unique_pr_numbers))) as executor:
+                pr_results = dict(zip(
+                    unique_pr_numbers,
+                    executor.map(_check_github_pr_merged, unique_pr_numbers)
+                ))
+            for req in open_reqs:
+                merged = pr_results.get(req["pr_number"])
+                if merged is True:
+                    req["status"] = PromotionStatus.approved
+                    req["reviewed_by"] = "GitHub PR merge"
+                    req["reviewed_at"] = datetime.now(timezone.utc).isoformat()
+                    changed = True
+                elif merged is False:
+                    req["status"] = PromotionStatus.rejected
+                    changed = True
+
     for req in raw:
         if req["status"] != "open":
             continue
@@ -200,17 +223,6 @@ def get_requests(team_id: str) -> list[PromotionRequest]:
                 req["status"] = PromotionStatus.approved
                 req["reviewed_by"] = "auto-approver (mock)"
                 req["reviewed_at"] = datetime.now(timezone.utc).isoformat()
-                changed = True
-
-        elif settings.promotion_mode == "github" and req.get("pr_number"):
-            merged = _check_github_pr_merged(req["pr_number"])
-            if merged is True:
-                req["status"] = PromotionStatus.approved
-                req["reviewed_by"] = "GitHub PR merge"
-                req["reviewed_at"] = datetime.now(timezone.utc).isoformat()
-                changed = True
-            elif merged is False:
-                req["status"] = PromotionStatus.rejected
                 changed = True
 
     if changed:

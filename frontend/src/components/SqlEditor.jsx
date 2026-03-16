@@ -122,7 +122,7 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
         setFilename(parsed.filename)
         setSubfolder(parsed.subfolder)
         setContent(res.data.content)
-        setStatus(null)
+        // Don't clear status here — lets save success message remain visible
       })
       .catch(() => setStatus({ type: 'error', msg: `Failed to load ${initialFile}` }))
       .finally(() => setLoading(false))

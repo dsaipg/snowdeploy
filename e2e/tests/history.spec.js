@@ -6,7 +6,8 @@ test.describe('HISTORY — Deployment history and status', () => {
 
   test('HISTORY-001: History tab is visible after login', async ({ page }) => {
     await login(page, 'alice');
-    await expect(page.getByRole('tab', { name: /history/i })).toBeVisible();
+    // Tabs are <button> elements, not ARIA role=tab
+    await expect(page.getByRole('button', { name: /📋 History|History/i })).toBeVisible();
   });
 
   test('HISTORY-002: History tab shows deployment records', async ({ page }) => {

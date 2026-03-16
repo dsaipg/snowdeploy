@@ -13,13 +13,8 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('files')
   const [openFile, setOpenFile] = useState(null)   // filename to open in editor
 
-  // Restore session from localStorage
-  useEffect(() => {
-    const stored = localStorage.getItem('sql_portal_user')
-    if (stored) {
-      try { setUser(JSON.parse(stored)) } catch { /* ignore */ }
-    }
-  }, [])
+  // Session is restored via Login component's returning-user card
+  // (Login reads localStorage and calls onLogin on one-click sign-in)
 
   // Load app config (templates, team info) once logged in
   useEffect(() => {
@@ -70,7 +65,6 @@ export default function App() {
       )}
       {activeTab === 'editor' && (
         <SqlEditor
-          key={openFile || '__new__'}
           initialFile={openFile}
           templates={appConfig?.sql_templates || []}
           onFileSaved={(filename) => {
