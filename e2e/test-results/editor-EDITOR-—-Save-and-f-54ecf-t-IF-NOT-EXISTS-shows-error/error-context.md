@@ -1,0 +1,61 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: ❄️
+        - generic [ref=e7]: SQL Deployment Portal
+      - generic [ref=e8]: Team Alpha
+      - generic [ref=e10]:
+        - generic [ref=e11]: Alice Chen
+        - button "Sign out" [ref=e12] [cursor=pointer]
+    - navigation [ref=e13]:
+      - button "📂 Files" [ref=e14] [cursor=pointer]
+      - button "✏️ Editor" [ref=e15] [cursor=pointer]
+      - button "🔁 Promote" [ref=e16] [cursor=pointer]
+      - button "📋 History" [ref=e17] [cursor=pointer]
+    - main [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - combobox [ref=e22] [cursor=pointer]:
+              - option "schema_table_ddls/bronze"
+              - option "schema_table_ddls/silver"
+              - option "schema_table_ddls/gold"
+              - option "views"
+              - option "procedures"
+              - option "alter_ddls" [selected]
+              - option "sql_scripts"
+              - option "/ (root)"
+            - generic [ref=e23]: /
+            - textbox "filename.sql" [ref=e24]
+          - generic [ref=e25]:
+            - button "New" [ref=e26] [cursor=pointer]
+            - button "Templates ▾" [ref=e28] [cursor=pointer]
+            - textbox "Commit message (optional)" [ref=e29]
+            - button "💾 Save" [ref=e30] [cursor=pointer]
+        - generic [ref=e31]:
+          - generic [ref=e32]:
+            - generic [ref=e33]: 🚫 Migration lint — 1 issue found
+            - button "✕" [ref=e34] [cursor=pointer]
+          - generic [ref=e36]:
+            - generic [ref=e37]: error
+            - generic [ref=e38]:
+              - generic [ref=e39]: ADD COLUMN without IF NOT EXISTS — will fail if column already exists.
+              - generic [ref=e40]: → Use ADD COLUMN IF NOT EXISTS
+        - code [ref=e44]:
+          - generic [ref=e45]:
+            - textbox "Editor content" [active] [ref=e46]
+            - textbox [ref=e47]
+            - generic [ref=e49]:
+              - generic [ref=e51]: "1"
+              - generic [ref=e54]: "2"
+            - generic [ref=e59]:
+              - generic [ref=e61]: "-- Write your SQL here"
+              - generic [ref=e63]: ALTER TABLE users ADD COLUMN email VARCHAR(255);
+  - generic [ref=e66]:
+    - alert
+    - alert
+```

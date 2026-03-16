@@ -1,0 +1,52 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: ❄️
+        - generic [ref=e7]: SQL Deployment Portal
+      - generic [ref=e8]: Team Alpha
+      - generic [ref=e10]:
+        - generic [ref=e11]: Alice Chen
+        - button "Sign out" [ref=e12] [cursor=pointer]
+    - navigation [ref=e13]:
+      - button "📂 Files" [ref=e14] [cursor=pointer]
+      - button "✏️ Editor" [ref=e15] [cursor=pointer]
+      - button "🔁 Promote" [ref=e16] [cursor=pointer]
+      - button "📋 History" [ref=e17] [cursor=pointer]
+    - main [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - combobox [ref=e22] [cursor=pointer]:
+              - option "schema_table_ddls/bronze"
+              - option "schema_table_ddls/silver"
+              - option "schema_table_ddls/gold"
+              - option "views" [selected]
+              - option "procedures"
+              - option "alter_ddls"
+              - option "sql_scripts"
+              - option "/ (root)"
+            - generic [ref=e23]: /
+            - textbox "filename.sql" [ref=e24]: 20260316_e2e_noext_1773641872878.sql
+          - generic [ref=e25]:
+            - button "New" [ref=e26] [cursor=pointer]
+            - button "Templates ▾" [ref=e28] [cursor=pointer]
+            - textbox "Commit message (optional)" [ref=e29]
+            - button "💾 Save" [ref=e30] [cursor=pointer]
+        - code [ref=e34]:
+          - generic [ref=e35]:
+            - textbox "Editor content" [ref=e36]
+            - textbox [ref=e37]
+            - generic [ref=e39]:
+              - generic [ref=e42]: "1"
+              - generic [ref=e44]: "2"
+            - generic [ref=e49]:
+              - generic [ref=e51]: "-- Write your SQL here"
+              - generic [ref=e53]: SELECT 3;
+  - generic [ref=e55]:
+    - alert
+    - alert
+```

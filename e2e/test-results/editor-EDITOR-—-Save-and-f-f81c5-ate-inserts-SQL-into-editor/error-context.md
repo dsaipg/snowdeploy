@@ -1,0 +1,65 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: ❄️
+        - generic [ref=e7]: SQL Deployment Portal
+      - generic [ref=e8]: Team Alpha
+      - generic [ref=e10]:
+        - generic [ref=e11]: Alice Chen
+        - button "Sign out" [ref=e12] [cursor=pointer]
+    - navigation [ref=e13]:
+      - button "📂 Files" [ref=e14] [cursor=pointer]
+      - button "✏️ Editor" [ref=e15] [cursor=pointer]
+      - button "🔁 Promote" [ref=e16] [cursor=pointer]
+      - button "📋 History" [ref=e17] [cursor=pointer]
+    - main [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - combobox [ref=e22] [cursor=pointer]:
+              - option "schema_table_ddls/bronze" [selected]
+              - option "schema_table_ddls/silver"
+              - option "schema_table_ddls/gold"
+              - option "views"
+              - option "procedures"
+              - option "alter_ddls"
+              - option "sql_scripts"
+              - option "/ (root)"
+            - generic [ref=e23]: /
+            - textbox "filename.sql" [ref=e24]
+          - generic [ref=e25]:
+            - button "New" [ref=e26] [cursor=pointer]
+            - button "Templates ▾" [ref=e28] [cursor=pointer]
+            - textbox "Commit message (optional)" [ref=e29]
+            - button "💾 Save" [ref=e30] [cursor=pointer]
+        - code [ref=e34]:
+          - generic [ref=e35]:
+            - textbox "Editor content" [active] [ref=e36]
+            - textbox [ref=e37]
+            - generic [ref=e39]:
+              - generic [ref=e41]: "1"
+              - generic [ref=e43]: "2"
+              - generic [ref=e44]:
+                - generic [ref=e45] [cursor=pointer]: 
+                - generic [ref=e46]: "3"
+              - generic [ref=e48]: "4"
+              - generic [ref=e50]: "5"
+              - generic [ref=e52]: "6"
+              - generic [ref=e54]: "7"
+              - generic [ref=e56]: "8"
+              - generic [ref=e59]: "9"
+            - generic [ref=e74]:
+              - generic [ref=e76]: "-- Write your SQL here"
+              - generic [ref=e79]: "CREATE TABLE IF NOT EXISTS {schema}.{table_name} ("
+              - generic [ref=e81]: id NUMBER AUTOINCREMENT PRIMARY KEY,
+              - generic [ref=e83]: created_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+              - generic [ref=e85]: updated_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP()
+              - generic [ref=e87]: );
+  - generic [ref=e92]:
+    - alert
+    - alert
+```

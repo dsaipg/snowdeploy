@@ -1,0 +1,103 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: ❄️
+      - generic [ref=e7]: SQL Deployment Portal
+    - generic [ref=e8]: Team Alpha
+    - generic [ref=e10]:
+      - generic [ref=e11]: Alice Chen
+      - button "Sign out" [ref=e12] [cursor=pointer]
+  - navigation [ref=e13]:
+    - button "📂 Files" [active] [ref=e14] [cursor=pointer]
+    - button "✏️ Editor" [ref=e15] [cursor=pointer]
+    - button "🔁 Promote" [ref=e16] [cursor=pointer]
+    - button "📋 History" [ref=e17] [cursor=pointer]
+  - main [ref=e18]:
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - heading "SQL Files" [level=2] [ref=e22]
+        - generic [ref=e23]:
+          - generic [ref=e24]: 16 total files
+          - button "↻" [ref=e25] [cursor=pointer]
+          - button "+ New File" [ref=e26] [cursor=pointer]
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - generic [ref=e29]: FOLDERS
+          - generic [ref=e30]:
+            - generic [ref=e31]: 🗃
+            - generic [ref=e32]: schema_table_ddls
+          - generic [ref=e33] [cursor=pointer]:
+            - generic [ref=e34]: 🥉
+            - generic [ref=e35]: bronze
+            - generic [ref=e36]: "3"
+          - generic [ref=e37] [cursor=pointer]:
+            - generic [ref=e38]: 🥈
+            - generic [ref=e39]: silver
+          - generic [ref=e40] [cursor=pointer]:
+            - generic [ref=e41]: 🥇
+            - generic [ref=e42]: gold
+            - generic [ref=e43]: "2"
+          - generic [ref=e44] [cursor=pointer]:
+            - generic [ref=e45]: 👁
+            - generic [ref=e46]: views
+            - generic [ref=e47]: "6"
+          - generic [ref=e48] [cursor=pointer]:
+            - generic [ref=e49]: ⚙
+            - generic [ref=e50]: procedures
+            - generic [ref=e51]: "1"
+          - generic [ref=e52] [cursor=pointer]:
+            - generic [ref=e53]: 🔢
+            - generic [ref=e54]: alter_ddls
+            - generic [ref=e55]: "3"
+          - generic [ref=e56] [cursor=pointer]:
+            - generic [ref=e57]: 📝
+            - generic [ref=e58]: sql_scripts
+            - generic [ref=e59]: "1"
+        - generic [ref=e60]:
+          - generic [ref=e61]:
+            - generic [ref=e62]:
+              - generic [ref=e63]: 🥉
+              - generic [ref=e64]: bronze
+              - generic [ref=e65]: "3"
+            - textbox "Filter files…" [ref=e66]
+          - generic [ref=e67]:
+            - generic [ref=e68]: Filename
+            - generic [ref=e69]: Modified
+            - generic [ref=e70]: Size
+            - generic [ref=e71]: Last Commit
+          - generic [ref=e72]:
+            - generic [ref=e73]:
+              - generic [ref=e74]:
+                - generic [ref=e75]: 🔒
+                - generic [ref=e76]: 20260316_.sql
+                - generic [ref=e77]: Alice Chen
+              - generic [ref=e78]: Mar 15, 11:17 PM
+              - generic [ref=e79]: 23 B
+              - generic [ref=e80]: "update: team-a/schema_table_ddls/bronze/20260316_.…"
+              - generic [ref=e81]:
+                - button "Open" [ref=e82] [cursor=pointer]
+                - button "Delete" [ref=e83] [cursor=pointer]
+            - generic [ref=e84]:
+              - generic [ref=e85]:
+                - generic [ref=e86]: 🗒
+                - generic [ref=e87]: badfile.txt.sql
+              - generic [ref=e88]: Mar 15, 11:12 PM
+              - generic [ref=e89]: 32 B
+              - generic [ref=e90]: "update: team-a/schema_table_ddls/bronze/badfile.tx…"
+              - generic [ref=e91]:
+                - button "Open" [ref=e92] [cursor=pointer]
+                - button "Delete" [ref=e93] [cursor=pointer]
+            - generic [ref=e94]:
+              - generic [ref=e95]:
+                - generic [ref=e96]: 🗒
+                - generic [ref=e97]: stg_events.sql
+              - generic [ref=e98]: Mar 15, 05:05 PM
+              - generic [ref=e99]: 680 B
+              - generic [ref=e100]: "chore: move all files under team-a/ folder structu…"
+              - generic [ref=e101]:
+                - button "Open" [ref=e102] [cursor=pointer]
+                - button "Delete" [ref=e103] [cursor=pointer]
+```

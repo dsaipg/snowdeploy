@@ -1,0 +1,3211 @@
+{
+  "config": {
+    "configFile": "/Users/damodsu/projects/sql-portal/e2e/playwright.config.js",
+    "rootDir": "/Users/damodsu/projects/sql-portal/e2e/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/damodsu/projects/sql-portal/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/Users/damodsu/projects/sql-portal/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 50000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "report",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "report/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "auth.spec.js",
+      "file": "auth.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "AUTH — Login",
+          "file": "auth.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AUTH-001: fresh login form shown when no session exists",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 571,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:14:21.670Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-7eb9d0212096ebc5cea1",
+              "file": "auth.spec.js",
+              "line": 7,
+              "column": 3
+            },
+            {
+              "title": "AUTH-002: alice logs in successfully — app shell visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 648,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:14:23.361Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-a1798e15ef6e3249fed3",
+              "file": "auth.spec.js",
+              "line": 14,
+              "column": 3
+            },
+            {
+              "title": "AUTH-003: bob logs in successfully — app shell visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 795,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:14:24.025Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-fb04f64e6c88973d3c77",
+              "file": "auth.spec.js",
+              "line": 20,
+              "column": 3
+            },
+            {
+              "title": "AUTH-004: rita logs in successfully — app shell visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1942,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:14:24.840Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-106ceeb47667fa6c0966",
+              "file": "auth.spec.js",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "AUTH-005: wrong password shows error message",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 8659,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/invalid|incorrect|failed/i)\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/invalid|incorrect|failed/i)\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/invalid|incorrect|failed/i)\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/invalid|incorrect|failed/i)\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js:37:63",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js",
+                          "column": 63,
+                          "line": 37
+                        },
+                        "snippet": "  35 |     await page.locator('input[type=\"password\"]').fill('wrongpassword');\n  36 |     await page.getByRole('button', { name: 'Sign In' }).click();\n> 37 |     await expect(page.getByText(/invalid|incorrect|failed/i)).toBeVisible({ timeout: 8000 });\n     |                                                               ^\n  38 |     // Should stay on login page\n  39 |     await expect(page.getByPlaceholder('e.g. alice')).toBeVisible();\n  40 |   });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js",
+                            "column": 63,
+                            "line": 37
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/invalid|incorrect|failed/i)\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/invalid|incorrect|failed/i)\u001b[22m\n\n\n  35 |     await page.locator('input[type=\"password\"]').fill('wrongpassword');\n  36 |     await page.getByRole('button', { name: 'Sign In' }).click();\n> 37 |     await expect(page.getByText(/invalid|incorrect|failed/i)).toBeVisible({ timeout: 8000 });\n     |                                                               ^\n  38 |     // Should stay on login page\n  39 |     await expect(page.getByPlaceholder('e.g. alice')).toBeVisible();\n  40 |   });\n    at /Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js:37:63"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:14:26.804Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/auth-AUTH-—-Login-AUTH-005-65bd1-assword-shows-error-message/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/auth-AUTH-—-Login-AUTH-005-65bd1-assword-shows-error-message/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js",
+                        "column": 63,
+                        "line": 37
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-179b9bf4022d2b9f33ce",
+              "file": "auth.spec.js",
+              "line": 32,
+              "column": 3
+            },
+            {
+              "title": "AUTH-006: unknown username shows error message",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 8754,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/invalid|incorrect|failed/i)\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/invalid|incorrect|failed/i)\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/invalid|incorrect|failed/i)\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/invalid|incorrect|failed/i)\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js:47:63",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js",
+                          "column": 63,
+                          "line": 47
+                        },
+                        "snippet": "  45 |     await page.locator('input[type=\"password\"]').fill('password');\n  46 |     await page.getByRole('button', { name: 'Sign In' }).click();\n> 47 |     await expect(page.getByText(/invalid|incorrect|failed/i)).toBeVisible({ timeout: 8000 });\n     |                                                               ^\n  48 |   });\n  49 |\n  50 |   test('AUTH-007: empty fields — HTML required validation prevents submit', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js",
+                            "column": 63,
+                            "line": 47
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/invalid|incorrect|failed/i)\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/invalid|incorrect|failed/i)\u001b[22m\n\n\n  45 |     await page.locator('input[type=\"password\"]').fill('password');\n  46 |     await page.getByRole('button', { name: 'Sign In' }).click();\n> 47 |     await expect(page.getByText(/invalid|incorrect|failed/i)).toBeVisible({ timeout: 8000 });\n     |                                                               ^\n  48 |   });\n  49 |\n  50 |   test('AUTH-007: empty fields — HTML required validation prevents submit', async ({ page }) => {\n    at /Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js:47:63"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:14:37.488Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/auth-AUTH-—-Login-AUTH-006-a4196-sername-shows-error-message/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/auth-AUTH-—-Login-AUTH-006-a4196-sername-shows-error-message/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js",
+                        "column": 63,
+                        "line": 47
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-55d2c1249aba58d8c778",
+              "file": "auth.spec.js",
+              "line": 42,
+              "column": 3
+            },
+            {
+              "title": "AUTH-007: empty fields — HTML required validation prevents submit",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 656,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:14:49.225Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-fc82bb90d1e6aa3aa911",
+              "file": "auth.spec.js",
+              "line": 50,
+              "column": 3
+            },
+            {
+              "title": "AUTH-008: returning user card shown on second visit",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5786,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Sign in' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Sign in' })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Sign in' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Sign in' })\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js:66:65",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js",
+                          "column": 65,
+                          "line": 66
+                        },
+                        "snippet": "  64 |     await expect(page.getByText('Alice Chen')).toBeVisible();\n  65 |     // One-click Sign in button\n> 66 |     await expect(page.getByRole('button', { name: 'Sign in' })).toBeVisible();\n     |                                                                 ^\n  67 |     // Should NOT show the username input\n  68 |     await expect(page.getByPlaceholder('e.g. alice')).not.toBeVisible();\n  69 |   });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js",
+                            "column": 65,
+                            "line": 66
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Sign in' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Sign in' })\u001b[22m\n\n\n  64 |     await expect(page.getByText('Alice Chen')).toBeVisible();\n  65 |     // One-click Sign in button\n> 66 |     await expect(page.getByRole('button', { name: 'Sign in' })).toBeVisible();\n     |                                                                 ^\n  67 |     // Should NOT show the username input\n  68 |     await expect(page.getByPlaceholder('e.g. alice')).not.toBeVisible();\n  69 |   });\n    at /Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js:66:65"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:14:50.828Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/auth-AUTH-—-Login-AUTH-008-567e3--card-shown-on-second-visit/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/auth-AUTH-—-Login-AUTH-008-567e3--card-shown-on-second-visit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js",
+                        "column": 65,
+                        "line": 66
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-2b81e608c5acdcd86f5a",
+              "file": "auth.spec.js",
+              "line": 59,
+              "column": 3
+            },
+            {
+              "title": "AUTH-009: \"Not you? Sign in differently\" clears session and shows full form",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 50110,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js",
+                            "column": 38,
+                            "line": 74
+                          },
+                          "message": "Error: locator.click: Test timeout of 50000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/not you/i)\u001b[22m\n\n\n  72 |     await login(page, 'alice', 'password');\n  73 |     await page.goto(BASE);\n> 74 |     await page.getByText(/not you/i).click();\n     |                                      ^\n  75 |     // Full form should appear\n  76 |     await expect(page.getByPlaceholder('e.g. alice')).toBeVisible();\n  77 |     await expect(page.locator('input[type=\"password\"]')).toBeVisible();\n    at /Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js:74:38"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:14:58.671Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/auth-AUTH-—-Login-AUTH-009-27be9-session-and-shows-full-form/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/auth-AUTH-—-Login-AUTH-009-27be9-session-and-shows-full-form/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-859841ba95d4025d16d6",
+              "file": "auth.spec.js",
+              "line": 71,
+              "column": 3
+            },
+            {
+              "title": "AUTH-010: after login, team badge shows correct team name",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 886,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:15:51.889Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-9117b1561601e77fb511",
+              "file": "auth.spec.js",
+              "line": 80,
+              "column": 3
+            },
+            {
+              "title": "AUTH-011: rita sees Team Beta in header",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 729,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:15:53.846Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-5d9f711f5dd61312f720",
+              "file": "auth.spec.js",
+              "line": 85,
+              "column": 3
+            },
+            {
+              "title": "AUTH-012: Sign out clears session and shows login form",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 727,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:15:54.599Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-aa2a8922eb0d89df3b45",
+              "file": "auth.spec.js",
+              "line": 90,
+              "column": 3
+            },
+            {
+              "title": "AUTH-013: one-click returning user sign-in works without re-entering credentials",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 50087,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js",
+                            "column": 57,
+                            "line": 101
+                          },
+                          "message": "Error: locator.click: Test timeout of 50000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Sign in' })\u001b[22m\n\n\n   99 |     await page.goto(BASE);\n  100 |     // Click the one-click Sign in button\n> 101 |     await page.getByRole('button', { name: 'Sign in' }).click();\n      |                                                         ^\n  102 |     // Should be in the app immediately\n  103 |     await expect(page.getByRole('button', { name: /Files/i })).toBeVisible({ timeout: 5000 });\n  104 |   });\n    at /Users/damodsu/projects/sql-portal/e2e/tests/auth.spec.js:101:57"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:15:55.348Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/auth-AUTH-—-Login-AUTH-013-d1eb9-out-re-entering-credentials/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/auth-AUTH-—-Login-AUTH-013-d1eb9-out-re-entering-credentials/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-771ce80515b6fba4999a",
+              "file": "auth.spec.js",
+              "line": 97,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "editor.spec.js",
+      "file": "editor.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "EDITOR — Save and file management",
+          "file": "editor.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "EDITOR-001: Editor tab shows subfolder select, filename input, Save button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1399,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:16:47.453Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-1b4ccb23d96b6c13a5c4",
+              "file": "editor.spec.js",
+              "line": 7,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-002: subfolder dropdown contains all expected folders",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1643,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:16:49.956Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-7a3eda9e5d66c755793e",
+              "file": "editor.spec.js",
+              "line": 15,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-003: create and save a new SQL file in views/",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 22042,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/✓ Saved|commit:/i)\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/✓ Saved|commit:/i)\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/✓ Saved|commit:/i)\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/✓ Saved|commit:/i)\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:43:54",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                          "column": 54,
+                          "line": 43
+                        },
+                        "snippet": "  41 |     await page.getByRole('button', { name: /💾 Save|Save/i }).click();\n  42 |     // Should show success status bar\n> 43 |     await expect(page.getByText(/✓ Saved|commit:/i)).toBeVisible({ timeout: 20000 });\n     |                                                      ^\n  44 |   });\n  45 |\n  46 |   test('EDITOR-004: save shows commit SHA in status bar', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                            "column": 54,
+                            "line": 43
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/✓ Saved|commit:/i)\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/✓ Saved|commit:/i)\u001b[22m\n\n\n  41 |     await page.getByRole('button', { name: /💾 Save|Save/i }).click();\n  42 |     // Should show success status bar\n> 43 |     await expect(page.getByText(/✓ Saved|commit:/i)).toBeVisible({ timeout: 20000 });\n     |                                                      ^\n  44 |   });\n  45 |\n  46 |   test('EDITOR-004: save shows commit SHA in status bar', async ({ page }) => {\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:43:54"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:16:51.619Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-ab44a-ve-a-new-SQL-file-in-views-/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-ab44a-ve-a-new-SQL-file-in-views-/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                        "column": 54,
+                        "line": 43
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-1c5d4b6f293cd24f030a",
+              "file": "editor.spec.js",
+              "line": 29,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-004: save shows commit SHA in status bar",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 22045,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/commit: [a-f0-9]{7}/i)\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/commit: [a-f0-9]{7}/i)\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/commit: [a-f0-9]{7}/i)\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/commit: [a-f0-9]{7}/i)\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:58:58",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                          "column": 58,
+                          "line": 58
+                        },
+                        "snippet": "  56 |     await page.getByRole('button', { name: /💾 Save|Save/i }).click();\n  57 |     // Status bar should show 7-char commit SHA\n> 58 |     await expect(page.getByText(/commit: [a-f0-9]{7}/i)).toBeVisible({ timeout: 20000 });\n     |                                                          ^\n  59 |   });\n  60 |\n  61 |   test('EDITOR-005: save with empty filename shows error', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                            "column": 58,
+                            "line": 58
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/commit: [a-f0-9]{7}/i)\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/commit: [a-f0-9]{7}/i)\u001b[22m\n\n\n  56 |     await page.getByRole('button', { name: /💾 Save|Save/i }).click();\n  57 |     // Status bar should show 7-char commit SHA\n> 58 |     await expect(page.getByText(/commit: [a-f0-9]{7}/i)).toBeVisible({ timeout: 20000 });\n     |                                                          ^\n  59 |   });\n  60 |\n  61 |   test('EDITOR-005: save with empty filename shows error', async ({ page }) => {\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:58:58"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:17:15.643Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-9d177-ws-commit-SHA-in-status-bar/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-9d177-ws-commit-SHA-in-status-bar/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                        "column": 58,
+                        "line": 58
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-d0668aaabc04652355ae",
+              "file": "editor.spec.js",
+              "line": 46,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-005: save with empty filename shows error",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 6917,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/enter a filename|filename/i)\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/enter a filename|filename/i)\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/enter a filename|filename/i)\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/enter a filename|filename/i)\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:66:64",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                          "column": 64,
+                          "line": 66
+                        },
+                        "snippet": "  64 |     await page.getByPlaceholder('filename.sql').clear();\n  65 |     await page.getByRole('button', { name: /💾 Save|Save/i }).click();\n> 66 |     await expect(page.getByText(/enter a filename|filename/i)).toBeVisible({ timeout: 5000 });\n     |                                                                ^\n  67 |   });\n  68 |\n  69 |   test('EDITOR-006: filename without .sql gets .sql appended automatically', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                            "column": 64,
+                            "line": 66
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/enter a filename|filename/i)\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/enter a filename|filename/i)\u001b[22m\n\n\n  64 |     await page.getByPlaceholder('filename.sql').clear();\n  65 |     await page.getByRole('button', { name: /💾 Save|Save/i }).click();\n> 66 |     await expect(page.getByText(/enter a filename|filename/i)).toBeVisible({ timeout: 5000 });\n     |                                                                ^\n  67 |   });\n  68 |\n  69 |   test('EDITOR-006: filename without .sql gets .sql appended automatically', async ({ page }) => {\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:66:64"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:17:40.657Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-ed5b2--empty-filename-shows-error/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-ed5b2--empty-filename-shows-error/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                        "column": 64,
+                        "line": 66
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-1945fb1f6d45b9289d44",
+              "file": "editor.spec.js",
+              "line": 61,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-006: filename without .sql gets .sql appended automatically",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 22589,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/e2e_noext_1773641872878\\.sql/i)\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/e2e_noext_1773641872878\\.sql/i)\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/e2e_noext_1773641872878\\.sql/i)\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/e2e_noext_1773641872878\\.sql/i)\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:80:68",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                          "column": 68,
+                          "line": 80
+                        },
+                        "snippet": "  78 |     await page.getByRole('button', { name: /💾 Save|Save/i }).click();\n  79 |     // Status bar should show the name with .sql\n> 80 |     await expect(page.getByText(new RegExp(`${base}\\\\.sql`, 'i'))).toBeVisible({ timeout: 20000 });\n     |                                                                    ^\n  81 |   });\n  82 |\n  83 |   test('EDITOR-007: loading an existing file shows its content in Monaco', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                            "column": 68,
+                            "line": 80
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/e2e_noext_1773641872878\\.sql/i)\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/e2e_noext_1773641872878\\.sql/i)\u001b[22m\n\n\n  78 |     await page.getByRole('button', { name: /💾 Save|Save/i }).click();\n  79 |     // Status bar should show the name with .sql\n> 80 |     await expect(page.getByText(new RegExp(`${base}\\\\.sql`, 'i'))).toBeVisible({ timeout: 20000 });\n     |                                                                    ^\n  81 |   });\n  82 |\n  83 |   test('EDITOR-007: loading an existing file shows its content in Monaco', async ({ page }) => {\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:80:68"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:17:50.829Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-fb655--sql-appended-automatically/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-fb655--sql-appended-automatically/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                        "column": 68,
+                        "line": 80
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-8097b99d99fd39c48098",
+              "file": "editor.spec.js",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-007: loading an existing file shows its content in Monaco",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 50098,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                            "column": 75,
+                            "line": 94
+                          },
+                          "message": "Error: locator.textContent: Test timeout of 50000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.monaco-editor .view-lines')\u001b[22m\n\n\n  92 |       await page.waitForTimeout(2000);\n  93 |       // Monaco should have content (not blank)\n> 94 |       const editorText = await page.locator('.monaco-editor .view-lines').textContent();\n     |                                                                           ^\n  95 |       expect(editorText?.trim().length).toBeGreaterThan(0);\n  96 |     }\n  97 |   });\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:94:75"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:18:16.165Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-5665c-shows-its-content-in-Monaco/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-5665c-shows-its-content-in-Monaco/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-38eb0a655f66cd6b0fde",
+              "file": "editor.spec.js",
+              "line": 83,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-008: SQL linter fires in alter_ddls/ — DROP TABLE shows error panel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3015,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:19:09.247Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-0fc7d5f5cce56553805f",
+              "file": "editor.spec.js",
+              "line": 99,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-009: SQL linter fires — TRUNCATE shows error",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2608,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/TRUNCATE deletes|migration/i)\nExpected: visible\nError: strict mode violation: getByText(/TRUNCATE deletes|migration/i) resolved to 2 elements:\n    1) <span>🚫 Migration lint — 1 issue found</span> aka getByText('🚫 Migration lint — 1 issue')\n    2) <span>TRUNCATE deletes all rows — should never be in a …</span> aka getByText('TRUNCATE deletes all rows —')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/TRUNCATE deletes|migration/i)\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/TRUNCATE deletes|migration/i)\nExpected: visible\nError: strict mode violation: getByText(/TRUNCATE deletes|migration/i) resolved to 2 elements:\n    1) <span>🚫 Migration lint — 1 issue found</span> aka getByText('🚫 Migration lint — 1 issue')\n    2) <span>TRUNCATE deletes all rows — should never be in a …</span> aka getByText('TRUNCATE deletes all rows —')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/TRUNCATE deletes|migration/i)\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:119:65",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                          "column": 65,
+                          "line": 119
+                        },
+                        "snippet": "  117 |     await page.keyboard.type('TRUNCATE TABLE orders;');\n  118 |     await page.waitForTimeout(1000);\n> 119 |     await expect(page.getByText(/TRUNCATE deletes|migration/i)).toBeVisible({ timeout: 5000 });\n      |                                                                 ^\n  120 |   });\n  121 |\n  122 |   test('EDITOR-010: SQL linter fires — ADD COLUMN without IF NOT EXISTS shows error', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                            "column": 65,
+                            "line": 119
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/TRUNCATE deletes|migration/i)\nExpected: visible\nError: strict mode violation: getByText(/TRUNCATE deletes|migration/i) resolved to 2 elements:\n    1) <span>🚫 Migration lint — 1 issue found</span> aka getByText('🚫 Migration lint — 1 issue')\n    2) <span>TRUNCATE deletes all rows — should never be in a …</span> aka getByText('TRUNCATE deletes all rows —')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/TRUNCATE deletes|migration/i)\u001b[22m\n\n\n  117 |     await page.keyboard.type('TRUNCATE TABLE orders;');\n  118 |     await page.waitForTimeout(1000);\n> 119 |     await expect(page.getByText(/TRUNCATE deletes|migration/i)).toBeVisible({ timeout: 5000 });\n      |                                                                 ^\n  120 |   });\n  121 |\n  122 |   test('EDITOR-010: SQL linter fires — ADD COLUMN without IF NOT EXISTS shows error', async ({ page }) => {\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:119:65"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:19:13.567Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-144d2-ires-—-TRUNCATE-shows-error/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-144d2-ires-—-TRUNCATE-shows-error/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                        "column": 65,
+                        "line": 119
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-6e38fe15bb8b8cf32264",
+              "file": "editor.spec.js",
+              "line": 111,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-010: SQL linter fires — ADD COLUMN without IF NOT EXISTS shows error",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2862,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/IF NOT EXISTS|already exists/i)\nExpected: visible\nError: strict mode violation: getByText(/IF NOT EXISTS|already exists/i) resolved to 2 elements:\n    1) <span>ADD COLUMN without IF NOT EXISTS — will fail if c…</span> aka getByText('ADD COLUMN without IF NOT')\n    2) <span>→ Use ADD COLUMN IF NOT EXISTS</span> aka getByText('→ Use ADD COLUMN IF NOT EXISTS')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/IF NOT EXISTS|already exists/i)\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/IF NOT EXISTS|already exists/i)\nExpected: visible\nError: strict mode violation: getByText(/IF NOT EXISTS|already exists/i) resolved to 2 elements:\n    1) <span>ADD COLUMN without IF NOT EXISTS — will fail if c…</span> aka getByText('ADD COLUMN without IF NOT')\n    2) <span>→ Use ADD COLUMN IF NOT EXISTS</span> aka getByText('→ Use ADD COLUMN IF NOT EXISTS')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/IF NOT EXISTS|already exists/i)\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:130:67",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                          "column": 67,
+                          "line": 130
+                        },
+                        "snippet": "  128 |     await page.keyboard.type('ALTER TABLE users ADD COLUMN email VARCHAR(255);');\n  129 |     await page.waitForTimeout(1000);\n> 130 |     await expect(page.getByText(/IF NOT EXISTS|already exists/i)).toBeVisible({ timeout: 5000 });\n      |                                                                   ^\n  131 |   });\n  132 |\n  133 |   test('EDITOR-011: SQL linter fires — DROP COLUMN shows warning', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                            "column": 67,
+                            "line": 130
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/IF NOT EXISTS|already exists/i)\nExpected: visible\nError: strict mode violation: getByText(/IF NOT EXISTS|already exists/i) resolved to 2 elements:\n    1) <span>ADD COLUMN without IF NOT EXISTS — will fail if c…</span> aka getByText('ADD COLUMN without IF NOT')\n    2) <span>→ Use ADD COLUMN IF NOT EXISTS</span> aka getByText('→ Use ADD COLUMN IF NOT EXISTS')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/IF NOT EXISTS|already exists/i)\u001b[22m\n\n\n  128 |     await page.keyboard.type('ALTER TABLE users ADD COLUMN email VARCHAR(255);');\n  129 |     await page.waitForTimeout(1000);\n> 130 |     await expect(page.getByText(/IF NOT EXISTS|already exists/i)).toBeVisible({ timeout: 5000 });\n      |                                                                   ^\n  131 |   });\n  132 |\n  133 |   test('EDITOR-011: SQL linter fires — DROP COLUMN shows warning', async ({ page }) => {\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:130:67"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:19:17.944Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-54ecf-t-IF-NOT-EXISTS-shows-error/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-54ecf-t-IF-NOT-EXISTS-shows-error/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                        "column": 67,
+                        "line": 130
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-6b1175a26a397a10654a",
+              "file": "editor.spec.js",
+              "line": 122,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-011: SQL linter fires — DROP COLUMN shows warning",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2881,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:19:23.421Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-9b2899b0e882e9d37cde",
+              "file": "editor.spec.js",
+              "line": 133,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-012: SQL linter does NOT fire in views/ folder",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3129,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:19:27.115Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-4190f5f87fdc34f9d4ff",
+              "file": "editor.spec.js",
+              "line": 144,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-013: Templates button opens dropdown with template names",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1737,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:19:30.260Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-9c620a966f2518550601",
+              "file": "editor.spec.js",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-014: selecting a template inserts SQL into editor",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2303,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"CREATE TABLE\"\u001b[39m\nReceived string:    \u001b[31m\"-- Write your SQL hereCREATE TABLE IF NOT EXISTS {schema}.{table_name} (    id         NUMBER AUTOINCREMENT PRIMARY KEY,    created_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),    updated_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP());\"\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"CREATE TABLE\"\u001b[39m\nReceived string:    \u001b[31m\"-- Write your SQL hereCREATE TABLE IF NOT EXISTS {schema}.{table_name} (    id         NUMBER AUTOINCREMENT PRIMARY KEY,    created_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),    updated_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP());\"\u001b[39m\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:176:24",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                          "column": 24,
+                          "line": 176
+                        },
+                        "snippet": "  174 |     await page.waitForTimeout(500);\n  175 |     const editorText = await page.locator('.monaco-editor .view-lines').textContent();\n> 176 |     expect(editorText).toContain('CREATE TABLE');\n      |                        ^\n  177 |   });\n  178 |\n  179 |   test('EDITOR-015: New button clears filename and resets editor', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                            "column": 24,
+                            "line": 176
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"CREATE TABLE\"\u001b[39m\nReceived string:    \u001b[31m\"-- Write your SQL hereCREATE TABLE IF NOT EXISTS {schema}.{table_name} (    id         NUMBER AUTOINCREMENT PRIMARY KEY,    created_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),    updated_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP());\"\u001b[39m\n\n  174 |     await page.waitForTimeout(500);\n  175 |     const editorText = await page.locator('.monaco-editor .view-lines').textContent();\n> 176 |     expect(editorText).toContain('CREATE TABLE');\n      |                        ^\n  177 |   });\n  178 |\n  179 |   test('EDITOR-015: New button clears filename and resets editor', async ({ page }) => {\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:176:24"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:19:32.016Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-f81c5-ate-inserts-SQL-into-editor/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-f81c5-ate-inserts-SQL-into-editor/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                        "column": 24,
+                        "line": 176
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-20667156cba15fb422d7",
+              "file": "editor.spec.js",
+              "line": 164,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-015: New button clears filename and resets editor",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1573,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:19:36.033Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-916ff376edd6873eb28c",
+              "file": "editor.spec.js",
+              "line": 179,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-016: optional commit message field is present",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1251,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:19:38.447Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-c0926673d20f193ca80c",
+              "file": "editor.spec.js",
+              "line": 189,
+              "column": 3
+            },
+            {
+              "title": "EDITOR-017: save with custom commit message uses it",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 22501,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/✓ Saved|commit:/i)\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/✓ Saved|commit:/i)\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/✓ Saved|commit:/i)\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/✓ Saved|commit:/i)\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:206:54",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                          "column": 54,
+                          "line": 206
+                        },
+                        "snippet": "  204 |     await page.keyboard.type('SELECT 99;');\n  205 |     await page.getByRole('button', { name: /💾 Save|Save/i }).click();\n> 206 |     await expect(page.getByText(/✓ Saved|commit:/i)).toBeVisible({ timeout: 20000 });\n      |                                                      ^\n  207 |   });\n  208 |\n  209 | });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                            "column": 54,
+                            "line": 206
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/✓ Saved|commit:/i)\nExpected: visible\nTimeout: 20000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 20000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/✓ Saved|commit:/i)\u001b[22m\n\n\n  204 |     await page.keyboard.type('SELECT 99;');\n  205 |     await page.getByRole('button', { name: /💾 Save|Save/i }).click();\n> 206 |     await expect(page.getByText(/✓ Saved|commit:/i)).toBeVisible({ timeout: 20000 });\n      |                                                      ^\n  207 |   });\n  208 |\n  209 | });\n    at /Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js:206:54"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:19:39.718Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-eae42-stom-commit-message-uses-it/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/editor-EDITOR-—-Save-and-f-eae42-stom-commit-message-uses-it/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/editor.spec.js",
+                        "column": 54,
+                        "line": 206
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1789dd38e4d700e8271e-399e181d96fbad18a15c",
+              "file": "editor.spec.js",
+              "line": 195,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "files.spec.js",
+      "file": "files.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "FILES — Folder tree and file list",
+          "file": "files.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "FILES-001: Files tab is the default tab after login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 637,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:20:03.980Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "816464c1ccc62560b69b-fa351543e98ceac6a386",
+              "file": "files.spec.js",
+              "line": 7,
+              "column": 3
+            },
+            {
+              "title": "FILES-002: folder tree shows all top-level folders",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1222,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('schema_table_ddls')\nExpected: visible\nError: strict mode violation: getByText('schema_table_ddls') resolved to 3 elements:\n    1) <span>schema_table_ddls</span> aka getByText('schema_table_ddls', { exact: true })\n    2) <span>update: team-a/schema_table_ddls/bronze/20260316_…</span> aka getByText('update: team-a/schema_table_ddls/bronze/20260316_.…')\n    3) <span>update: team-a/schema_table_ddls/bronze/badfile.t…</span> aka getByText('update: team-a/schema_table_ddls/bronze/badfile.tx…')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByText('schema_table_ddls')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('schema_table_ddls')\nExpected: visible\nError: strict mode violation: getByText('schema_table_ddls') resolved to 3 elements:\n    1) <span>schema_table_ddls</span> aka getByText('schema_table_ddls', { exact: true })\n    2) <span>update: team-a/schema_table_ddls/bronze/20260316_…</span> aka getByText('update: team-a/schema_table_ddls/bronze/20260316_.…')\n    3) <span>update: team-a/schema_table_ddls/bronze/badfile.t…</span> aka getByText('update: team-a/schema_table_ddls/bronze/badfile.tx…')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByText('schema_table_ddls')\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js:16:55",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js",
+                          "column": 55,
+                          "line": 16
+                        },
+                        "snippet": "  14 |     await login(page, 'alice');\n  15 |     await goToTab(page, 'Files');\n> 16 |     await expect(page.getByText('schema_table_ddls')).toBeVisible({ timeout: 8000 });\n     |                                                       ^\n  17 |     await expect(page.getByText('views')).toBeVisible();\n  18 |     await expect(page.getByText('procedures')).toBeVisible();\n  19 |     await expect(page.getByText('alter_ddls')).toBeVisible();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js",
+                            "column": 55,
+                            "line": 16
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('schema_table_ddls')\nExpected: visible\nError: strict mode violation: getByText('schema_table_ddls') resolved to 3 elements:\n    1) <span>schema_table_ddls</span> aka getByText('schema_table_ddls', { exact: true })\n    2) <span>update: team-a/schema_table_ddls/bronze/20260316_…</span> aka getByText('update: team-a/schema_table_ddls/bronze/20260316_.…')\n    3) <span>update: team-a/schema_table_ddls/bronze/badfile.t…</span> aka getByText('update: team-a/schema_table_ddls/bronze/badfile.tx…')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByText('schema_table_ddls')\u001b[22m\n\n\n  14 |     await login(page, 'alice');\n  15 |     await goToTab(page, 'Files');\n> 16 |     await expect(page.getByText('schema_table_ddls')).toBeVisible({ timeout: 8000 });\n     |                                                       ^\n  17 |     await expect(page.getByText('views')).toBeVisible();\n  18 |     await expect(page.getByText('procedures')).toBeVisible();\n  19 |     await expect(page.getByText('alter_ddls')).toBeVisible();\n    at /Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js:16:55"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:20:05.540Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/files-FILES-—-Folder-tree--e5946-shows-all-top-level-folders/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/files-FILES-—-Folder-tree--e5946-shows-all-top-level-folders/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js",
+                        "column": 55,
+                        "line": 16
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "816464c1ccc62560b69b-b8fc3b3e963442f52ae2",
+              "file": "files.spec.js",
+              "line": 13,
+              "column": 3
+            },
+            {
+              "title": "FILES-003: schema_table_ddls expands to show bronze, silver, gold",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2289,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('bronze')\nExpected: visible\nError: strict mode violation: getByText('bronze') resolved to 4 elements:\n    1) <span>bronze</span> aka getByText('bronze').first()\n    2) <span>bronze</span> aka getByText('bronze').nth(1)\n    3) <span>update: team-a/schema_table_ddls/bronze/20260316_…</span> aka getByText('update: team-a/schema_table_ddls/bronze/20260316_.…')\n    4) <span>update: team-a/schema_table_ddls/bronze/badfile.t…</span> aka getByText('update: team-a/schema_table_ddls/bronze/badfile.tx…')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('bronze')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('bronze')\nExpected: visible\nError: strict mode violation: getByText('bronze') resolved to 4 elements:\n    1) <span>bronze</span> aka getByText('bronze').first()\n    2) <span>bronze</span> aka getByText('bronze').nth(1)\n    3) <span>update: team-a/schema_table_ddls/bronze/20260316_…</span> aka getByText('update: team-a/schema_table_ddls/bronze/20260316_.…')\n    4) <span>update: team-a/schema_table_ddls/bronze/badfile.t…</span> aka getByText('update: team-a/schema_table_ddls/bronze/badfile.tx…')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('bronze')\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js:30:44",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js",
+                          "column": 44,
+                          "line": 30
+                        },
+                        "snippet": "  28 |     const schemaDdls = page.getByText('schema_table_ddls').first();\n  29 |     await schemaDdls.click();\n> 30 |     await expect(page.getByText('bronze')).toBeVisible({ timeout: 5000 });\n     |                                            ^\n  31 |     await expect(page.getByText('silver')).toBeVisible();\n  32 |     await expect(page.getByText('gold')).toBeVisible();\n  33 |   });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js",
+                            "column": 44,
+                            "line": 30
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('bronze')\nExpected: visible\nError: strict mode violation: getByText('bronze') resolved to 4 elements:\n    1) <span>bronze</span> aka getByText('bronze').first()\n    2) <span>bronze</span> aka getByText('bronze').nth(1)\n    3) <span>update: team-a/schema_table_ddls/bronze/20260316_…</span> aka getByText('update: team-a/schema_table_ddls/bronze/20260316_.…')\n    4) <span>update: team-a/schema_table_ddls/bronze/badfile.t…</span> aka getByText('update: team-a/schema_table_ddls/bronze/badfile.tx…')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('bronze')\u001b[22m\n\n\n  28 |     const schemaDdls = page.getByText('schema_table_ddls').first();\n  29 |     await schemaDdls.click();\n> 30 |     await expect(page.getByText('bronze')).toBeVisible({ timeout: 5000 });\n     |                                            ^\n  31 |     await expect(page.getByText('silver')).toBeVisible();\n  32 |     await expect(page.getByText('gold')).toBeVisible();\n  33 |   });\n    at /Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js:30:44"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:20:08.544Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/files-FILES-—-Folder-tree--ae3d0--to-show-bronze-silver-gold/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/files-FILES-—-Folder-tree--ae3d0--to-show-bronze-silver-gold/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js",
+                        "column": 44,
+                        "line": 30
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "816464c1ccc62560b69b-50879205752f04c851cb",
+              "file": "files.spec.js",
+              "line": 23,
+              "column": 3
+            },
+            {
+              "title": "FILES-004: clicking views folder shows .sql files",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4257,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:20:13.498Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "816464c1ccc62560b69b-a558c1b30f73899cd90a",
+              "file": "files.spec.js",
+              "line": 35,
+              "column": 3
+            },
+            {
+              "title": "FILES-005: file list shows last commit author",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3256,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:20:18.659Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "816464c1ccc62560b69b-f1fcb09e628b64313bc2",
+              "file": "files.spec.js",
+              "line": 45,
+              "column": 3
+            },
+            {
+              "title": "FILES-006: New File button navigates to Editor tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1205,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:20:21.937Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "816464c1ccc62560b69b-6d222251e94ed8606cf2",
+              "file": "files.spec.js",
+              "line": 54,
+              "column": 3
+            },
+            {
+              "title": "FILES-007: alice team isolation — no team-b content visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2681,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:20:23.238Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "816464c1ccc62560b69b-e133cf5918caaab10d3e",
+              "file": "files.spec.js",
+              "line": 64,
+              "column": 3
+            },
+            {
+              "title": "FILES-008: rita sees her team-b files only",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2586,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:20:25.938Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "816464c1ccc62560b69b-9da62a4159aabf59ea97",
+              "file": "files.spec.js",
+              "line": 71,
+              "column": 3
+            },
+            {
+              "title": "FILES-009: clicking a SQL file opens Editor tab with file loaded",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 11369,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.monaco-editor')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('.monaco-editor')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.monaco-editor')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('.monaco-editor')\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js:92:52",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js",
+                          "column": 52,
+                          "line": 92
+                        },
+                        "snippet": "  90 |       await expect(page.getByRole('button', { name: /✏️|Editor/i })).toBeVisible({ timeout: 5000 });\n  91 |       // Monaco editor should be visible\n> 92 |       await expect(page.locator('.monaco-editor')).toBeVisible({ timeout: 8000 });\n     |                                                    ^\n  93 |     }\n  94 |   });\n  95 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js",
+                            "column": 52,
+                            "line": 92
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.monaco-editor')\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('.monaco-editor')\u001b[22m\n\n\n  90 |       await expect(page.getByRole('button', { name: /✏️|Editor/i })).toBeVisible({ timeout: 5000 });\n  91 |       // Monaco editor should be visible\n> 92 |       await expect(page.locator('.monaco-editor')).toBeVisible({ timeout: 8000 });\n     |                                                    ^\n  93 |     }\n  94 |   });\n  95 |\n    at /Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js:92:52"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:20:28.544Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/files-FILES-—-Folder-tree--69adc-Editor-tab-with-file-loaded/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/files-FILES-—-Folder-tree--69adc-Editor-tab-with-file-loaded/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/files.spec.js",
+                        "column": 52,
+                        "line": 92
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "816464c1ccc62560b69b-814f7372545283d530ee",
+              "file": "files.spec.js",
+              "line": 79,
+              "column": 3
+            },
+            {
+              "title": "FILES-010: lock badge visible when another user has file open",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7720,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:20:42.776Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "816464c1ccc62560b69b-7d279d7421be28ec8fe7",
+              "file": "files.spec.js",
+              "line": 96,
+              "column": 3
+            },
+            {
+              "title": "FILES-011: empty folder shows graceful empty state, no crash",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3049,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:20:51.999Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "816464c1ccc62560b69b-d5a0ef00aeed1f293644",
+              "file": "files.spec.js",
+              "line": 123,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "history.spec.js",
+      "file": "history.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "HISTORY — Deployment history and status",
+          "file": "history.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "HISTORY-001: History tab is visible after login",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5651,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('tab', { name: /history/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tab', { name: /history/i })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('tab', { name: /history/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tab', { name: /history/i })\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/history.spec.js:9:63",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/history.spec.js",
+                          "column": 63,
+                          "line": 9
+                        },
+                        "snippet": "   7 |   test('HISTORY-001: History tab is visible after login', async ({ page }) => {\n   8 |     await login(page, 'alice');\n>  9 |     await expect(page.getByRole('tab', { name: /history/i })).toBeVisible();\n     |                                                               ^\n  10 |   });\n  11 |\n  12 |   test('HISTORY-002: History tab shows deployment records', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/history.spec.js",
+                            "column": 63,
+                            "line": 9
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('tab', { name: /history/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tab', { name: /history/i })\u001b[22m\n\n\n   7 |   test('HISTORY-001: History tab is visible after login', async ({ page }) => {\n   8 |     await login(page, 'alice');\n>  9 |     await expect(page.getByRole('tab', { name: /history/i })).toBeVisible();\n     |                                                               ^\n  10 |   });\n  11 |\n  12 |   test('HISTORY-002: History tab shows deployment records', async ({ page }) => {\n    at /Users/damodsu/projects/sql-portal/e2e/tests/history.spec.js:9:63"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:20:55.073Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/history-HISTORY-—-Deployme-3e68d--tab-is-visible-after-login/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/history-HISTORY-—-Deployme-3e68d--tab-is-visible-after-login/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/history.spec.js",
+                        "column": 63,
+                        "line": 9
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "256e00334ecda521afce-abf4b747907f53d346ac",
+              "file": "history.spec.js",
+              "line": 7,
+              "column": 3
+            },
+            {
+              "title": "HISTORY-002: History tab shows deployment records",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3593,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:03.310Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "256e00334ecda521afce-792c4279bc38692001c4",
+              "file": "history.spec.js",
+              "line": 12,
+              "column": 3
+            },
+            {
+              "title": "HISTORY-003: history record shows team, environment, files, triggered-by",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3184,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:07.930Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "256e00334ecda521afce-20a781533cfc7fa5f31e",
+              "file": "history.spec.js",
+              "line": 21,
+              "column": 3
+            },
+            {
+              "title": "HISTORY-004: history record shows Airflow run status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3249,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:11.140Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "256e00334ecda521afce-d0e8eb198e59251585de",
+              "file": "history.spec.js",
+              "line": 35,
+              "column": 3
+            },
+            {
+              "title": "HISTORY-005: alice only sees her team deployments, not other teams",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3386,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:14.425Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "256e00334ecda521afce-ccf254e8f7831206caef",
+              "file": "history.spec.js",
+              "line": 46,
+              "column": 3
+            },
+            {
+              "title": "HISTORY-006: empty history shows empty state not an error",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3193,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:17.840Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "256e00334ecda521afce-1ec574a6fa0797ddfce1",
+              "file": "history.spec.js",
+              "line": 54,
+              "column": 3
+            },
+            {
+              "title": "HISTORY-007: refreshing history tab does not duplicate entries",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6202,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:21.054Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "256e00334ecda521afce-20b65ac6f39f2e6ef863",
+              "file": "history.spec.js",
+              "line": 62,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "promote.spec.js",
+      "file": "promote.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "PROMOTE — Submission and approval flow",
+          "file": "promote.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "PROMOTE-001: Promote tab visible and clickable after login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 581,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:27.283Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-f7b518ddf4a1f837b8c3",
+              "file": "promote.spec.js",
+              "line": 7,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-002: Promote tab shows Dev→QA and QA→Prod environment toggle buttons",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2649,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:27.878Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-0f58b01d77d2298f26a5",
+              "file": "promote.spec.js",
+              "line": 12,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-003: file list shows team SQL files with checkboxes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3107,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:30.540Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-b545fc001cdf4f6f7fcf",
+              "file": "promote.spec.js",
+              "line": 21,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-004: Select All button selects all files",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3208,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:33.665Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-032d44cbf3c27ae87248",
+              "file": "promote.spec.js",
+              "line": 28,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-005: None button deselects all files",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3186,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:36.891Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-ad7a896f69eef6ca2bdc",
+              "file": "promote.spec.js",
+              "line": 41,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-006: Submit button disabled when no files selected",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3158,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:40.089Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-a6d232d04abe95dadc27",
+              "file": "promote.spec.js",
+              "line": 51,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-007: submit one file creates an open promotion request",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8257,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:43.261Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-176a27b0616b0585fc64",
+              "file": "promote.spec.js",
+              "line": 62,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-008: submitter (alice) sees \"Waiting for a teammate\" not Approve button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8114,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:51.532Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-0488a5866e11f94ad3dc",
+              "file": "promote.spec.js",
+              "line": 79,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-009: bob sees Approve button on alice's submission",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 24199,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /^Approve$/i })\nExpected: visible\nError: strict mode violation: getByRole('button', { name: /^Approve$/i }) resolved to 3 elements:\n    1) <button>Approve</button> aka getByRole('button', { name: 'Approve' }).first()\n    2) <button>Approve</button> aka getByRole('button', { name: 'Approve' }).nth(1)\n    3) <button>Approve</button> aka getByRole('button', { name: 'Approve' }).nth(2)\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /^Approve$/i })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /^Approve$/i })\nExpected: visible\nError: strict mode violation: getByRole('button', { name: /^Approve$/i }) resolved to 3 elements:\n    1) <button>Approve</button> aka getByRole('button', { name: 'Approve' }).first()\n    2) <button>Approve</button> aka getByRole('button', { name: 'Approve' }).nth(1)\n    3) <button>Approve</button> aka getByRole('button', { name: 'Approve' }).nth(2)\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /^Approve$/i })\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/promote.spec.js:112:71",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/promote.spec.js",
+                          "column": 71,
+                          "line": 112
+                        },
+                        "snippet": "  110 |\n  111 |     // Bob should see the Approve button\n> 112 |     await expect(bobPage.getByRole('button', { name: /^Approve$/i })).toBeVisible({ timeout: 8000 });\n      |                                                                       ^\n  113 |     await expect(bobPage.getByRole('button', { name: /^Approve$/i })).toBeEnabled();\n  114 |     await bobCtx.close();\n  115 |   });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/promote.spec.js",
+                            "column": 71,
+                            "line": 112
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /^Approve$/i })\nExpected: visible\nError: strict mode violation: getByRole('button', { name: /^Approve$/i }) resolved to 3 elements:\n    1) <button>Approve</button> aka getByRole('button', { name: 'Approve' }).first()\n    2) <button>Approve</button> aka getByRole('button', { name: 'Approve' }).nth(1)\n    3) <button>Approve</button> aka getByRole('button', { name: 'Approve' }).nth(2)\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /^Approve$/i })\u001b[22m\n\n\n  110 |\n  111 |     // Bob should see the Approve button\n> 112 |     await expect(bobPage.getByRole('button', { name: /^Approve$/i })).toBeVisible({ timeout: 8000 });\n      |                                                                       ^\n  113 |     await expect(bobPage.getByRole('button', { name: /^Approve$/i })).toBeEnabled();\n  114 |     await bobCtx.close();\n  115 |   });\n    at /Users/damodsu/projects/sql-portal/e2e/tests/promote.spec.js:112:71"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:21:59.658Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/promote-PROMOTE-—-Submissi-464bb-utton-on-alice-s-submission/test-failed-1.png"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/promote-PROMOTE-—-Submissi-464bb-utton-on-alice-s-submission/test-failed-2.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/promote-PROMOTE-—-Submissi-464bb-utton-on-alice-s-submission/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/promote.spec.js",
+                        "column": 71,
+                        "line": 112
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-6304c6af545bc8e50187",
+              "file": "promote.spec.js",
+              "line": 94,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-010: mock mode — request auto-approves within 40 seconds",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 48179,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/Approved/i).first()\nExpected: visible\nTimeout: 40000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 40000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/Approved/i).first()\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/Approved/i).first()\nExpected: visible\nTimeout: 40000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 40000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/Approved/i).first()\u001b[22m\n\n    at /Users/damodsu/projects/sql-portal/e2e/tests/promote.spec.js:127:55",
+                        "location": {
+                          "file": "/Users/damodsu/projects/sql-portal/e2e/tests/promote.spec.js",
+                          "column": 55,
+                          "line": 127
+                        },
+                        "snippet": "  125 |\n  126 |     // Wait up to 40s for auto-approval (mock delay is 30s)\n> 127 |     await expect(page.getByText(/Approved/i).first()).toBeVisible({ timeout: 40000 });\n      |                                                       ^\n  128 |   });\n  129 |\n  130 |   test('PROMOTE-011: after approval, Deploy button appears', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/promote.spec.js",
+                            "column": 55,
+                            "line": 127
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/Approved/i).first()\nExpected: visible\nTimeout: 40000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 40000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/Approved/i).first()\u001b[22m\n\n\n  125 |\n  126 |     // Wait up to 40s for auto-approval (mock delay is 30s)\n> 127 |     await expect(page.getByText(/Approved/i).first()).toBeVisible({ timeout: 40000 });\n      |                                                       ^\n  128 |   });\n  129 |\n  130 |   test('PROMOTE-011: after approval, Deploy button appears', async ({ page }) => {\n    at /Users/damodsu/projects/sql-portal/e2e/tests/promote.spec.js:127:55"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:22:25.846Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/promote-PROMOTE-—-Submissi-5e7ab--approves-within-40-seconds/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/promote-PROMOTE-—-Submissi-5e7ab--approves-within-40-seconds/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/damodsu/projects/sql-portal/e2e/tests/promote.spec.js",
+                        "column": 55,
+                        "line": 127
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-35b481acb8c007d38c5b",
+              "file": "promote.spec.js",
+              "line": 117,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-011: after approval, Deploy button appears",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 50167,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/promote.spec.js",
+                            "column": 47,
+                            "line": 140
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/Approved/i)\nExpected: visible\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 40000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/Approved/i)\u001b[22m\n\n\n  138 |\n  139 |     // Wait for approved status\n> 140 |     await expect(page.getByText(/Approved/i)).toBeVisible({ timeout: 40000 });\n      |                                               ^\n  141 |     // Deploy button should appear\n  142 |     await expect(page.getByRole('button', { name: /Deploy to/i })).toBeVisible({ timeout: 5000 });\n  143 |   });\n    at /Users/damodsu/projects/sql-portal/e2e/tests/promote.spec.js:140:47"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:23:16.868Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/promote-PROMOTE-—-Submissi-0d113-roval-Deploy-button-appears/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/promote-PROMOTE-—-Submissi-0d113-roval-Deploy-button-appears/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-dd044dd28a3ba5a86b13",
+              "file": "promote.spec.js",
+              "line": 130,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-012: Deploy button triggers deployment",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 50137,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 50000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/damodsu/projects/sql-portal/e2e/tests/promote.spec.js",
+                            "column": 47,
+                            "line": 154
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/Approved/i)\nExpected: visible\nTimeout: 40000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 40000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/Approved/i)\u001b[22m\n\n\n  152 |     await page.waitForTimeout(2000);\n  153 |\n> 154 |     await expect(page.getByText(/Approved/i)).toBeVisible({ timeout: 40000 });\n      |                                               ^\n  155 |     await page.getByRole('button', { name: /Deploy to/i }).first().click();\n  156 |     await expect(page.getByText(/Deployed|deploying/i).first()).toBeVisible({ timeout: 10000 });\n  157 |   });\n    at /Users/damodsu/projects/sql-portal/e2e/tests/promote.spec.js:154:47"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:24:10.404Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/promote-PROMOTE-—-Submissi-bbcfd--button-triggers-deployment/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/damodsu/projects/sql-portal/e2e/test-results/promote-PROMOTE-—-Submissi-bbcfd--button-triggers-deployment/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-cf447b901fa5b9534b09",
+              "file": "promote.spec.js",
+              "line": 145,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-013: notes field accepts optional deployment notes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3315,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:25:03.711Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-f01fcb9495b5f7a601f5",
+              "file": "promote.spec.js",
+              "line": 159,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-014: scheduling toggle NOT visible when views/ file selected",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9564,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:25:08.184Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-d1dd0c91c416e5065679",
+              "file": "promote.spec.js",
+              "line": 169,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-015: scheduling toggle visible when procedures/ file selected",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8056,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:25:17.763Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-5311dd7af35eee19067b",
+              "file": "promote.spec.js",
+              "line": 185,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-016: scheduling toggle visible when sql_scripts/ file selected",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8592,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:25:25.846Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-646b8b268c45716bd202",
+              "file": "promote.spec.js",
+              "line": 199,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-017: enable schedule checkbox reveals schedule type options",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9014,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:25:34.471Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-66df839c2284fe260182",
+              "file": "promote.spec.js",
+              "line": 213,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-018: PR URL link visible on github mode submissions",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8422,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:25:43.505Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-9f51502206636e5316b4",
+              "file": "promote.spec.js",
+              "line": 238,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-019: switching from QA to Prod target env updates submit button label",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 17862,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:25:51.940Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-a28142edbf77a25b3c42",
+              "file": "promote.spec.js",
+              "line": 249,
+              "column": 3
+            },
+            {
+              "title": "PROMOTE-020: Active Reviews section shows open requests",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 50000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6867,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-16T06:26:09.817Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a4e6b15255f34b03d58-f2716d20cd55a706857c",
+              "file": "promote.spec.js",
+              "line": 265,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-03-16T06:14:19.123Z",
+    "duration": 717708.23,
+    "expected": 46,
+    "skipped": 0,
+    "unexpected": 22,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,190 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: ❄️
+      - generic [ref=e7]: SQL Deployment Portal
+    - generic [ref=e8]: Team Alpha
+    - generic [ref=e10]:
+      - generic [ref=e11]: Alice Chen
+      - button "Sign out" [ref=e12] [cursor=pointer]
+  - navigation [ref=e13]:
+    - button "📂 Files" [ref=e14] [cursor=pointer]
+    - button "✏️ Editor" [ref=e15] [cursor=pointer]
+    - button "🔁 Promote" [ref=e16] [cursor=pointer]
+    - button "📋 History" [ref=e17] [cursor=pointer]
+  - main [ref=e18]:
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - generic [ref=e22]:
+          - generic [ref=e25]: Dev
+          - generic [ref=e26]: 16 files
+          - generic [ref=e27]: Write & save SQL
+        - generic [ref=e28]:
+          - generic [ref=e29]: →
+          - generic [ref=e30]:
+            - generic [ref=e33]: QA
+            - generic [ref=e34]: 0 files
+            - generic [ref=e35]: Needs PR approval
+        - generic [ref=e36]:
+          - generic [ref=e37]: →
+          - generic [ref=e38]:
+            - generic [ref=e41]: Prod
+            - generic [ref=e42]: 0 files
+            - generic [ref=e43]: Needs data owner approval
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - generic [ref=e46]: Submit for Review
+          - generic [ref=e47]:
+            - generic [ref=e48]: Promote to
+            - generic [ref=e49]:
+              - button "QA" [ref=e50] [cursor=pointer]
+              - button "Prod" [ref=e51] [cursor=pointer]
+          - generic [ref=e52]:
+            - generic [ref=e53]:
+              - generic [ref=e54]: Select files
+              - generic [ref=e55]:
+                - button "All" [ref=e56] [cursor=pointer]
+                - button "None" [ref=e57] [cursor=pointer]
+            - generic [ref=e58]:
+              - generic [ref=e59] [cursor=pointer]:
+                - checkbox "alter_ddls/001_initial_schema.sql alter_ddls" [ref=e60]
+                - generic [ref=e61]: alter_ddls/001_initial_schema.sql
+                - generic [ref=e62]: alter_ddls
+              - generic [ref=e63] [cursor=pointer]:
+                - checkbox "alter_ddls/002_add_user_segments.sql alter_ddls" [ref=e64]
+                - generic [ref=e65]: alter_ddls/002_add_user_segments.sql
+                - generic [ref=e66]: alter_ddls
+              - generic [ref=e67] [cursor=pointer]:
+                - checkbox "alter_ddls/003_orders_add_discount.sql alter_ddls" [ref=e68]
+                - generic [ref=e69]: alter_ddls/003_orders_add_discount.sql
+                - generic [ref=e70]: alter_ddls
+              - generic [ref=e71] [cursor=pointer]:
+                - checkbox "procedures/sp_refresh_daily.sql procedures" [ref=e72]
+                - generic [ref=e73]: procedures/sp_refresh_daily.sql
+                - generic [ref=e74]: procedures
+              - generic [ref=e75] [cursor=pointer]:
+                - checkbox "schema_table_ddls/bronze/20260316_.sql schema_table_ddls/bronze" [ref=e76]
+                - generic [ref=e77]: schema_table_ddls/bronze/20260316_.sql
+                - generic [ref=e78]: schema_table_ddls/bronze
+              - generic [ref=e79] [cursor=pointer]:
+                - checkbox "schema_table_ddls/bronze/badfile.txt.sql schema_table_ddls/bronze" [ref=e80]
+                - generic [ref=e81]: schema_table_ddls/bronze/badfile.txt.sql
+                - generic [ref=e82]: schema_table_ddls/bronze
+              - generic [ref=e83] [cursor=pointer]:
+                - checkbox "schema_table_ddls/bronze/stg_events.sql schema_table_ddls/bronze" [ref=e84]
+                - generic [ref=e85]: schema_table_ddls/bronze/stg_events.sql
+                - generic [ref=e86]: schema_table_ddls/bronze
+              - generic [ref=e87] [cursor=pointer]:
+                - checkbox "schema_table_ddls/gold/orders.sql schema_table_ddls/gold" [ref=e88]
+                - generic [ref=e89]: schema_table_ddls/gold/orders.sql
+                - generic [ref=e90]: schema_table_ddls/gold
+              - generic [ref=e91] [cursor=pointer]:
+                - checkbox "schema_table_ddls/gold/users.sql schema_table_ddls/gold" [ref=e92]
+                - generic [ref=e93]: schema_table_ddls/gold/users.sql
+                - generic [ref=e94]: schema_table_ddls/gold
+              - generic [ref=e95] [cursor=pointer]:
+                - checkbox "sql_scripts/seed_dev_data.sql sql_scripts" [ref=e96]
+                - generic [ref=e97]: sql_scripts/seed_dev_data.sql
+                - generic [ref=e98]: sql_scripts
+              - generic [ref=e99] [cursor=pointer]:
+                - checkbox "views/20260316_commit_msg_test_1773641980826.sql views" [ref=e100]
+                - generic [ref=e101]: views/20260316_commit_msg_test_1773641980826.sql
+                - generic [ref=e102]: views
+              - generic [ref=e103] [cursor=pointer]:
+                - checkbox "views/20260316_e2e_noext_1773641872878.sql views" [ref=e104]
+                - generic [ref=e105]: views/20260316_e2e_noext_1773641872878.sql
+                - generic [ref=e106]: views
+              - generic [ref=e107] [cursor=pointer]:
+                - checkbox "views/20260316_sha_test_1773641837867.sql views" [ref=e108]
+                - generic [ref=e109]: views/20260316_sha_test_1773641837867.sql
+                - generic [ref=e110]: views
+              - generic [ref=e111] [cursor=pointer]:
+                - checkbox "views/e2e_view_1773641812850.sql views" [ref=e112]
+                - generic [ref=e113]: views/e2e_view_1773641812850.sql
+                - generic [ref=e114]: views
+              - generic [ref=e115] [cursor=pointer]:
+                - checkbox "views/v_active_users.sql views" [ref=e116]
+                - generic [ref=e117]: views/v_active_users.sql
+                - generic [ref=e118]: views
+              - generic [ref=e119] [cursor=pointer]:
+                - checkbox "views/v_daily_revenue.sql views" [ref=e120]
+                - generic [ref=e121]: views/v_daily_revenue.sql
+                - generic [ref=e122]: views
+          - generic [ref=e123]:
+            - generic [ref=e124]: Notes (optional)
+            - textbox "e.g. Adds user segment column for Q2 report" [ref=e125]
+          - generic [ref=e126]: Submitted 1 file(s) for QA review
+          - button "Submit file(s) to QA" [disabled] [ref=e127] [cursor=pointer]
+        - generic [ref=e128]:
+          - generic [ref=e129]:
+            - text: Active Reviews
+            - generic [ref=e130]: "5"
+          - generic [ref=e131]:
+            - generic [ref=e132]:
+              - generic [ref=e133]:
+                - generic [ref=e135]: Awaiting approval
+                - generic [ref=e136]: Dev → QA
+              - generic [ref=e137]: Mar 15, 11:21 PM
+            - generic [ref=e138]:
+              - text: Submitted by
+              - strong [ref=e139]: Alice Chen
+            - generic [ref=e141]: alter_ddls/001_initial_schema.sql
+            - link "View GitHub PR →" [ref=e142] [cursor=pointer]:
+              - /url: https://github.com/dsaipg/snowdeploy-sample/pull/3
+            - generic [ref=e144]: Waiting for a teammate to approve
+          - generic [ref=e145]:
+            - generic [ref=e146]:
+              - generic [ref=e147]:
+                - generic [ref=e149]: Awaiting approval
+                - generic [ref=e150]: Dev → QA
+              - generic [ref=e151]: Mar 15, 11:21 PM
+            - generic [ref=e152]:
+              - text: Submitted by
+              - strong [ref=e153]: Alice Chen
+            - generic [ref=e155]: alter_ddls/001_initial_schema.sql
+            - link "View GitHub PR →" [ref=e156] [cursor=pointer]:
+              - /url: https://github.com/dsaipg/snowdeploy-sample/pull/3
+            - generic [ref=e158]: Waiting for a teammate to approve
+          - generic [ref=e159]:
+            - generic [ref=e160]:
+              - generic [ref=e161]:
+                - generic [ref=e163]: Awaiting approval
+                - generic [ref=e164]: Dev → QA
+              - generic [ref=e165]: Mar 15, 11:22 PM
+            - generic [ref=e166]:
+              - text: Submitted by
+              - strong [ref=e167]: Alice Chen
+            - generic [ref=e169]: alter_ddls/001_initial_schema.sql
+            - link "View GitHub PR →" [ref=e170] [cursor=pointer]:
+              - /url: https://github.com/dsaipg/snowdeploy-sample/pull/3
+            - generic [ref=e172]: Waiting for a teammate to approve
+          - generic [ref=e173]:
+            - generic [ref=e174]:
+              - generic [ref=e175]:
+                - generic [ref=e177]: Awaiting approval
+                - generic [ref=e178]: Dev → QA
+              - generic [ref=e179]: Mar 15, 11:22 PM
+            - generic [ref=e180]:
+              - text: Submitted by
+              - strong [ref=e181]: Alice Chen
+            - generic [ref=e183]: alter_ddls/001_initial_schema.sql
+            - link "View GitHub PR →" [ref=e184] [cursor=pointer]:
+              - /url: https://github.com/dsaipg/snowdeploy-sample/pull/3
+            - generic [ref=e186]: Waiting for a teammate to approve
+          - generic [ref=e187]:
+            - generic [ref=e188]:
+              - generic [ref=e189]:
+                - generic [ref=e191]: Awaiting approval
+                - generic [ref=e192]: Dev → QA
+              - generic [ref=e193]: Mar 15, 11:23 PM
+            - generic [ref=e194]:
+              - text: Submitted by
+              - strong [ref=e195]: Alice Chen
+            - generic [ref=e197]: alter_ddls/001_initial_schema.sql
+            - link "View GitHub PR →" [ref=e198] [cursor=pointer]:
+              - /url: https://github.com/dsaipg/snowdeploy-sample/pull/3
+            - generic [ref=e200]: Waiting for a teammate to approve
+```
