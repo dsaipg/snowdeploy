@@ -50,7 +50,7 @@ services:
       GIT_MODE: "remote"
       GIT_REPO_PATH: "./repo"
       GIT_REPO_URL: "https://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@github.com/dsaipg/snowdeploy-sample.git"
-      GIT_BRANCH: "main"
+      GIT_BRANCH: "develop"
       GIT_SERVICE_ACCOUNT_USER: "sql-portal-bot"
       GIT_SERVICE_ACCOUNT_EMAIL: "sql-portal@company.com"
 
