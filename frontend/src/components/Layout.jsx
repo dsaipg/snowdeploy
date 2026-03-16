@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import config from '../config'
+import HelpModal from './HelpModal'
 
 export default function Layout({ user, onLogout, activeTab, setActiveTab, children }) {
+  const [showHelp, setShowHelp] = useState(false)
   const tabs = [
     { id: 'files',   label: '📂 Files' },
     { id: 'editor',  label: '✏️ Editor' },
@@ -22,9 +25,11 @@ export default function Layout({ user, onLogout, activeTab, setActiveTab, childr
         </div>
         <div style={styles.userArea}>
           <span style={styles.userLabel}>{user.display_name}</span>
+          <button style={styles.helpBtn} onClick={() => setShowHelp(true)} title="Documentation">?</button>
           <button style={styles.logoutBtn} onClick={onLogout}>Sign out</button>
         </div>
       </header>
+      {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
 
       {/* ── Tab nav ──────────────────────────────────────────── */}
       <nav style={styles.nav}>
@@ -71,6 +76,12 @@ const styles = {
   teamDot: { width: 6, height: 6, borderRadius: '50%', background: '#22c55e' },
   userArea: { display: 'flex', alignItems: 'center', gap: '12px' },
   userLabel: { fontSize: '13px', color: '#64748b' },
+  helpBtn: {
+    background: 'transparent', border: '1px solid #1e293b',
+    borderRadius: '50%', width: 26, height: 26,
+    color: '#64748b', fontSize: '13px', fontWeight: 700,
+    cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+  },
   logoutBtn: {
     background: 'transparent', border: '1px solid #1e293b',
     borderRadius: '6px', padding: '4px 10px',
