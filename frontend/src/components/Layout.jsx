@@ -25,7 +25,7 @@ export default function Layout({ user, onLogout, activeTab, setActiveTab, childr
         </div>
         <div style={styles.userArea}>
           <span style={styles.userLabel}>{user.display_name}</span>
-          <button style={styles.helpBtn} onClick={() => setShowHelp(true)} title="Documentation">?</button>
+          <button style={styles.helpBtn} onClick={() => setShowHelp(true)}>📖 Docs</button>
           <button style={styles.logoutBtn} onClick={onLogout}>Sign out</button>
         </div>
       </header>
@@ -78,9 +78,9 @@ const styles = {
   userLabel: { fontSize: '13px', color: '#64748b' },
   helpBtn: {
     background: 'transparent', border: '1px solid #1e293b',
-    borderRadius: '50%', width: 26, height: 26,
-    color: '#64748b', fontSize: '13px', fontWeight: 700,
-    cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+    borderRadius: '6px', padding: '4px 10px',
+    color: '#94a3b8', fontSize: '12px', fontWeight: 500,
+    cursor: 'pointer',
   },
   logoutBtn: {
     background: 'transparent', border: '1px solid #1e293b',
