@@ -161,6 +161,15 @@ export default function PromotionPanel({ user }) {
   const activeRequests = requests.filter(r => r.status !== 'deployed' && r.status !== 'rejected')
   const recentDeployed = requests.filter(r => r.status === 'deployed').slice(-5).reverse()
 
+  // Files that have been successfully deployed to QA
+  const qaDeployedFiles = new Set(
+    requests.filter(r => r.to_env === 'qa' && r.status === 'deployed').flatMap(r => r.files)
+  )
+  // Warning: files selected for Prod that haven't been through QA
+  const notInQA = targetEnv === 'prod'
+    ? selectedFiles.filter(f => !qaDeployedFiles.has(f))
+    : []
+
   return (
     <div style={s.page}>
 
@@ -184,8 +193,8 @@ export default function PromotionPanel({ user }) {
                 <span style={{ ...s.envCount, color: c.text }}>{count} files</span>
                 <span style={{ ...s.envDesc, color: c.text }}>
                   {env === 'dev'  ? 'Write & save SQL' :
-                   env === 'qa'   ? 'Needs PR approval' :
-                                    'Needs data owner approval'}
+                   env === 'qa'   ? (summary?.pending_qa?.length > 0 ? `${summary.pending_qa.length} pending approval` : 'No pending reviews') :
+                                    (summary?.pending_prod?.length > 0 ? `${summary.pending_prod.length} pending approval` : 'No pending reviews')}
                 </span>
               </div>
             </div>
@@ -334,6 +343,14 @@ export default function PromotionPanel({ user }) {
             </div>
           )}
 
+          {notInQA.length > 0 && (
+            <div style={s.warnBanner}>
+              ⚠ {notInQA.length === 1 ? '1 file has' : `${notInQA.length} files have`} not been deployed to QA first:
+              <ul style={{ margin: '4px 0 0 0', paddingLeft: 16 }}>
+                {notInQA.map(f => <li key={f} style={{ fontFamily: 'monospace', fontSize: 11 }}>{f}</li>)}
+              </ul>
+            </div>
+          )}
           {error && <div style={s.errorBanner}>{error}</div>}
           {success && <div style={s.successBanner}>{success}</div>}
 
@@ -602,6 +619,11 @@ const s = {
     borderRadius: 6, padding: '8px 12px',
     color: '#e2e8f0', fontSize: 13, resize: 'none',
     fontFamily: 'inherit', outline: 'none',
+  },
+  warnBanner: {
+    background: '#1c1200', border: '1px solid #d97706',
+    borderRadius: 6, padding: '8px 12px',
+    color: '#fcd34d', fontSize: 12, lineHeight: 1.6,
   },
   errorBanner: {
     background: '#1c0a0a', border: '1px solid #dc2626',
