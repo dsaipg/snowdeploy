@@ -30,7 +30,7 @@ const ENV_COLORS = {
 const STATUS_CONFIG = {
   open:     { label: 'Awaiting approval', color: '#f59e0b', bg: '#1c1500' },
   approved: { label: 'Approved',          color: '#22c55e', bg: '#0d1f0d' },
-  deployed: { label: 'Deployed',          color: '#64748b', bg: '#0f172a' },
+  deployed: { label: 'Deployed',          color: '#9899b8', bg: '#0f172a' },
   rejected: { label: 'Rejected',          color: '#ef4444', bg: '#1c0a0a' },
 }
 
@@ -468,7 +468,7 @@ function AirflowStatus({ run }) {
     return (
       <div style={as.wrap}>
         <span style={as.spinner}>⟳</span>
-        <span style={{ color: '#64748b', fontSize: 12 }}>Triggering Airflow…</span>
+        <span style={{ color: '#9899b8', fontSize: 12 }}>Triggering Airflow…</span>
       </div>
     )
   }
@@ -508,15 +508,15 @@ function AirflowStatus({ run }) {
 const as = {
   wrap: {
     marginTop: 8, padding: '8px 10px',
-    background: '#0a0f1a', borderRadius: 6,
-    border: '1px solid #1e293b',
+    background: '#0d0e14', borderRadius: 6,
+    border: '1px solid #2a2d3e',
   },
   header: { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 },
   badge: {
     fontSize: 11, fontWeight: 600, border: '1px solid',
     borderRadius: 4, padding: '2px 7px',
   },
-  time: { fontSize: 11, color: '#475569' },
+  time: { fontSize: 11, color: '#5c5f7a' },
   tasks: { display: 'flex', flexDirection: 'column', gap: 3, marginTop: 4 },
   taskRow: { display: 'flex', alignItems: 'center', gap: 6 },
   taskDot: { width: 6, height: 6, borderRadius: '50%', flexShrink: 0 },
@@ -528,11 +528,11 @@ const s = {
   page: { display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, gap: 16 },
   pipeline: {
     display: 'flex', alignItems: 'center', gap: 0,
-    background: '#161b27', border: '1px solid #1e293b',
+    background: '#1a1b26', border: '1px solid #2a2d3e',
     borderRadius: 10, padding: '16px 24px', flexShrink: 0,
   },
   pipelineRow: { display: 'flex', alignItems: 'center' },
-  arrow: { fontSize: 20, color: '#334155', margin: '0 12px' },
+  arrow: { fontSize: 20, color: '#4a4d66', margin: '0 12px' },
   envBox: {
     display: 'flex', flexDirection: 'column', gap: 4,
     border: '1px solid', borderRadius: 8,
@@ -545,60 +545,60 @@ const s = {
   body: { display: 'flex', gap: 16, flex: 1, minHeight: 0 },
   submitPanel: {
     display: 'flex', flexDirection: 'column', gap: 12,
-    background: '#161b27', border: '1px solid #1e293b',
+    background: '#1a1b26', border: '1px solid #2a2d3e',
     borderRadius: 10, padding: 20, width: 340, flexShrink: 0,
     overflowY: 'auto',
   },
   reviewsPanel: {
     display: 'flex', flexDirection: 'column', gap: 10,
-    background: '#161b27', border: '1px solid #1e293b',
+    background: '#1a1b26', border: '1px solid #2a2d3e',
     borderRadius: 10, padding: 20, flex: 1, overflowY: 'auto',
   },
   sectionHeader: {
-    fontSize: 12, fontWeight: 700, color: '#64748b',
+    fontSize: 12, fontWeight: 700, color: '#9899b8',
     textTransform: 'uppercase', letterSpacing: '0.08em',
     display: 'flex', alignItems: 'center', gap: 8,
   },
   badge: {
-    background: '#1e293b', color: '#94a3b8',
+    background: '#2a2d3e', color: '#94a3b8',
     borderRadius: 10, padding: '1px 7px', fontSize: 11,
   },
   field: { display: 'flex', flexDirection: 'column', gap: 4 },
-  label: { fontSize: 12, color: '#64748b', fontWeight: 500 },
+  label: { fontSize: 12, color: '#9899b8', fontWeight: 500 },
   envToggle: { display: 'flex', gap: 6 },
   envToggleBtn: {
-    flex: 1, padding: '7px 0', border: '1px solid #1e293b',
+    flex: 1, padding: '7px 0', border: '1px solid #2a2d3e',
     borderRadius: 6, background: 'transparent',
-    color: '#64748b', fontSize: 13, cursor: 'pointer',
+    color: '#9899b8', fontSize: 13, cursor: 'pointer',
   },
   envToggleBtnActive: {
-    background: '#1e3a5f', borderColor: '#2563eb', color: '#93c5fd', fontWeight: 600,
+    background: '#2d2a6e', borderColor: '#6366f1', color: '#93c5fd', fontWeight: 600,
   },
   fileList: {
-    border: '1px solid #1e293b', borderRadius: 6,
+    border: '1px solid #2a2d3e', borderRadius: 6,
     maxHeight: 220, overflowY: 'auto',
-    background: '#0f1117',
+    background: '#13141c',
   },
-  emptyFiles: { color: '#475569', fontSize: 12, padding: '12px 16px', textAlign: 'center' },
+  emptyFiles: { color: '#5c5f7a', fontSize: 12, padding: '12px 16px', textAlign: 'center' },
   fileRow: {
     display: 'flex', alignItems: 'center', gap: 8,
     padding: '7px 12px', cursor: 'pointer',
-    borderBottom: '1px solid #1e293b',
+    borderBottom: '1px solid #2a2d3e',
     color: '#94a3b8', fontSize: 12,
   },
   fileName: { flex: 1, fontFamily: 'monospace' },
   folderBadge: {
-    fontSize: 10, color: '#475569',
-    background: '#1e293b', borderRadius: 4,
+    fontSize: 10, color: '#5c5f7a',
+    background: '#2a2d3e', borderRadius: 4,
     padding: '1px 5px',
   },
   bulkBtn: {
-    background: 'transparent', border: '1px solid #1e293b',
+    background: 'transparent', border: '1px solid #2a2d3e',
     borderRadius: 4, padding: '2px 8px',
-    color: '#64748b', fontSize: 11, cursor: 'pointer',
+    color: '#9899b8', fontSize: 11, cursor: 'pointer',
   },
   textarea: {
-    background: '#0f1117', border: '1px solid #1e293b',
+    background: '#13141c', border: '1px solid #2a2d3e',
     borderRadius: 6, padding: '8px 12px',
     color: '#e2e8f0', fontSize: 13, resize: 'none',
     fontFamily: 'inherit', outline: 'none',
@@ -614,13 +614,13 @@ const s = {
     color: '#86efac', fontSize: 12,
   },
   submitBtn: {
-    background: '#2563eb', color: '#fff',
+    background: '#4f46e5', color: '#fff',
     border: 'none', borderRadius: 7,
     padding: '10px 0', fontSize: 13, fontWeight: 600,
     cursor: 'pointer', transition: 'opacity 0.15s',
   },
   emptyState: {
-    color: '#475569', fontSize: 13, textAlign: 'center',
+    color: '#5c5f7a', fontSize: 13, textAlign: 'center',
     padding: '32px 0', lineHeight: 1.6,
   },
   reqCard: {
@@ -632,12 +632,12 @@ const s = {
   statusDot: { width: 8, height: 8, borderRadius: '50%', flexShrink: 0 },
   statusLabel: { fontSize: 12, fontWeight: 600 },
   envPill: {
-    fontSize: 11, color: '#64748b',
-    background: '#1e293b', borderRadius: 10,
+    fontSize: 11, color: '#9899b8',
+    background: '#2a2d3e', borderRadius: 10,
     padding: '1px 8px',
   },
-  reqTime: { fontSize: 11, color: '#475569' },
-  reqMeta: { fontSize: 12, color: '#64748b' },
+  reqTime: { fontSize: 11, color: '#5c5f7a' },
+  reqMeta: { fontSize: 12, color: '#9899b8' },
   fileChips: { display: 'flex', flexWrap: 'wrap', gap: 4 },
   chip: {
     fontSize: 11, fontFamily: 'monospace',
@@ -660,9 +660,9 @@ const s = {
     padding: '6px 14px', fontSize: 12, fontWeight: 600,
     cursor: 'pointer',
   },
-  waitingLabel: { fontSize: 12, color: '#475569', fontStyle: 'italic' },
+  waitingLabel: { fontSize: 12, color: '#5c5f7a', fontStyle: 'italic' },
   deployBtn: {
-    background: '#1d4ed8', color: '#dbeafe',
+    background: '#4f46e5', color: '#dbeafe',
     border: 'none', borderRadius: 6,
     padding: '6px 14px', fontSize: 12, fontWeight: 600,
     cursor: 'pointer',
@@ -680,33 +680,33 @@ const s = {
     background: '#0d2116', borderRadius: 4,
     padding: '2px 7px', flexShrink: 0,
   },
-  deployedFiles: { color: '#64748b', fontFamily: 'monospace', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
-  deployedTime: { color: '#334155', flexShrink: 0 },
+  deployedFiles: { color: '#9899b8', fontFamily: 'monospace', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
+  deployedTime: { color: '#4a4d66', flexShrink: 0 },
   scheduleBox: {
     background: '#0f0f1a', border: '1px solid #3730a3',
     borderRadius: 7, padding: '10px 12px',
   },
   schedTypeBtn: {
-    background: 'transparent', border: '1px solid #1e293b',
+    background: 'transparent', border: '1px solid #2a2d3e',
     borderRadius: 4, padding: '3px 10px',
-    color: '#64748b', fontSize: 11, cursor: 'pointer',
+    color: '#9899b8', fontSize: 11, cursor: 'pointer',
   },
   schedTypeBtnActive: {
     background: '#1e1b4b', borderColor: '#6366f1', color: '#a5b4fc', fontWeight: 600,
   },
-  schedLabel: { fontSize: 11, color: '#64748b', flexShrink: 0 },
+  schedLabel: { fontSize: 11, color: '#9899b8', flexShrink: 0 },
   schedInput: {
-    background: '#0f1117', border: '1px solid #1e293b',
+    background: '#13141c', border: '1px solid #2a2d3e',
     borderRadius: 5, padding: '4px 8px',
     color: '#e2e8f0', fontSize: 12, outline: 'none', flex: 1,
   },
   schedPreview: {
-    fontSize: 11, color: '#475569',
-    background: '#0a0f1a', borderRadius: 4,
+    fontSize: 11, color: '#5c5f7a',
+    background: '#0d0e14', borderRadius: 4,
     padding: '4px 8px',
   },
   schedPill: {
-    fontSize: 11, color: '#64748b',
+    fontSize: 11, color: '#9899b8',
     background: '#0f0f1a', border: '1px solid #3730a3',
     borderRadius: 4, padding: '3px 8px',
   },

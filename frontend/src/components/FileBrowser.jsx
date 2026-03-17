@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react'
 import { filesApi, lockApi } from '../api/client'
 
 const FOLDER_META = {
-  'schema_table_ddls/bronze': { label: 'bronze', icon: '🥉', color: '#cd7f32', indent: true },
-  'schema_table_ddls/silver': { label: 'silver', icon: '🥈', color: '#a8a9ad', indent: true },
-  'schema_table_ddls/gold':   { label: 'gold',   icon: '🥇', color: '#fbbf24', indent: true },
-  'views':             { label: 'views',      icon: '👁', color: '#34d399', indent: false },
-  'procedures':        { label: 'procedures', icon: '⚙',  color: '#f87171', indent: false },
-  'alter_ddls':        { label: 'alter_ddls', icon: '🔢', color: '#818cf8', indent: false },
-  'sql_scripts':           { label: 'sql_scripts',    icon: '📝', color: '#94a3b8', indent: false },
+  'schema_table_ddls/bronze': { label: 'bronze', icon: '◈', color: '#cd7f32', indent: true },
+  'schema_table_ddls/silver': { label: 'silver', icon: '◈', color: '#a8a9ad', indent: true },
+  'schema_table_ddls/gold':   { label: 'gold',   icon: '◈', color: '#fbbf24', indent: true },
+  'views':       { label: 'views',      icon: '▤', color: '#34d399', indent: false },
+  'procedures':  { label: 'procedures', icon: 'ƒ', color: '#f87171', indent: false },
+  'alter_ddls':  { label: 'alter_ddls', icon: '🔧', color: '#818cf8', indent: false },
+  'sql_scripts': { label: 'sql_scripts', icon: '≡', color: '#94a3b8', indent: false },
 }
 
 // Always show these folders, even if empty
@@ -102,7 +102,7 @@ export default function FileBrowser({ onOpenFile, onNewFile }) {
     ? visibleFiles.filter(f => f.name.toLowerCase().includes(search.toLowerCase()))
     : visibleFiles
 
-  const meta = FOLDER_META[selectedFolder] || { label: selectedFolder || 'root', icon: '📁', color: '#64748b' }
+  const meta = FOLDER_META[selectedFolder] || { label: selectedFolder || 'root', icon: '📁', color: '#9899b8' }
 
   return (
     <div style={styles.shell}>
@@ -123,7 +123,7 @@ export default function FileBrowser({ onOpenFile, onNewFile }) {
       ) : files.length === 0 ? (
         <div style={styles.emptyBox}>
           <div style={{ fontSize: 40, marginBottom: 12 }}>📂</div>
-          <p style={{ color: '#64748b', marginBottom: 16 }}>No SQL files yet.</p>
+          <p style={{ color: '#9899b8', marginBottom: 16 }}>No SQL files yet.</p>
           <button style={styles.newBtn} onClick={onNewFile}>Create your first file</button>
         </div>
       ) : (
@@ -209,7 +209,7 @@ export default function FileBrowser({ onOpenFile, onNewFile }) {
                     <span style={styles.colCommit}>
                       {file.last_commit_message
                         ? file.last_commit_message.slice(0, 50) + (file.last_commit_message.length > 50 ? '…' : '')
-                        : <span style={{ color: '#334155' }}>—</span>}
+                        : <span style={{ color: '#4a4d66' }}>—</span>}
                     </span>
                     <span style={styles.colActions}>
                       <button style={styles.actionBtn} onClick={() => handleOpenFile(file)}>Open</button>
@@ -235,13 +235,13 @@ export default function FileBrowser({ onOpenFile, onNewFile }) {
               <strong style={{ color: '#fcd34d' }}>{lockWarning.lock.display_name}</strong> is currently editing{' '}
               <strong style={{ color: '#e2e8f0' }}>{lockWarning.file.name}</strong>.
             </p>
-            <p style={{ color: '#64748b', marginBottom: 20, fontSize: 13 }}>
+            <p style={{ color: '#9899b8', marginBottom: 20, fontSize: 13 }}>
               You can still open it, but your changes may conflict with theirs.
             </p>
             <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
               <button style={styles.actionBtn} onClick={() => setLockWarning(null)}>Cancel</button>
               <button
-                style={{ ...styles.actionBtn, background: '#1e3a5f', borderColor: '#2563eb', color: '#93c5fd' }}
+                style={{ ...styles.actionBtn, background: '#2d2a6e', borderColor: '#6366f1', color: '#93c5fd' }}
                 onClick={() => { onOpenFile(lockWarning.file.path); setLockWarning(null) }}
               >Open anyway</button>
             </div>
@@ -279,43 +279,43 @@ const styles = {
     marginBottom: 12, flexShrink: 0,
   },
   heading: { fontSize: 18, fontWeight: 700, color: '#f1f5f9', margin: 0 },
-  totalCount: { fontSize: 12, color: '#475569' },
+  totalCount: { fontSize: 12, color: '#5c5f7a' },
   refreshBtn: {
-    background: 'transparent', border: '1px solid #1e293b',
+    background: 'transparent', border: '1px solid #2a2d3e',
     borderRadius: 6, padding: '6px 10px',
-    color: '#64748b', fontSize: 14, cursor: 'pointer',
+    color: '#9899b8', fontSize: 14, cursor: 'pointer',
   },
   newBtn: {
-    background: '#1d4ed8', border: 'none', borderRadius: 7,
+    background: '#4f46e5', border: 'none', borderRadius: 7,
     padding: '7px 16px', color: '#fff', fontSize: 13, fontWeight: 600, cursor: 'pointer',
   },
   error: {
     background: '#450a0a', border: '1px solid #ef4444', borderRadius: 8,
     padding: '10px 14px', color: '#fca5a5', fontSize: 13, marginBottom: 12, flexShrink: 0,
   },
-  empty: { color: '#475569', textAlign: 'center', padding: '48px 0' },
+  empty: { color: '#5c5f7a', textAlign: 'center', padding: '48px 0' },
   emptyBox: {
     textAlign: 'center', padding: '60px 24px',
-    background: '#161b27', border: '1px solid #1e293b', borderRadius: 12,
+    background: '#1a1b26', border: '1px solid #2a2d3e', borderRadius: 12,
   },
 
   // Two-pane layout
   panes: {
     display: 'flex', gap: 0, flex: 1, minHeight: 0,
-    border: '1px solid #1e293b', borderRadius: 12, overflow: 'hidden',
+    border: '1px solid #2a2d3e', borderRadius: 12, overflow: 'hidden',
   },
 
   // Left sidebar
   sidebar: {
     width: 190, flexShrink: 0,
-    background: '#0f1117',
-    borderRight: '1px solid #1e293b',
+    background: '#13141c',
+    borderRight: '1px solid #2a2d3e',
     overflowY: 'auto',
     padding: '8px 0',
   },
   sidebarLabel: {
     fontSize: 10, fontWeight: 700, letterSpacing: '1px',
-    color: '#334155', padding: '4px 12px 8px', textTransform: 'uppercase',
+    color: '#4a4d66', padding: '4px 12px 8px', textTransform: 'uppercase',
   },
   groupHeader: {
     display: 'flex', alignItems: 'center', gap: 6,
@@ -328,39 +328,39 @@ const styles = {
     transition: 'background 0.1s',
   },
   folderRowActive: {
-    background: '#161b27',
-    borderLeftColor: '#2563eb',
+    background: '#1a1b26',
+    borderLeftColor: '#6366f1',
   },
-  folderIcon: { fontSize: 14, flexShrink: 0 },
+  folderIcon: { fontSize: 13, flexShrink: 0, width: 18, textAlign: 'center', lineHeight: 1 },
   folderLabel: { fontSize: 13, fontWeight: 500, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
   folderBadge: {
-    fontSize: 10, fontWeight: 700, color: '#475569',
-    background: '#1e293b', borderRadius: 10,
+    fontSize: 10, fontWeight: 700, color: '#5c5f7a',
+    background: '#2a2d3e', borderRadius: 10,
     padding: '1px 6px', flexShrink: 0,
   },
 
   // Right file pane
   filePane: {
-    flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, background: '#161b27',
+    flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, background: '#1a1b26',
   },
   filePaneHeader: {
     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-    padding: '12px 16px', borderBottom: '1px solid #1e293b', flexShrink: 0,
-    background: '#0f1117',
+    padding: '12px 16px', borderBottom: '1px solid #2a2d3e', flexShrink: 0,
+    background: '#13141c',
   },
   filePaneTitle: { fontSize: 14, fontWeight: 700 },
   fileCountBadge: {
-    fontSize: 11, color: '#475569', background: '#1e293b',
+    fontSize: 11, color: '#5c5f7a', background: '#2a2d3e',
     borderRadius: 10, padding: '1px 7px',
   },
   searchInput: {
-    background: '#161b27', border: '1px solid #1e293b',
+    background: '#1a1b26', border: '1px solid #2a2d3e',
     borderRadius: 6, padding: '5px 10px',
     color: '#e2e8f0', fontSize: 12, outline: 'none', width: 180,
   },
   fileRowHeader: {
-    background: '#0a0f1a', fontSize: 10, fontWeight: 700,
-    letterSpacing: '0.8px', textTransform: 'uppercase', color: '#334155',
+    background: '#0d0e14', fontSize: 10, fontWeight: 700,
+    letterSpacing: '0.8px', textTransform: 'uppercase', color: '#4a4d66',
     flexShrink: 0,
   },
   fileScroll: { overflowY: 'auto', flex: 1 },
@@ -369,18 +369,18 @@ const styles = {
     gridTemplateColumns: '2fr 1.2fr 0.6fr 2fr 145px',
     alignItems: 'center',
     padding: '10px 16px',
-    borderBottom: '1px solid #0f1421',
+    borderBottom: '1px solid #0a0b11',
   },
   emptyFolder: {
-    padding: '48px 0', textAlign: 'center', color: '#334155', fontSize: 13,
+    padding: '48px 0', textAlign: 'center', color: '#4a4d66', fontSize: 13,
   },
   colName: { display: 'flex', alignItems: 'center', gap: 8, overflow: 'hidden' },
-  colMeta: { fontSize: 12, color: '#64748b', paddingRight: 8 },
-  colCommit: { fontSize: 12, color: '#475569', paddingRight: 8, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
+  colMeta: { fontSize: 12, color: '#9899b8', paddingRight: 8 },
+  colCommit: { fontSize: 12, color: '#5c5f7a', paddingRight: 8, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
   colActions: { display: 'flex', gap: 6, justifyContent: 'flex-end' },
   fileName: { fontSize: 13, fontWeight: 500, color: '#e2e8f0', fontFamily: 'monospace', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
   actionBtn: {
-    background: '#1e293b', border: '1px solid #334155',
+    background: '#2a2d3e', border: '1px solid #334155',
     borderRadius: 6, padding: '4px 10px',
     color: '#94a3b8', fontSize: 12, cursor: 'pointer', whiteSpace: 'nowrap',
   },
@@ -395,7 +395,7 @@ const styles = {
     display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100,
   },
   modal: {
-    background: '#161b27', border: '1px solid #334155',
+    background: '#1a1b26', border: '1px solid #334155',
     borderRadius: 12, padding: 28, maxWidth: 420, width: '100%',
   },
 }

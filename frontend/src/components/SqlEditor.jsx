@@ -231,7 +231,7 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
                 {templates.map(tmpl => (
                   <button key={tmpl.name} style={styles.dropdownItem} onClick={() => insertTemplate(tmpl)}>
                     <span style={{ fontWeight: 600, color: '#e2e8f0', fontSize: 13 }}>{tmpl.name}</span>
-                    <span style={{ color: '#64748b', fontSize: 11 }}>{tmpl.description}</span>
+                    <span style={{ color: '#9899b8', fontSize: 11 }}>{tmpl.description}</span>
                   </button>
                 ))}
               </div>
@@ -239,7 +239,7 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
           </div>
 
           <input
-            style={{ ...styles.filenameInput, maxWidth: 240, fontSize: 12, color: '#64748b', background: '#161b27', border: '1px solid #1e293b', borderRadius: 6, padding: '6px 10px' }}
+            style={{ ...styles.filenameInput, maxWidth: 240, fontSize: 12, color: '#9899b8', background: '#1a1b26', border: '1px solid #2a2d3e', borderRadius: 6, padding: '6px 10px' }}
             value={commitMessage}
             onChange={e => setCommitMessage(e.target.value)}
             placeholder="Commit message (optional)"
@@ -289,7 +289,7 @@ export default function SqlEditor({ initialFile, templates, onFileSaved }) {
                 </span>
                 <div style={styles.lintText}>
                   <span style={{ color: '#e2e8f0', fontSize: 13 }}>{issue.message}</span>
-                  <span style={{ color: '#64748b', fontSize: 11 }}>→ {issue.fix}</span>
+                  <span style={{ color: '#9899b8', fontSize: 11 }}>→ {issue.fix}</span>
                 </div>
               </div>
             ))}
@@ -338,27 +338,28 @@ const styles = {
   },
   filenameWrap: {
     display: 'flex', alignItems: 'center', gap: 4,
-    background: '#161b27', border: '1px solid #1e293b',
+    background: '#1a1b26', border: '1px solid #2a2d3e',
     borderRadius: 7, padding: '6px 10px', flex: 1, maxWidth: 320,
   },
   subfolderSelect: {
-    background: 'transparent', border: 'none', outline: 'none',
-    color: '#64748b', fontSize: 12, fontFamily: 'monospace', cursor: 'pointer',
-    maxWidth: 150,
+    background: '#252836', border: '1px solid #3d4060',
+    borderRadius: 5, outline: 'none', padding: '3px 6px',
+    color: '#e2e8f0', fontSize: 12, fontFamily: 'monospace', cursor: 'pointer',
+    maxWidth: 160,
   },
-  folderHint: { fontSize: 12, color: '#475569', whiteSpace: 'nowrap' },
+  folderHint: { fontSize: 12, color: '#5c5f7a', whiteSpace: 'nowrap' },
   filenameInput: {
     background: 'transparent', border: 'none', outline: 'none',
     color: '#e2e8f0', fontSize: 13, fontFamily: 'monospace', flex: 1, minWidth: 80,
   },
   toolbarActions: { display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' },
   toolBtn: {
-    background: '#1e293b', border: '1px solid #334155',
+    background: '#2a2d3e', border: '1px solid #334155',
     borderRadius: 6, padding: '6px 12px',
     color: '#94a3b8', fontSize: 12, cursor: 'pointer', whiteSpace: 'nowrap',
   },
   saveBtn: {
-    background: '#1d4ed8', border: 'none', borderRadius: 6, padding: '7px 16px',
+    background: '#4f46e5', border: 'none', borderRadius: 6, padding: '7px 16px',
     color: '#fff', fontSize: 13, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap',
   },
   statusBar: {
@@ -370,21 +371,21 @@ const styles = {
   lintPanel: {
     border: '1px solid', borderRadius: 8,
     marginBottom: 8, overflow: 'hidden', flexShrink: 0,
-    background: '#0f1117',
+    background: '#13141c',
   },
   lintHeader: {
     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-    padding: '8px 14px', borderBottom: '1px solid #1e293b',
+    padding: '8px 14px', borderBottom: '1px solid #2a2d3e',
   },
   lintTitle: { fontSize: 13, fontWeight: 600 },
   lintDismiss: {
-    background: 'none', border: 'none', color: '#475569',
+    background: 'none', border: 'none', color: '#5c5f7a',
     cursor: 'pointer', fontSize: 14, padding: '0 4px',
   },
   lintList: { display: 'flex', flexDirection: 'column', gap: 0 },
   lintItem: {
     display: 'flex', alignItems: 'flex-start', gap: 10,
-    padding: '8px 14px', borderBottom: '1px solid #1e293b',
+    padding: '8px 14px', borderBottom: '1px solid #2a2d3e',
   },
   lintBadge: {
     fontSize: 10, fontWeight: 700, border: '1px solid',
@@ -395,15 +396,15 @@ const styles = {
 
   editorWrap: {
     flex: 1, minHeight: 0, borderRadius: 10, overflow: 'hidden',
-    border: '1px solid #1e293b',
+    border: '1px solid #2a2d3e',
   },
   editorLoading: {
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    height: '100%', color: '#475569',
+    height: '100%', color: '#5c5f7a',
   },
   dropdown: {
     position: 'absolute', top: '110%', left: 0, zIndex: 50,
-    background: '#161b27', border: '1px solid #334155',
+    background: '#1a1b26', border: '1px solid #334155',
     borderRadius: 8, padding: 4, minWidth: 240,
     display: 'flex', flexDirection: 'column', gap: 2,
     boxShadow: '0 8px 32px rgba(0,0,0,0.5)',

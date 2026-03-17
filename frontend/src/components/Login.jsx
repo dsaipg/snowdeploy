@@ -120,15 +120,15 @@ export default function Login({ onLogin }) {
 const styles = {
   page: {
     minHeight: '100vh',
-    background: '#0f1117',
+    background: '#13141c',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     padding: '24px',
   },
   card: {
-    background: '#161b27',
-    border: '1px solid #1e293b',
+    background: '#1a1b26',
+    border: '1px solid #2a2d3e',
     borderRadius: '16px',
     padding: '40px',
     width: '100%',
@@ -137,13 +137,13 @@ const styles = {
   header: { textAlign: 'center', marginBottom: '32px' },
   icon: { fontSize: '40px', marginBottom: '12px' },
   title: { fontSize: '22px', fontWeight: 700, color: '#f1f5f9', marginBottom: '6px' },
-  subtitle: { fontSize: '14px', color: '#64748b' },
+  subtitle: { fontSize: '14px', color: '#9899b8' },
   returning: {
     display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px',
   },
   avatar: {
     width: 56, height: 56, borderRadius: '50%',
-    background: '#1d4ed8', color: '#fff',
+    background: '#4f46e5', color: '#fff',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     fontSize: 22, fontWeight: 700,
   },
@@ -157,8 +157,8 @@ const styles = {
   field: { display: 'flex', flexDirection: 'column', gap: '6px' },
   label: { fontSize: '13px', fontWeight: 600, color: '#94a3b8' },
   input: {
-    background: '#0f1117',
-    border: '1px solid #1e293b',
+    background: '#13141c',
+    border: '1px solid #2a2d3e',
     borderRadius: '8px',
     padding: '10px 14px',
     color: '#e2e8f0',
@@ -174,7 +174,7 @@ const styles = {
     fontSize: '13px',
   },
   btn: {
-    background: '#2563eb',
+    background: '#4f46e5',
     border: 'none',
     borderRadius: '8px',
     padding: '12px',
@@ -188,11 +188,11 @@ const styles = {
   switchBtn: {
     background: 'transparent',
     border: 'none',
-    color: '#475569',
+    color: '#5c5f7a',
     fontSize: '13px',
     cursor: 'pointer',
     marginTop: '4px',
     textDecoration: 'underline',
   },
-  hint: { textAlign: 'center', fontSize: '12px', color: '#475569', marginTop: '24px' },
+  hint: { textAlign: 'center', fontSize: '12px', color: '#5c5f7a', marginTop: '24px' },
 }

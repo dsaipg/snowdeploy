@@ -34,11 +34,11 @@ export default function HistoryPanel() {
       </div>
 
       {loading ? (
-        <p style={{ color: '#475569', padding: 16 }}>Loading history…</p>
+        <p style={{ color: '#5c5f7a', padding: 16 }}>Loading history…</p>
       ) : runs.length === 0 ? (
         <div style={styles.empty}>
           <div style={{ fontSize: 36, marginBottom: 10 }}>📋</div>
-          <p style={{ color: '#64748b' }}>No deployments yet.</p>
+          <p style={{ color: '#9899b8' }}>No deployments yet.</p>
         </div>
       ) : (
         <div style={styles.list}>
@@ -54,7 +54,7 @@ export default function HistoryPanel() {
                   <span style={styles.runId}>{run.run_id.slice(-20)}</span>
                   <span style={styles.meta}>{fmt(run.triggered_at)}</span>
                   <span style={styles.fileCount}>{run.files.length} file{run.files.length !== 1 ? 's' : ''}</span>
-                  <span style={{ color: '#475569', marginLeft: 'auto' }}>{isOpen ? '▲' : '▼'}</span>
+                  <span style={{ color: '#5c5f7a', marginLeft: 'auto' }}>{isOpen ? '▲' : '▼'}</span>
                 </div>
 
                 {isOpen && (
@@ -109,32 +109,32 @@ const styles = {
   header: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
   heading: { fontSize: 18, fontWeight: 700, color: '#f1f5f9' },
   refreshBtn: {
-    background: 'transparent', border: '1px solid #1e293b',
+    background: 'transparent', border: '1px solid #2a2d3e',
     borderRadius: 7, padding: '7px 14px',
-    color: '#64748b', fontSize: 13, cursor: 'pointer',
+    color: '#9899b8', fontSize: 13, cursor: 'pointer',
   },
   empty: { textAlign: 'center', padding: '60px 0' },
   list: { display: 'flex', flexDirection: 'column', gap: 10 },
-  card: { background: '#161b27', border: '1px solid #1e293b', borderRadius: 10, overflow: 'hidden' },
+  card: { background: '#1a1b26', border: '1px solid #2a2d3e', borderRadius: 10, overflow: 'hidden' },
   cardHeader: {
     display: 'flex', alignItems: 'center', gap: 12,
     padding: '12px 16px', cursor: 'pointer',
   },
   badge: { fontSize: 11, fontWeight: 700, padding: '3px 8px', borderRadius: 5 },
-  runId: { fontSize: 12, color: '#475569', fontFamily: 'monospace' },
-  meta: { fontSize: 12, color: '#64748b' },
-  fileCount: { fontSize: 12, color: '#64748b', marginLeft: 'auto' },
+  runId: { fontSize: 12, color: '#5c5f7a', fontFamily: 'monospace' },
+  meta: { fontSize: 12, color: '#9899b8' },
+  fileCount: { fontSize: 12, color: '#9899b8', marginLeft: 'auto' },
   cardBody: {
-    padding: '0 16px 16px', borderTop: '1px solid #1e293b',
+    padding: '0 16px 16px', borderTop: '1px solid #2a2d3e',
     paddingTop: 14, display: 'flex', flexDirection: 'column', gap: 14,
   },
   section: {},
-  sectionLabel: { fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: '#475569' },
+  sectionLabel: { fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: '#5c5f7a' },
   filePill: {
-    background: '#0f1117', border: '1px solid #1e293b',
+    background: '#13141c', border: '1px solid #2a2d3e',
     borderRadius: 5, padding: '3px 8px',
     fontSize: 12, color: '#94a3b8', fontFamily: 'monospace',
   },
   taskRow: { display: 'flex', alignItems: 'center', gap: 10 },
-  timing: { display: 'flex', gap: 24, fontSize: 12, color: '#475569' },
+  timing: { display: 'flex', gap: 24, fontSize: 12, color: '#5c5f7a' },
 }

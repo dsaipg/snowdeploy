@@ -10,8 +10,8 @@ const s = {
     zIndex: 1000,
   },
   modal: {
-    background: '#161b27',
-    border: '1px solid #1e293b',
+    background: '#1a1b26',
+    border: '1px solid #2a2d3e',
     borderRadius: 12,
     width: '680px',
     maxWidth: '95vw',
@@ -23,7 +23,7 @@ const s = {
   header: {
     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
     padding: '16px 20px',
-    borderBottom: '1px solid #1e293b',
+    borderBottom: '1px solid #2a2d3e',
     flexShrink: 0,
   },
   headerTitle: {
@@ -32,23 +32,23 @@ const s = {
   },
   closeBtn: {
     background: 'transparent', border: 'none',
-    color: '#64748b', fontSize: 16, cursor: 'pointer',
+    color: '#9899b8', fontSize: 16, cursor: 'pointer',
     padding: '2px 6px', borderRadius: 4,
   },
   tabBar: {
     display: 'flex', gap: 0,
-    borderBottom: '1px solid #1e293b',
+    borderBottom: '1px solid #2a2d3e',
     padding: '0 20px',
     flexShrink: 0,
   },
   tab: {
     background: 'none', border: 'none',
     padding: '10px 14px',
-    color: '#64748b', fontSize: 13, fontWeight: 500,
+    color: '#9899b8', fontSize: 13, fontWeight: 500,
     cursor: 'pointer',
     borderBottom: '2px solid transparent',
   },
-  tabActive: { color: '#e2e8f0', borderBottomColor: '#2563eb' },
+  tabActive: { color: '#e2e8f0', borderBottomColor: '#6366f1' },
   body: {
     flex: 1, overflowY: 'auto',
     padding: '20px 24px',
@@ -57,7 +57,7 @@ const s = {
   intro: { color: '#cbd5e1', marginBottom: 20, lineHeight: 1.7 },
   section: { marginTop: 20 },
   sectionTitle: {
-    fontSize: 11, fontWeight: 700, color: '#64748b',
+    fontSize: 11, fontWeight: 700, color: '#9899b8',
     textTransform: 'uppercase', letterSpacing: '0.08em',
     marginBottom: 10,
   },
@@ -66,7 +66,7 @@ const s = {
   strong: { color: '#e2e8f0' },
   code: {
     fontFamily: 'monospace', fontSize: 12,
-    background: '#0f1117', border: '1px solid #1e293b',
+    background: '#13141c', border: '1px solid #2a2d3e',
     borderRadius: 4, padding: '1px 5px', color: '#93c5fd',
   },
   infoBox: {
@@ -78,16 +78,16 @@ const s = {
   flowRow: { display: 'flex', gap: 10, marginBottom: 20, flexWrap: 'wrap' },
   flowCard: {
     flex: 1, minWidth: 120,
-    background: '#0f1117', border: '1px solid #1e293b',
+    background: '#13141c', border: '1px solid #2a2d3e',
     borderRadius: 8, padding: '12px 14px',
     display: 'flex', flexDirection: 'column', gap: 4,
   },
   flowIcon: { fontSize: 20 },
   flowLabel: { fontSize: 13, fontWeight: 600, color: '#e2e8f0' },
-  flowDesc: { fontSize: 11, color: '#64748b', lineHeight: 1.5 },
+  flowDesc: { fontSize: 11, color: '#9899b8', lineHeight: 1.5 },
   pipeline: { display: 'flex', alignItems: 'center', gap: 4, marginBottom: 12 },
   pipelineRow: { display: 'flex', alignItems: 'center' },
-  arrow: { color: '#334155', fontSize: 16, margin: '0 6px' },
+  arrow: { color: '#4a4d66', fontSize: 16, margin: '0 6px' },
   envBadge: {
     borderRadius: 6, padding: '4px 14px',
     fontSize: 12, fontWeight: 700, border: '1px solid',
@@ -96,7 +96,7 @@ const s = {
   envQa:   { background: '#1a1a0d', borderColor: '#a16207', color: '#fde68a' },
   envProd: { background: '#0d2116', borderColor: '#15803d', color: '#86efac' },
   folderCard: {
-    background: '#0f1117', border: '1px solid #1e293b',
+    background: '#13141c', border: '1px solid #2a2d3e',
     borderRadius: 8, padding: '12px 16px',
     marginBottom: 10,
   },
@@ -109,12 +109,12 @@ const s = {
     color: '#a5b4fc', borderRadius: 10, padding: '1px 7px',
   },
   folderDesc: { color: '#94a3b8', fontSize: 12, margin: '0 0 6px 0', lineHeight: 1.6 },
-  folderExample: { fontSize: 11, color: '#475569', fontFamily: 'monospace' },
+  folderExample: { fontSize: 11, color: '#5c5f7a', fontFamily: 'monospace' },
   steps: { display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 16 },
   step: { display: 'flex', gap: 14, alignItems: 'flex-start' },
   stepNum: {
     width: 24, height: 24, borderRadius: '50%',
-    background: '#1e3a5f', border: '1px solid #2563eb',
+    background: '#2d2a6e', border: '1px solid #2563eb',
     color: '#93c5fd', fontSize: 12, fontWeight: 700,
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     flexShrink: 0, marginTop: 1,
@@ -123,7 +123,7 @@ const s = {
   stepBody: { fontSize: 12, color: '#94a3b8', lineHeight: 1.6 },
   cronTable: {
     display: 'flex', flexDirection: 'column', gap: 6,
-    background: '#0f1117', border: '1px solid #1e293b',
+    background: '#13141c', border: '1px solid #2a2d3e',
     borderRadius: 7, padding: '10px 14px',
   },
   cronRow: { display: 'flex', alignItems: 'center', gap: 16 },
