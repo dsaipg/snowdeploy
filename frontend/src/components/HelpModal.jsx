@@ -2,6 +2,138 @@ import { useState } from 'react'
 
 const TABS = ['Overview', 'Folders', 'Promote', 'Scheduling']
 
+const s = {
+  overlay: {
+    position: 'fixed', inset: 0,
+    background: 'rgba(0,0,0,0.7)',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    zIndex: 1000,
+  },
+  modal: {
+    background: '#161b27',
+    border: '1px solid #1e293b',
+    borderRadius: 12,
+    width: '680px',
+    maxWidth: '95vw',
+    maxHeight: '85vh',
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'hidden',
+  },
+  header: {
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+    padding: '16px 20px',
+    borderBottom: '1px solid #1e293b',
+    flexShrink: 0,
+  },
+  headerTitle: {
+    display: 'flex', alignItems: 'center', gap: 10,
+    fontSize: 16, fontWeight: 700, color: '#f1f5f9',
+  },
+  closeBtn: {
+    background: 'transparent', border: 'none',
+    color: '#64748b', fontSize: 16, cursor: 'pointer',
+    padding: '2px 6px', borderRadius: 4,
+  },
+  tabBar: {
+    display: 'flex', gap: 0,
+    borderBottom: '1px solid #1e293b',
+    padding: '0 20px',
+    flexShrink: 0,
+  },
+  tab: {
+    background: 'none', border: 'none',
+    padding: '10px 14px',
+    color: '#64748b', fontSize: 13, fontWeight: 500,
+    cursor: 'pointer',
+    borderBottom: '2px solid transparent',
+  },
+  tabActive: { color: '#e2e8f0', borderBottomColor: '#2563eb' },
+  body: {
+    flex: 1, overflowY: 'auto',
+    padding: '20px 24px',
+    color: '#94a3b8', fontSize: 13, lineHeight: 1.7,
+  },
+  intro: { color: '#cbd5e1', marginBottom: 20, lineHeight: 1.7 },
+  section: { marginTop: 20 },
+  sectionTitle: {
+    fontSize: 11, fontWeight: 700, color: '#64748b',
+    textTransform: 'uppercase', letterSpacing: '0.08em',
+    marginBottom: 10,
+  },
+  ul: { paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 8 },
+  ol: { paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 8 },
+  strong: { color: '#e2e8f0' },
+  code: {
+    fontFamily: 'monospace', fontSize: 12,
+    background: '#0f1117', border: '1px solid #1e293b',
+    borderRadius: 4, padding: '1px 5px', color: '#93c5fd',
+  },
+  infoBox: {
+    marginTop: 20,
+    background: '#0d2137', border: '1px solid #1d4ed844',
+    borderRadius: 7, padding: '10px 14px',
+    fontSize: 12, color: '#93c5fd', lineHeight: 1.6,
+  },
+  flowRow: { display: 'flex', gap: 10, marginBottom: 20, flexWrap: 'wrap' },
+  flowCard: {
+    flex: 1, minWidth: 120,
+    background: '#0f1117', border: '1px solid #1e293b',
+    borderRadius: 8, padding: '12px 14px',
+    display: 'flex', flexDirection: 'column', gap: 4,
+  },
+  flowIcon: { fontSize: 20 },
+  flowLabel: { fontSize: 13, fontWeight: 600, color: '#e2e8f0' },
+  flowDesc: { fontSize: 11, color: '#64748b', lineHeight: 1.5 },
+  pipeline: { display: 'flex', alignItems: 'center', gap: 4, marginBottom: 12 },
+  pipelineRow: { display: 'flex', alignItems: 'center' },
+  arrow: { color: '#334155', fontSize: 16, margin: '0 6px' },
+  envBadge: {
+    borderRadius: 6, padding: '4px 14px',
+    fontSize: 12, fontWeight: 700, border: '1px solid',
+  },
+  envDev:  { background: '#0d2137', borderColor: '#1d4ed8', color: '#93c5fd' },
+  envQa:   { background: '#1a1a0d', borderColor: '#a16207', color: '#fde68a' },
+  envProd: { background: '#0d2116', borderColor: '#15803d', color: '#86efac' },
+  folderCard: {
+    background: '#0f1117', border: '1px solid #1e293b',
+    borderRadius: 8, padding: '12px 16px',
+    marginBottom: 10,
+  },
+  folderHeader: { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 },
+  folderIcon: { fontSize: 16 },
+  folderName: { fontSize: 13, fontWeight: 700, fontFamily: 'monospace' },
+  schedBadge: {
+    fontSize: 10, fontWeight: 600,
+    background: '#0f0f1a', border: '1px solid #6366f1',
+    color: '#a5b4fc', borderRadius: 10, padding: '1px 7px',
+  },
+  folderDesc: { color: '#94a3b8', fontSize: 12, margin: '0 0 6px 0', lineHeight: 1.6 },
+  folderExample: { fontSize: 11, color: '#475569', fontFamily: 'monospace' },
+  steps: { display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 16 },
+  step: { display: 'flex', gap: 14, alignItems: 'flex-start' },
+  stepNum: {
+    width: 24, height: 24, borderRadius: '50%',
+    background: '#1e3a5f', border: '1px solid #2563eb',
+    color: '#93c5fd', fontSize: 12, fontWeight: 700,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    flexShrink: 0, marginTop: 1,
+  },
+  stepTitle: { fontSize: 13, fontWeight: 600, color: '#e2e8f0', marginBottom: 2 },
+  stepBody: { fontSize: 12, color: '#94a3b8', lineHeight: 1.6 },
+  cronTable: {
+    display: 'flex', flexDirection: 'column', gap: 6,
+    background: '#0f1117', border: '1px solid #1e293b',
+    borderRadius: 7, padding: '10px 14px',
+  },
+  cronRow: { display: 'flex', alignItems: 'center', gap: 16 },
+  cronCode: {
+    fontFamily: 'monospace', fontSize: 12,
+    color: '#a5b4fc', width: 130, flexShrink: 0,
+  },
+  cronLabel: { fontSize: 12, color: '#94a3b8' },
+}
+
 const CONTENT = {
   Overview: (
     <div>
@@ -243,144 +375,4 @@ export default function HelpModal({ onClose }) {
       </div>
     </div>
   )
-}
-
-const s = {
-  overlay: {
-    position: 'fixed', inset: 0,
-    background: 'rgba(0,0,0,0.7)',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    zIndex: 1000,
-  },
-  modal: {
-    background: '#161b27',
-    border: '1px solid #1e293b',
-    borderRadius: 12,
-    width: '680px',
-    maxWidth: '95vw',
-    maxHeight: '85vh',
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'hidden',
-  },
-  header: {
-    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-    padding: '16px 20px',
-    borderBottom: '1px solid #1e293b',
-    flexShrink: 0,
-  },
-  headerTitle: {
-    display: 'flex', alignItems: 'center', gap: 10,
-    fontSize: 16, fontWeight: 700, color: '#f1f5f9',
-  },
-  closeBtn: {
-    background: 'transparent', border: 'none',
-    color: '#64748b', fontSize: 16, cursor: 'pointer',
-    padding: '2px 6px', borderRadius: 4,
-  },
-  tabBar: {
-    display: 'flex', gap: 0,
-    borderBottom: '1px solid #1e293b',
-    padding: '0 20px',
-    flexShrink: 0,
-  },
-  tab: {
-    background: 'none', border: 'none',
-    padding: '10px 14px',
-    color: '#64748b', fontSize: 13, fontWeight: 500,
-    cursor: 'pointer',
-    borderBottom: '2px solid transparent',
-  },
-  tabActive: { color: '#e2e8f0', borderBottomColor: '#2563eb' },
-  body: {
-    flex: 1, overflowY: 'auto',
-    padding: '20px 24px',
-    color: '#94a3b8', fontSize: 13, lineHeight: 1.7,
-  },
-  intro: { color: '#cbd5e1', marginBottom: 20, lineHeight: 1.7 },
-  section: { marginTop: 20 },
-  sectionTitle: {
-    fontSize: 11, fontWeight: 700, color: '#64748b',
-    textTransform: 'uppercase', letterSpacing: '0.08em',
-    marginBottom: 10,
-  },
-  ul: { paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 8 },
-  ol: { paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 8 },
-  strong: { color: '#e2e8f0' },
-  code: {
-    fontFamily: 'monospace', fontSize: 12,
-    background: '#0f1117', border: '1px solid #1e293b',
-    borderRadius: 4, padding: '1px 5px', color: '#93c5fd',
-  },
-  infoBox: {
-    marginTop: 20,
-    background: '#0d2137', border: '1px solid #1d4ed844',
-    borderRadius: 7, padding: '10px 14px',
-    fontSize: 12, color: '#93c5fd', lineHeight: 1.6,
-  },
-
-  // Overview
-  flowRow: { display: 'flex', gap: 10, marginBottom: 20, flexWrap: 'wrap' },
-  flowCard: {
-    flex: 1, minWidth: 120,
-    background: '#0f1117', border: '1px solid #1e293b',
-    borderRadius: 8, padding: '12px 14px',
-    display: 'flex', flexDirection: 'column', gap: 4,
-  },
-  flowIcon: { fontSize: 20 },
-  flowLabel: { fontSize: 13, fontWeight: 600, color: '#e2e8f0' },
-  flowDesc: { fontSize: 11, color: '#64748b', lineHeight: 1.5 },
-  pipeline: { display: 'flex', alignItems: 'center', gap: 4, marginBottom: 12 },
-  pipelineRow: { display: 'flex', alignItems: 'center' },
-  arrow: { color: '#334155', fontSize: 16, margin: '0 6px' },
-  envBadge: {
-    borderRadius: 6, padding: '4px 14px',
-    fontSize: 12, fontWeight: 700, border: '1px solid',
-  },
-  envDev:  { background: '#0d2137', borderColor: '#1d4ed8', color: '#93c5fd' },
-  envQa:   { background: '#1a1a0d', borderColor: '#a16207', color: '#fde68a' },
-  envProd: { background: '#0d2116', borderColor: '#15803d', color: '#86efac' },
-
-  // Folders
-  folderCard: {
-    background: '#0f1117', border: '1px solid #1e293b',
-    borderRadius: 8, padding: '12px 16px',
-    marginBottom: 10,
-  },
-  folderHeader: { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 },
-  folderIcon: { fontSize: 16 },
-  folderName: { fontSize: 13, fontWeight: 700, fontFamily: 'monospace' },
-  schedBadge: {
-    fontSize: 10, fontWeight: 600,
-    background: '#0f0f1a', border: '1px solid #6366f1',
-    color: '#a5b4fc', borderRadius: 10, padding: '1px 7px',
-  },
-  folderDesc: { color: '#94a3b8', fontSize: 12, margin: '0 0 6px 0', lineHeight: 1.6 },
-  folderExample: { fontSize: 11, color: '#475569', fontFamily: 'monospace' },
-
-  // Promote steps
-  steps: { display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 16 },
-  step: { display: 'flex', gap: 14, alignItems: 'flex-start' },
-  stepNum: {
-    width: 24, height: 24, borderRadius: '50%',
-    background: '#1e3a5f', border: '1px solid #2563eb',
-    color: '#93c5fd', fontSize: 12, fontWeight: 700,
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    flexShrink: 0, marginTop: 1,
-  },
-  stepTitle: { fontSize: 13, fontWeight: 600, color: '#e2e8f0', marginBottom: 2 },
-  stepBody: { fontSize: 12, color: '#94a3b8', lineHeight: 1.6 },
-
-  // Scheduling
-  cronTable: {
-    display: 'flex', flexDirection: 'column', gap: 6,
-    background: '#0f1117', border: '1px solid #1e293b',
-    borderRadius: 7, padding: '10px 14px',
-  },
-  cronRow: { display: 'flex', alignItems: 'center', gap: 16 },
-  cronCode: {
-    fontFamily: 'monospace', fontSize: 12,
-    color: '#a5b4fc', width: 130, flexShrink: 0,
-  },
-  cronLabel: { fontSize: 12, color: '#94a3b8' },
 }
